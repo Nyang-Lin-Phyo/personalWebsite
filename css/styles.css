@@ -1,0 +1,21 @@
+.link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 1.1rem;
+    color: #c9b8f0;
+    text-decoration: none;
+
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.link-left:hover {
+    opacity: 0.85;
+    transform: translateX(-3px);
+}
+
+.link-right:hover {
+    opacity: 0.85;
+    transform: translateX(3px);
+}
