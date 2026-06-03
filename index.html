@@ -577,7 +577,6 @@
     </section>
 
     <!-- ── LAYER 3: SKILLS ── -->
-    <!-- ── LAYER 3: SKILLS ── -->
     <section class="layer" id="skills">
         <p class="section-label fade-up">02 — Skills</p>
 
@@ -654,79 +653,255 @@
 
     <!-- ── LAYER 4: PROJECTS ── -->
     <section class="layer" id="projects">
+
+
         <p class="section-label fade-up">03 — Projects</p>
-        <h2 class="projects-header fade-up">Things<br /><em>I've built.</em></h2>
+
+        <h2 class="projects-header fade-up">
+            Things<br /><em>I've built.</em>
+        </h2>
+
         <div class="project-list">
 
+            <!-- HSRN -->
             <div class="project-item fade-up">
                 <span class="project-num">01</span>
+
                 <div>
-                    <p class="project-title">Project One</p>
-                    <p class="project-desc">A short description of what this project does and why it's interesting.
-                        Replace this with your real work.</p>
+                    <p class="project-title">
+                        High-Speed Research Network (HSRN)
+                    </p>
+
+                    <p class="project-desc">
+                        Audio Systems Team Lead • NYU Tandon
+                        <br><br>
+
+                        Refactored a legacy distributed real-time audio receiver
+                        from a dual-stream architecture into a scalable
+                        multi-sender pipeline capable of supporting synchronized
+                        audio from globally distributed performers.
+
+                        <br><br>
+
+                        Designed lock-free audio processing pipelines with
+                        per-sender jitter buffers, dynamic stream subscription,
+                        and real-time audio mixing, allowing new performers
+                        to join without interrupting active sessions.
+
+                        <br><br>
+
+                        Resolved long-standing plugin lifecycle crashes,
+                        simplified stream management, and established a
+                        maintainable architecture that significantly improved
+                        reliability for large-scale collaborative live audio
+                        applications.
+                    </p>
                 </div>
+
                 <div class="project-tags">
-                    <span class="tag">React</span>
-                    <span class="tag">Node</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">Audio</span>
+                    <span class="tag">Distributed</span>
+                    <span class="tag">Networking</span>
+                    <span class="tag">Concurrency</span>
                 </div>
             </div>
 
+            <!-- M-FLY -->
             <div class="project-item fade-up">
                 <span class="project-num">02</span>
+
                 <div>
-                    <p class="project-title">Project Two</p>
-                    <p class="project-desc">Another cool thing you built. Keep descriptions tight — one or two
-                        sentences.</p>
+                    <p class="project-title">
+                        M-Fly
+                    </p>
+
+                    <p class="project-desc">
+                        Autonomous Aircraft Computer Vision Platform
+                        <br><br>
+
+                        Collaboratively developed software for an autonomous
+                        aircraft capable of terrain mapping, object detection,
+                        object classification, and payload delivery using
+                        computer vision and machine learning.
+
+                        <br><br>
+
+                        Integrated OpenCV, YOLOv7, and PaddleOCR into a unified
+                        perception pipeline that enabled the aircraft to identify
+                        targets and navigate using visual information collected
+                        during flight.
+
+                        <br><br>
+
+                        Worked closely with hardware and software teams to resolve
+                        integration challenges, establishing structured engineering
+                        discussions that improved cross-team decision making and
+                        project execution.
+                    </p>
                 </div>
+
                 <div class="project-tags">
                     <span class="tag">Python</span>
+                    <span class="tag">OpenCV</span>
+                    <span class="tag">YOLOv7</span>
+                    <span class="tag">OCR</span>
                     <span class="tag">ML</span>
                 </div>
             </div>
 
+            <!-- SEARCH ENGINE -->
             <div class="project-item fade-up">
                 <span class="project-num">03</span>
+
                 <div>
-                    <p class="project-title">Project Three</p>
-                    <p class="project-desc">Your third project. You can add more by duplicating the project-item block
-                        above.</p>
+                    <p class="project-title">
+                        Search Engine
+                    </p>
+
+                    <p class="project-desc">
+                        Built a scalable search engine in C++ using information
+                        retrieval techniques including TF-IDF and PageRank to rank
+                        and retrieve relevant web pages.
+
+                        <br><br>
+
+                        Implemented a MapReduce indexing pipeline that processed
+                        large collections of web pages, generating inverted indexes
+                        mapping words to documents while tracking term frequency
+                        statistics for ranking.
+
+                        <br><br>
+
+                        Developed a REST API using Flask and SQLite to serve
+                        search results as JSON and created a web-based frontend
+                        for querying indexed content.
+                    </p>
                 </div>
+
                 <div class="project-tags">
                     <span class="tag">C++</span>
-                    <span class="tag">Systems</span>
+                    <span class="tag">Flask</span>
+                    <span class="tag">TF-IDF</span>
+                    <span class="tag">PageRank</span>
+                    <span class="tag">MapReduce</span>
                 </div>
             </div>
 
         </div>
+
+        <div class="projects-more fade-up">
+            <a href="projects.html">
+                Here's all the projects I've worked on →
+            </a>
+        </div>
+
+
     </section>
 
-    <!-- ── LAYER 5: CONTACT ── -->
+
+    <!-- ── LAYER 5: PERSONAL PROJECTS ── -->
+
+    <section class="layer" id="personal">
+
+        <p class="section-label fade-up">04 — Personal Projects</p>
+
+        <h2 class="projects-header fade-up">
+            Things I build<br /><em>for fun.</em>
+        </h2>
+
+        <div class="project-list">
+
+            <div class="project-item fade-up">
+                <span class="project-num">01</span>
+
+                <div>
+                    <p class="project-title">
+                        PNG VTuber Overlay
+                    </p>
+
+                    <p class="project-desc">
+                        Built a lightweight PNG VTuber overlay system for OBS
+                        that uses a browser source and a local WebSocket server
+                        to create reactive avatar expressions.
+
+                        <br><br>
+
+                        Implemented keyboard-triggered expression swapping,
+                        mouse-following hand tracking, and OBS-compatible
+                        browser rendering for stream overlays.
+
+                        <br><br>
+
+                        Packaged the application as a standalone Windows
+                        executable using PyInstaller, allowing creators to
+                        launch and configure the overlay without installing
+                        Python or additional dependencies.
+                    </p>
+                </div>
+
+                <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">OBS</span>
+                    <span class="tag">WebSocket</span>
+                    <span class="tag">PyInstaller</span>
+                </div>
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ── LAYER 6: Contact ── -->
     <section class="layer" id="contact">
-        <p class="section-label fade-up">04 — Contact</p>
-        <h2 class="contact-big fade-up">Let's<br /><em>connect.</em></h2>
+
+        <p class="section-label fade-up">05 — Contact</p>
+
+        <h2 class="contact-big fade-up">
+            Let's<br /><em>connect.</em>
+        </h2>
+
         <div class="contact-links fade-up">
+
             <div class="contact-link">
                 <span class="contact-link-label">Email</span>
-                <a href="mailto:you@email.com">you@email.com</a>
+                <a href="mailto:nlphyo.ramsey@gmail.com">
+                    nlphyo.ramsey@gmail.com
+                </a>
             </div>
+
             <div class="contact-link">
                 <span class="contact-link-label">GitHub</span>
-                <a href="https://github.com/Nyang-Lin-Phyo" target="_blank">github.com/Nyang-Lin-Phyo</a>
+                <a href="https://github.com/Nyang-Lin-Phyo" target="_blank">
+                    github.com/Nyang-Lin-Phyo
+                </a>
             </div>
+
             <div class="contact-link">
                 <span class="contact-link-label">LinkedIn</span>
-                <a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a>
+                <a href="https://www.linkedin.com/in/nyang-lin-phyo/" target="_blank">
+                    linkedin.com/in/nyang-lin-phyo
+                </a>
             </div>
+
             <div class="contact-link">
                 <span class="contact-link-label">Resume</span>
-                <a href="resume.pdf" target="_blank">Download PDF</a>
+                <a href="assets/Resume.pdf" target="_blank">
+                    Download PDF
+                </a>
             </div>
+
         </div>
+
         <footer>
             <span>© 2026 Nyang Lin Phyo</span>
-            <span>Built with HTML · CSS · no frameworks</span>
+            <span>Built with Cats</span>
         </footer>
+
     </section>
+
 
     <!-- FADE-IN OBSERVER -->
     <script>
