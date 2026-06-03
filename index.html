@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nyang Lin Phyo — Personal Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ── TOKENS ─────────────────────────────────────── */
+        :root {
+            --bg: #0d0b14;
+            --bg2: #120f1e;
+            --bg3: #0f0c1a;
+            --purple: #c9b8f0;
+            --purple-dim: #8b74c2;
+            --purple-lo: #2a1e4a;
+            --text: #ede8ff;
+            --muted: #7a6fa0;
+            --line: rgba(201, 184, 240, 0.15);
+            --glow: rgba(201, 184, 240, 0.08);
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+        }
+
+        /* ── RESET ───────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a { color: var(--purple); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── LAYERS ──────────────────────────────────────── */
+        .layer {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 6rem clamp(2rem, 8vw, 9rem);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--line);
+        }
+
+        /* ── NOISE TEXTURE OVERLAY ───────────────────────── */
+        .layer::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ── NAV ─────────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.4rem clamp(2rem, 8vw, 9rem);
+            background: rgba(13, 11, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .nav-logo {
+            font-family: var(--serif);
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            color: var(--purple);
+        }
+
+        .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+
+        .nav-links a {
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--purple); text-decoration: none; }
+
+        /* ── LAYER 1 — HERO ──────────────────────────────── */
+        #hero { background: var(--bg); }
+
+        .hero-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--purple-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-name {
+            font-family: var(--serif);
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-weight: 300;
+            line-height: 0.95;
+            letter-spacing: -0.01em;
+            color: var(--purple);
+            margin-bottom: 1.8rem;
+        }
+
+        .hero-name em { font-style: italic; color: var(--text); }
+
+        .hero-sub {
+            font-size: 0.85rem;
+            color: var(--muted);
+            max-width: 38ch;
+            margin-bottom: 3rem;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--purple);
+            border: 1px solid var(--line);
+            padding: 0.75rem 1.6rem;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .hero-cta:hover {
+            background: var(--glow);
+            border-color: var(--purple-dim);
+            text-decoration: none;
+        }
+
+        /* ── HERO PHOTO ──────────────────────────────────── */
+        .hero-photo {
+            position: absolute;
+            /* right edge scales with viewport */
+            right: clamp(1rem, 8vw, 10rem);
+            /* vertically centered in the section */
+            top: 20%;
+            transform: translateY(-50%);
+            /* width is purely vw-driven so it shrinks/grows with the window */
+            width: 22vw;
+            /* height follows a portrait ratio */
+            height: 30vw;
+            /* hard caps so it never gets absurdly large or tiny */
+            max-width: 300px;
+            max-height: 420px;
+            min-width: 120px;
+            min-height: 160px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+        }
+        
+
+        .hero-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            filter: grayscale(20%) brightness(0.88);
+            transition: filter 0.4s;
+        }
+
+        .hero-photo:hover img { filter: grayscale(0%) brightness(1); }
+
+        /* hide photo when it would overlap the text */
+        @media (max-width: 700px) { .hero-photo { display: none; } }
+
+        /* ── LAYER 2 — ABOUT ─────────────────────────────── */
+        #about { background: var(--bg2); }
+
+        .section-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--purple-dim);
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            max-width: 60px;
+            height: 1px;
+            background: var(--line);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            max-width: 900px;
+        }
+
+        .about-text {
+            font-family: var(--serif);
+            font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+            font-weight: 300;
+            line-height: 1.55;
+            color: var(--text);
+        }
+
+        .about-details { display: flex; flex-direction: column; gap: 1rem; }
+
+        .detail-row {
+            display: flex;
+            gap: 1rem;
+            align-items: baseline;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 0.75rem;
+        }
+
+        .detail-key {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            min-width: 80px;
+        }
+
+        .detail-val { font-size: 0.82rem; color: var(--text); }
+
+        /* ── LAYER 3 — SKILLS ────────────────────────────── */
+        #skills { background: var(--bg3); }
+
+        .skills-header {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 300;
+            color: var(--purple);
+            margin-bottom: 3.5rem;
+            max-width: 20ch;
+            line-height: 1.1;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1px;
+            border: 1px solid var(--line);
+            max-width: 820px;
+        }
+
+        .skill-cell {
+            padding: 1.3rem 1.5rem;
+            border: 1px solid var(--line);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .skill-cell:hover { background: var(--glow); color: var(--purple); }
+
+        /* ── LAYER 4 — PROJECTS ──────────────────────────── */
+        #projects { background: var(--bg2); }
+
+        .projects-header {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 300;
+            color: var(--purple);
+            margin-bottom: 3.5rem;
+            line-height: 1.1;
+        }
+
+        .project-list { display: flex; flex-direction: column; gap: 0; max-width: 860px; }
+
+        .project-item {
+            display: grid;
+            grid-template-columns: 2.5rem 1fr auto;
+            align-items: start;
+            gap: 1.5rem;
+            padding: 1.8rem 0;
+            border-top: 1px solid var(--line);
+            transition: background 0.15s;
+            cursor: default;
+        }
+
+        .project-item:last-child { border-bottom: 1px solid var(--line); }
+
+        .project-num {
+            font-size: 0.65rem;
+            color: var(--purple-dim);
+            letter-spacing: 0.1em;
+            padding-top: 0.2rem;
+        }
+
+        .project-title {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: var(--text);
+            margin-bottom: 0.35rem;
+        }
+
+        .project-desc { font-size: 0.78rem; color: var(--muted); max-width: 55ch; }
+
+        .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: flex-end; }
+
+        .tag {
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border: 1px solid var(--line);
+            padding: 0.25rem 0.55rem;
+            color: var(--purple-dim);
+        }
+
+        /* ── LAYER 5 — CONTACT ───────────────────────────── */
+        #contact { background: var(--bg); }
+
+        .contact-big {
+            font-family: var(--serif);
+            font-size: clamp(2.5rem, 8vw, 7rem);
+            font-weight: 300;
+            line-height: 0.95;
+            color: var(--purple);
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-big em { font-style: italic; color: var(--text); }
+
+        .contact-links { display: flex; gap: 3rem; flex-wrap: wrap; margin-bottom: 4rem; }
+
+        .contact-link { display: flex; flex-direction: column; gap: 0.3rem; }
+
+        .contact-link-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .contact-link a { font-size: 0.82rem; color: var(--purple); transition: color 0.2s; }
+        .contact-link a:hover { color: var(--text); text-decoration: none; }
+
+        footer {
+            position: absolute;
+            bottom: 2.5rem;
+            left: clamp(2rem, 8vw, 9rem);
+            right: clamp(2rem, 8vw, 9rem);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            border-top: 1px solid var(--line);
+            padding-top: 1rem;
+        }
+
+        /* ── FADE-IN ANIMATION ───────────────────────────── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ──────────────────────────────────── */
+        @media (max-width: 700px) {
+            .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .project-item { grid-template-columns: 2rem 1fr; }
+            .project-tags { display: none; }
+            .contact-links { gap: 2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <span class="nav-logo">Nyang Lin Phyo</span>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── LAYER 1: HERO ── -->
+    <section class="layer" id="hero">
+
+        <div class="hero-photo fade-up">
+            <img src="assets/me.jpg" alt="Nyang Lin Phyo" />
+        </div>
+
+        <p class="hero-eyebrow fade-up">Open to job offers · Graduating 2027</p>
+        <h1 class="hero-name fade-up">Nyang Lin Phyo<br /><em>(Ramsey)</em></h1>
+        <p class="hero-sub fade-up">
+            Software engineer · NYU CS · builder of things that occasionally work on the first try.
+        </p>
+        <a class="hero-cta fade-up" href="#about">
+            <span>Scroll to explore</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="7" y1="2" x2="7" y2="12" />
+                <polyline points="3,8 7,12 11,8" />
+            </svg>
+        </a>
+    </section>
+
+    <!-- ── LAYER 2: ABOUT ── -->
+    <section class="layer" id="about">
+        <p class="section-label fade-up">01 — About</p>
+        <div class="about-grid">
+            <p class="about-text fade-up">
+                I'm a developer who cares about clean code, rigorous systems, and pushing the boundaries of what
+                machines can perceive. My research interest is in <em>passive NLOS imaging</em> — using ML to
+                reconstruct scenes that are literally hidden from view.
+            </p>
+            <div class="about-details fade-up">
+                <div class="detail-row">
+                    <span class="detail-key">Location</span>
+                    <span class="detail-val">Brooklyn, NY</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">School</span>
+                    <span class="detail-val">New York University, Class of '27</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Degree</span>
+                    <span class="detail-val">M.S. Computer Science</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Focus</span>
+                    <span class="detail-val">Machine Learning · Passive NLOS Imaging</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Status</span>
+                    <span class="detail-val">Open to full-time offers (2026–2027)</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">GitHub</span>
+                    <span class="detail-val"><a href="https://github.com/Nyang-Lin-Phyo" target="_blank">@Nyang-Lin-Phyo</a></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── LAYER 3: SKILLS ── -->
+    <section class="layer" id="skills">
+        <p class="section-label fade-up">02 — Skills</p>
+        <h2 class="skills-header fade-up">What I work<br /><em>with.</em></h2>
+        <div class="skills-grid fade-up">
+            <div class="skill-cell">Python</div>
+            <div class="skill-cell">JavaScript</div>
+            <div class="skill-cell">TypeScript</div>
+            <div class="skill-cell">React</div>
+            <div class="skill-cell">Node.js</div>
+            <div class="skill-cell">HTML / CSS</div>
+            <div class="skill-cell">C / C++</div>
+            <div class="skill-cell">Java</div>
+            <div class="skill-cell">SQL</div>
+            <div class="skill-cell">Git</div>
+            <div class="skill-cell">Linux</div>
+            <div class="skill-cell">Docker</div>
+        </div>
+    </section>
+
+    <!-- ── LAYER 4: PROJECTS ── -->
+    <section class="layer" id="projects">
+        <p class="section-label fade-up">03 — Projects</p>
+        <h2 class="projects-header fade-up">Things<br /><em>I've built.</em></h2>
+        <div class="project-list">
+
+            <div class="project-item fade-up">
+                <span class="project-num">01</span>
+                <div>
+                    <p class="project-title">Project One</p>
+                    <p class="project-desc">A short description of what this project does and why it's interesting. Replace this with your real work.</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">React</span>
+                    <span class="tag">Node</span>
+                </div>
+            </div>
+
+            <div class="project-item fade-up">
+                <span class="project-num">02</span>
+                <div>
+                    <p class="project-title">Project Two</p>
+                    <p class="project-desc">Another cool thing you built. Keep descriptions tight — one or two sentences.</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">ML</span>
+                </div>
+            </div>
+
+            <div class="project-item fade-up">
+                <span class="project-num">03</span>
+                <div>
+                    <p class="project-title">Project Three</p>
+                    <p class="project-desc">Your third project. You can add more by duplicating the project-item block above.</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">C++</span>
+                    <span class="tag">Systems</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── LAYER 5: CONTACT ── -->
+    <section class="layer" id="contact">
+        <p class="section-label fade-up">04 — Contact</p>
+        <h2 class="contact-big fade-up">Let's<br /><em>connect.</em></h2>
+        <div class="contact-links fade-up">
+            <div class="contact-link">
+                <span class="contact-link-label">Email</span>
+                <a href="mailto:you@email.com">you@email.com</a>
+            </div>
+            <div class="contact-link">
+                <span class="contact-link-label">GitHub</span>
+                <a href="https://github.com/Nyang-Lin-Phyo" target="_blank">github.com/Nyang-Lin-Phyo</a>
+            </div>
+            <div class="contact-link">
+                <span class="contact-link-label">LinkedIn</span>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a>
+            </div>
+            <div class="contact-link">
+                <span class="contact-link-label">Resume</span>
+                <a href="resume.pdf" target="_blank">Download PDF</a>
+            </div>
+        </div>
+        <footer>
+            <span>© 2026 Nyang Lin Phyo</span>
+            <span>Built with HTML · CSS · no frameworks</span>
+        </footer>
+    </section>
+
+    <!-- FADE-IN OBSERVER -->
+    <script>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const els = e.target.querySelectorAll('.fade-up');
+                    els.forEach((el, i) => {
+                        setTimeout(() => el.classList.add('visible'), i * 90);
+                    });
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.layer').forEach(section => observer.observe(section));
+    </script>
+
+</body>
+
+</html>
