@@ -418,6 +418,42 @@
             display: block;
         }
 
+        /* ── DEMO ───────────────────────────── */
+
+        .demo-placeholder {
+            width: 100%;
+            max-width: 520px;
+            height: 520px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(6px);
+        }
+
+        .demo-btn {
+            padding: 0.8rem 1.4rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--purple);
+
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .demo-btn:hover {
+            background: var(--glow);
+            border-color: var(--purple-dim);
+        }
+
         /* ── LAYER 5 — CONTACT ───────────────────────────── */
         #contact {
             background: var(--bg);
@@ -862,7 +898,11 @@
                     </p>
 
                     <div class="project-demo-container fade-up">
-                        <iframe src="demos/pngvtuber-demo.html" class="project-demo"></iframe>
+                        <div class="demo-placeholder" id="demoPlaceholder">
+                            <button class="demo-btn" id="loadDemoBtn">
+                                Load Demo
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -942,6 +982,19 @@
         }, { threshold: 0.15 });
 
         document.querySelectorAll('.layer').forEach(section => observer.observe(section));
+
+        document.getElementById("loadDemoBtn").addEventListener("click", () => {
+            const container = document.getElementById("demoPlaceholder");
+
+            const iframe = document.createElement("iframe");
+            iframe.src = "demos/pngvtuber-demo.html";
+            iframe.className = "project-demo";
+
+            iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
+
+            container.innerHTML = "";
+            container.appendChild(iframe);
+        });
     </script>
 
 </body>
