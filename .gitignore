@@ -1,0 +1,29 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor configs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node (if you ever add a build step)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+dist/
+.cache/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Misc
+*.log
+*.bak
+*.swp
+*~
+notes.txt
