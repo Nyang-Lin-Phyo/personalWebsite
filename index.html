@@ -804,40 +804,49 @@
 
     <section class="layer" id="personal">
 
-        <p class="section-label fade-up">04 — Personal Projects</p>
+
+        <p class="section-label fade-up">
+            04 — Personal Projects
+        </p>
 
         <h2 class="projects-header fade-up">
-            Things I build<br /><em>for fun.</em>
+            Things I build<br />
+            <em>for fun.</em>
         </h2>
 
         <div class="project-list">
 
             <div class="project-item fade-up">
+
                 <span class="project-num">01</span>
 
                 <div>
+
                     <p class="project-title">
                         PNG VTuber Overlay
                     </p>
 
                     <p class="project-desc">
-                        Built a lightweight PNG VTuber overlay system for OBS
-                        that uses a browser source and a local WebSocket server
-                        to create reactive avatar expressions.
+
+                        Built a lightweight PNG VTuber system
+                        that reacts to keyboard input and mouse
+                        movement using a browser-based interface.
 
                         <br><br>
 
-                        Implemented keyboard-triggered expression swapping,
-                        mouse-following hand tracking, and OBS-compatible
-                        browser rendering for stream overlays.
+                        Supports custom expressions triggered by
+                        key presses, dynamic mouse-following
+                        overlays, and can be packaged as a
+                        standalone desktop application.
 
                         <br><br>
 
-                        Packaged the application as a standalone Windows
-                        executable using PyInstaller, allowing creators to
-                        launch and configure the overlay without installing
-                        Python or additional dependencies.
+                        Originally created as a simple alternative
+                        to Live2D-style avatars for streaming and
+                        online content creation.
+
                     </p>
+
                 </div>
 
                 <div class="project-tags">
@@ -846,12 +855,21 @@
                     <span class="tag">WebSocket</span>
                     <span class="tag">PyInstaller</span>
                 </div>
+
             </div>
+
+        </div>
+
+        <div class="project-demo-container fade-up">
+
+            <iframe src="demos/pngvtuber-demo.html" class="project-demo">
+            </iframe>
 
         </div>
 
 
     </section>
+
 
 
     <!-- ── LAYER 6: Contact ── -->
