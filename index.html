@@ -805,41 +805,39 @@
                 </div>
             </div>
 
-            <!-- SEARCH ENGINE -->
+            <!-- Scaling Laws for Transformer Language Models -->
             <div class="project-item fade-up">
-                <span class="project-num">03</span>
+                <span class="project-num">XX</span>
 
                 <div>
                     <p class="project-title">
-                        Search Engine
+                        Scaling Laws for Transformer Language Models on SVG Code
                     </p>
 
                     <p class="project-desc">
-                        Built a scalable search engine in C++ using information
-                        retrieval techniques including TF-IDF and PageRank to rank
-                        and retrieve relevant web pages.
+                        Investigated scaling behavior of decoder-only transformer models trained on
+                        structured SVG code, evaluating 10 model variants under Standard Parameterization
+                        and Maximal Update Parameterization (µP).
 
                         <br><br>
 
-                        Implemented a MapReduce indexing pipeline that processed
-                        large collections of web pages, generating inverted indexes
-                        mapping words to documents while tracking term frequency
-                        statistics for ranking.
+                        Conducted systematic learning rate sweeps and cross-width transfer experiments,
+                        demonstrating stable zero-shot hyperparameter transfer under µP and unstable
+                        scaling behavior under standard parameterization.
 
                         <br><br>
 
-                        Developed a REST API using Flask and SQLite to serve
-                        search results as JSON and created a web-based frontend
-                        for querying indexed content.
+                        Trained up to 91M-parameter models on a 4K BPE SVG dataset, achieving 1.57 test
+                        perplexity with 100% SVG validity and fully renderable outputs.
                     </p>
                 </div>
 
                 <div class="project-tags">
-                    <span class="tag">C++</span>
-                    <span class="tag">Flask</span>
-                    <span class="tag">TF-IDF</span>
-                    <span class="tag">PageRank</span>
-                    <span class="tag">MapReduce</span>
+                    <span class="tag">PyTorch</span>
+                    <span class="tag">Transformers</span>
+                    <span class="tag">µP</span>
+                    <span class="tag">Scaling Laws</span>
+                    <span class="tag">NLP</span>
                 </div>
             </div>
 

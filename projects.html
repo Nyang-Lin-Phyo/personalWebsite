@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -8,6 +7,7 @@
     <title>Projects — Nyang Lin Phyo</title>
 
     <link rel="icon" href="assets/R.png" type="image/png">
+
     <style>
         body {
             background: #0d0b14;
@@ -24,16 +24,37 @@
             margin-bottom: 3rem;
         }
 
-        h2 {
-            margin-top: 3rem;
-        }
-
         a {
             color: #c9b8f0;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .project {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #ffffff;
+        }
+
+        .desc {
+            color: #cfc8e6;
+            margin-bottom: 1rem;
+        }
+
+        .tags {
+            color: #9a90b8;
+            font-size: 0.9rem;
         }
     </style>
-
-
 </head>
 
 <body>
@@ -42,34 +63,159 @@
 
     <h1>All Projects</h1>
 
-    <h2>High-Speed Research Network (HSRN)</h2>
+    <!-- HSRN -->
+    <div class="project">
+        <div class="title">High-Speed Research Network (HSRN)</div>
+        <div class="desc">
+            Refactored a distributed real-time audio system for large-scale collaborative environments.
+            Designed a multi-sender pipeline supporting synchronized audio ingestion and real-time mixing
+            from globally distributed performers using low-latency processing and dynamic stream management.
+        </div>
+        <div class="tags">C++ · Audio Systems · Concurrency · Real-Time Systems</div>
+    </div>
 
-    <h2>M-Fly</h2>
+    <!-- M-Fly -->
+    <div class="project">
+        <div class="title">M-Fly</div>
+        <div class="desc">
+            Built an autonomous aircraft perception system integrating computer vision and machine learning
+            for navigation, terrain mapping, and object detection. Developed a unified pipeline using
+            OpenCV, YOLOv7, and PaddleOCR for real-time decision-making.
+        </div>
+        <div class="tags">Python · OpenCV · YOLOv7 · OCR · ML</div>
+    </div>
 
-    <h2>Search Engine</h2>
+    <!-- Scaling Laws -->
+    <div class="project">
+        <div class="title">Scaling Laws for Transformer Language Models on SVG Code</div>
+        <div class="desc">
+            Studied scaling behavior of decoder-only transformer models on structured SVG data.
+            Performed systematic learning rate sweeps and width transfer experiments under SP and µP,
+            demonstrating stable zero-shot hyperparameter transfer under µP and unstable scaling under SP.
+        </div>
+        <div class="tags">PyTorch · Transformers · µP · Scaling Laws · NLP</div>
+    </div>
 
-    <h2>Memory Manager</h2>
+    <!-- NYC Trees -->
+    <div class="project">
+        <div class="title">NYC Trees Web Application</div>
+        <div class="desc">
+            Product Owner for a civic data platform using NYC Open Data to track and update street tree information.
+            Led Agile sprint planning and feature prioritization while designing a public-facing data contribution
+            system.
+        </div>
+        <div class="tags">Agile · Product · Flask · JavaScript · Open Data</div>
+    </div>
 
-    <h2>Network File Server</h2>
+    <!-- Insta485 -->
+    <div class="project">
+        <div class="title">Insta485</div>
+        <div class="desc">
+            Built a full-stack Instagram-like web application with authentication, posts, likes, and comments.
+            Implemented REST APIs with Flask and dynamic frontend updates using AJAX for seamless user interaction.
+        </div>
+        <div class="tags">Flask · JavaScript · REST API · SQLite · AJAX</div>
+    </div>
 
-    <h2>Insta485</h2>
+    <!-- Search Engine -->
+    <div class="project">
+        <div class="title">Search Engine</div>
+        <div class="desc">
+            Built a scalable search engine in C++ using TF-IDF ranking and PageRank.
+            Implemented MapReduce-style processing and exposed results through a Flask REST API.
+        </div>
+        <div class="tags">C++ · TF-IDF · PageRank · MapReduce · Flask</div>
+    </div>
 
-    <h2>NYC Trees</h2>
+    <!-- Memory Manager -->
+    <div class="project">
+        <div class="title">Memory Manager</div>
+        <div class="desc">
+            Implemented a user-level virtual memory pager with page tables, swapping, and eviction.
+            Used a clock algorithm with dirty/clean page tracking and supported concurrent process execution.
+        </div>
+        <div class="tags">C++ · Operating Systems · Paging · Concurrency</div>
+    </div>
 
-    <h2>Thread Library</h2>
+    <!-- Network File Server -->
+    <div class="project">
+        <div class="title">Network File Server</div>
+        <div class="desc">
+            Designed a multi-threaded file server supporting remote file operations over sockets.
+            Ensured thread safety with synchronization primitives and handled concurrent directory access.
+        </div>
+        <div class="tags">C++ · Sockets · Multithreading · Systems</div>
+    </div>
 
-    <h2>LC2K Assembler</h2>
+    <!-- Thread Library -->
+    <div class="project">
+        <div class="title">Thread Library Implementation</div>
+        <div class="desc">
+            Built a user-level thread library supporting scheduling, context switching, mutexes,
+            and condition variables using ucontext-based execution management.
+        </div>
+        <div class="tags">C++ · OS · Threads · Synchronization</div>
+    </div>
 
-    <h2>Solar Radiation Prediction</h2>
+    <!-- PNG VTuber -->
+    <div class="project">
+        <div class="title">PNG VTuber Overlay</div>
+        <div class="desc">
+            Developed a lightweight browser-based VTuber overlay system with keyboard-driven
+            expression swapping and mouse-following animations for OBS streaming.
+        </div>
+        <div class="tags">JavaScript · HTML · CSS · OBS · UI Systems</div>
+    </div>
 
-    <h2>Among Us Remake</h2>
+    <!-- LC2K -->
+    <div class="project">
+        <div class="title">LC2K Assembler</div>
+        <div class="desc">
+            Built a C-based assembler translating LC2K assembly into machine code,
+            handling instruction parsing and binary encoding.
+        </div>
+        <div class="tags">C · Assembly · Systems</div>
+    </div>
 
-    <h2>Super Mario Remake</h2>
+    <!-- Solar -->
+    <div class="project">
+        <div class="title">Solar Radiation Prediction</div>
+        <div class="desc">
+            Developed machine learning models including KNN, decision trees, random forests,
+            and MLPs to predict solar radiation levels for energy forecasting.
+        </div>
+        <div class="tags">Python · ML · Regression · Scikit-learn</div>
+    </div>
 
-    <h2>Table Database</h2>
+    <!-- Super Mario -->
+    <div class="project">
+        <div class="title">Super Mario Remake</div>
+        <div class="desc">
+            Implemented graph search algorithms (BFS/DFS) to build an AI agent navigating
+            a multi-level Mario environment connected via pipe structures.
+        </div>
+        <div class="tags">C++ · Graph Algorithms · AI</div>
+    </div>
 
-    <h2>Zombie Tower Defense</h2>
+    <!-- Table DB -->
+    <div class="project">
+        <div class="title">Table Database</div>
+        <div class="desc">
+            Designed a custom database system with query processing, hash tables,
+            and support for large multi-table operations.
+        </div>
+        <div class="tags">C++ · Databases · Hash Tables</div>
+    </div>
 
+    <!-- Zombie TD -->
+    <div class="project">
+        <div class="title">Zombie Tower Defense</div>
+        <div class="desc">
+            Built a tower defense game using priority queues and object-oriented design
+            with templated data structures and inheritance.
+        </div>
+        <div class="tags">C++ · Data Structures · OOP · Game Dev</div>
+    </div>
 
 </body>
 
