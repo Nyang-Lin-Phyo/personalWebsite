@@ -9,7 +9,7 @@ desktop.ini
 *.sublime-project
 *.sublime-workspace
 
-# Node (if you ever add a build step)
+# Node
 node_modules/
 npm-debug.log*
 yarn-error.log*
