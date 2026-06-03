@@ -40,14 +40,12 @@
         #png-display,
         #mouse-display {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 600px;
-            /* <- control display size */
-            height: auto;
-            z-index: 2;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
+            display: block;
             pointer-events: none;
             image-rendering: pixelated;
         }
@@ -516,7 +514,7 @@ ${missing.join('\n')}
             overlayCenter = null;
         });
 
-        window.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', (e) => {
             if (!mouseImg) return;
 
             const c = getOverlayCenter();
@@ -532,7 +530,7 @@ ${missing.join('\n')}
             );
 
             mouseDisplay.style.transform =
-                `translate(-50%, -50%) translate(${-normX * MOUSE_RANGE}px, ${-normY * MOUSE_RANGE}px)`;
+                `translate(${-normX * MOUSE_RANGE}px, ${-normY * MOUSE_RANGE}px)`;
         });
     </script>
 </body>
