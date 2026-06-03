@@ -350,13 +350,11 @@
 
         .project-item {
             display: grid;
-            grid-template-columns: 2.5rem 1fr auto;
+            grid-template-columns: 2.5rem 1fr 180px;
             align-items: start;
             gap: 1.5rem;
             padding: 1.8rem 0;
             border-top: 1px solid var(--line);
-            transition: background 0.15s;
-            cursor: default;
         }
 
         .project-item:last-child {
@@ -398,6 +396,26 @@
             border: 1px solid var(--line);
             padding: 0.25rem 0.55rem;
             color: var(--purple-dim);
+        }
+
+        /* ── Demo ───────────────────────────── */
+        .project-demo-container {
+            margin-top: 1.5rem;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .project-demo {
+            width: 100%;
+            max-width: 520px;
+            height: 520px;
+
+            border-radius: 12px;
+            border: 1px solid var(--line);
+
+            overflow: hidden;
+            display: block;
         }
 
         /* ── LAYER 5 — CONTACT ───────────────────────────── */
@@ -817,14 +835,10 @@
         <div class="project-list">
 
             <div class="project-item fade-up">
-
                 <span class="project-num">01</span>
 
-                <div>
-
-                    <p class="project-title">
-                        PNG VTuber Overlay
-                    </p>
+                <div class="project-content">
+                    <p class="project-title">PNG VTuber Overlay</p>
 
                     <p class="project-desc">
 
@@ -847,6 +861,9 @@
 
                     </p>
 
+                    <div class="project-demo-container fade-up">
+                        <iframe src="demos/pngvtuber-demo.html" class="project-demo"></iframe>
+                    </div>
                 </div>
 
                 <div class="project-tags">
@@ -855,18 +872,8 @@
                     <span class="tag">WebSocket</span>
                     <span class="tag">PyInstaller</span>
                 </div>
-
             </div>
-
         </div>
-
-        <div class="project-demo-container fade-up">
-
-            <iframe src="demos/pngvtuber-demo.html" class="project-demo">
-            </iframe>
-
-        </div>
-
 
     </section>
 
