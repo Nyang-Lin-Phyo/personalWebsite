@@ -27,9 +27,18 @@
         }
 
         /* ── RESET ───────────────────────────────────────── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y proximity;
+        }
 
         body {
             background: var(--bg);
@@ -40,8 +49,14 @@
             overflow-x: hidden;
         }
 
-        a { color: var(--purple); text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        a {
+            color: var(--purple);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
 
         /* ── LAYERS ──────────────────────────────────────── */
         .layer {
@@ -71,7 +86,9 @@
         /* ── NAV ─────────────────────────────────────────── */
         nav {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
             display: flex;
             justify-content: space-between;
@@ -90,7 +107,11 @@
             color: var(--purple);
         }
 
-        .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+        .nav-links {
+            display: flex;
+            gap: 2.2rem;
+            list-style: none;
+        }
 
         .nav-links a {
             font-size: 0.72rem;
@@ -100,10 +121,15 @@
             transition: color 0.2s;
         }
 
-        .nav-links a:hover { color: var(--purple); text-decoration: none; }
+        .nav-links a:hover {
+            color: var(--purple);
+            text-decoration: none;
+        }
 
         /* ── LAYER 1 — HERO ──────────────────────────────── */
-        #hero { background: var(--bg); }
+        #hero {
+            background: var(--bg);
+        }
 
         .hero-eyebrow {
             font-size: 0.7rem;
@@ -123,7 +149,10 @@
             margin-bottom: 1.8rem;
         }
 
-        .hero-name em { font-style: italic; color: var(--text); }
+        .hero-name em {
+            font-style: italic;
+            color: var(--text);
+        }
 
         .hero-sub {
             font-size: 0.85rem;
@@ -172,7 +201,7 @@
             overflow: hidden;
             border: 1px solid var(--line);
         }
-        
+
 
         .hero-photo img {
             width: 100%;
@@ -183,13 +212,21 @@
             transition: filter 0.4s;
         }
 
-        .hero-photo:hover img { filter: grayscale(0%) brightness(1); }
+        .hero-photo:hover img {
+            filter: grayscale(0%) brightness(1);
+        }
 
         /* hide photo when it would overlap the text */
-        @media (max-width: 700px) { .hero-photo { display: none; } }
+        @media (max-width: 700px) {
+            .hero-photo {
+                display: none;
+            }
+        }
 
         /* ── LAYER 2 — ABOUT ─────────────────────────────── */
-        #about { background: var(--bg2); }
+        #about {
+            background: var(--bg2);
+        }
 
         .section-label {
             font-size: 0.65rem;
@@ -226,7 +263,11 @@
             color: var(--text);
         }
 
-        .about-details { display: flex; flex-direction: column; gap: 1rem; }
+        .about-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
         .detail-row {
             display: flex;
@@ -241,13 +282,18 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--muted);
-            min-width: 80px;
+            min-width: 110px;
         }
 
-        .detail-val { font-size: 0.82rem; color: var(--text); }
+        .detail-val {
+            font-size: 0.82rem;
+            color: var(--text);
+        }
 
         /* ── LAYER 3 — SKILLS ────────────────────────────── */
-        #skills { background: var(--bg3); }
+        #skills {
+            background: var(--bg3);
+        }
 
         .skills-header {
             font-family: var(--serif);
@@ -276,10 +322,15 @@
             transition: background 0.2s, color 0.2s;
         }
 
-        .skill-cell:hover { background: var(--glow); color: var(--purple); }
+        .skill-cell:hover {
+            background: var(--glow);
+            color: var(--purple);
+        }
 
         /* ── LAYER 4 — PROJECTS ──────────────────────────── */
-        #projects { background: var(--bg2); }
+        #projects {
+            background: var(--bg2);
+        }
 
         .projects-header {
             font-family: var(--serif);
@@ -290,7 +341,12 @@
             line-height: 1.1;
         }
 
-        .project-list { display: flex; flex-direction: column; gap: 0; max-width: 860px; }
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 860px;
+        }
 
         .project-item {
             display: grid;
@@ -303,7 +359,9 @@
             cursor: default;
         }
 
-        .project-item:last-child { border-bottom: 1px solid var(--line); }
+        .project-item:last-child {
+            border-bottom: 1px solid var(--line);
+        }
 
         .project-num {
             font-size: 0.65rem;
@@ -320,9 +378,18 @@
             margin-bottom: 0.35rem;
         }
 
-        .project-desc { font-size: 0.78rem; color: var(--muted); max-width: 55ch; }
+        .project-desc {
+            font-size: 0.78rem;
+            color: var(--muted);
+            max-width: 55ch;
+        }
 
-        .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: flex-end; }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: flex-end;
+        }
 
         .tag {
             font-size: 0.62rem;
@@ -334,7 +401,9 @@
         }
 
         /* ── LAYER 5 — CONTACT ───────────────────────────── */
-        #contact { background: var(--bg); }
+        #contact {
+            background: var(--bg);
+        }
 
         .contact-big {
             font-family: var(--serif);
@@ -345,11 +414,23 @@
             margin-bottom: 2.5rem;
         }
 
-        .contact-big em { font-style: italic; color: var(--text); }
+        .contact-big em {
+            font-style: italic;
+            color: var(--text);
+        }
 
-        .contact-links { display: flex; gap: 3rem; flex-wrap: wrap; margin-bottom: 4rem; }
+        .contact-links {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
 
-        .contact-link { display: flex; flex-direction: column; gap: 0.3rem; }
+        .contact-link {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
 
         .contact-link-label {
             font-size: 0.62rem;
@@ -358,8 +439,16 @@
             color: var(--muted);
         }
 
-        .contact-link a { font-size: 0.82rem; color: var(--purple); transition: color 0.2s; }
-        .contact-link a:hover { color: var(--text); text-decoration: none; }
+        .contact-link a {
+            font-size: 0.82rem;
+            color: var(--purple);
+            transition: color 0.2s;
+        }
+
+        .contact-link a:hover {
+            color: var(--text);
+            text-decoration: none;
+        }
 
         footer {
             position: absolute;
@@ -382,15 +471,33 @@
             transition: opacity 0.7s ease, transform 0.7s ease;
         }
 
-        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* ── RESPONSIVE ──────────────────────────────────── */
         @media (max-width: 700px) {
-            .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-            .project-item { grid-template-columns: 2rem 1fr; }
-            .project-tags { display: none; }
-            .contact-links { gap: 2rem; }
-            .nav-links { display: none; }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .project-item {
+                grid-template-columns: 2rem 1fr;
+            }
+
+            .project-tags {
+                display: none;
+            }
+
+            .contact-links {
+                gap: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -462,29 +569,86 @@
                 </div>
                 <div class="detail-row">
                     <span class="detail-key">GitHub</span>
-                    <span class="detail-val"><a href="https://github.com/Nyang-Lin-Phyo" target="_blank">@Nyang-Lin-Phyo</a></span>
+                    <span class="detail-val"><a href="https://github.com/Nyang-Lin-Phyo"
+                            target="_blank">@Nyang-Lin-Phyo</a></span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ── LAYER 3: SKILLS ── -->
+    <!-- ── LAYER 3: SKILLS ── -->
     <section class="layer" id="skills">
         <p class="section-label fade-up">02 — Skills</p>
-        <h2 class="skills-header fade-up">What I work<br /><em>with.</em></h2>
-        <div class="skills-grid fade-up">
-            <div class="skill-cell">Python</div>
-            <div class="skill-cell">JavaScript</div>
-            <div class="skill-cell">TypeScript</div>
-            <div class="skill-cell">React</div>
-            <div class="skill-cell">Node.js</div>
-            <div class="skill-cell">HTML / CSS</div>
-            <div class="skill-cell">C / C++</div>
-            <div class="skill-cell">Java</div>
-            <div class="skill-cell">SQL</div>
-            <div class="skill-cell">Git</div>
-            <div class="skill-cell">Linux</div>
-            <div class="skill-cell">Docker</div>
+
+        <h2 class="skills-header fade-up">
+            Technologies<br /><em>& Expertise.</em>
+        </h2>
+
+        <div class="about-grid fade-up">
+
+            <div class="about-details">
+
+                <div class="detail-row">
+                    <span class="detail-key">Languages</span>
+                    <span class="detail-val">
+                        Python · C++ · C · Java · JavaScript · SQL · HTML · CSS · R · MATLAB · Bash · YAML
+                    </span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-key">Frontend</span>
+                    <span class="detail-val">
+                        React · JavaScript · HTML/CSS · AJAX
+                    </span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-key">Backend</span>
+                    <span class="detail-val">
+                        Flask · Node.js · REST APIs · Jinja2
+                    </span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-key">Databases</span>
+                    <span class="detail-val">
+                        SQLite · MySQL · PostgreSQL · MongoDB
+                    </span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-key">Systems</span>
+                    <span class="detail-val">
+                        Linux · Docker · Networking · Socket Programming · Multithreading
+                    </span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-key">ML / CV</span>
+                    <span class="detail-val">
+                        OpenCV · YOLOv7 · PaddleOCR · Machine Learning · Computer Vision
+                    </span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-key">Concepts</span>
+                    <span class="detail-val">
+                        Operating Systems · Distributed Systems · Information Retrieval · Computer Architecture ·
+                        Concurrent Programming
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="about-text">
+                Over the past several years I've worked across machine learning,
+                computer vision, operating systems, networking, distributed systems,
+                and full-stack web development. My interests are centered around
+                building reliable systems that combine rigorous engineering with
+                intelligent software.
+            </div>
+
         </div>
     </section>
 
@@ -498,7 +662,8 @@
                 <span class="project-num">01</span>
                 <div>
                     <p class="project-title">Project One</p>
-                    <p class="project-desc">A short description of what this project does and why it's interesting. Replace this with your real work.</p>
+                    <p class="project-desc">A short description of what this project does and why it's interesting.
+                        Replace this with your real work.</p>
                 </div>
                 <div class="project-tags">
                     <span class="tag">React</span>
@@ -510,7 +675,8 @@
                 <span class="project-num">02</span>
                 <div>
                     <p class="project-title">Project Two</p>
-                    <p class="project-desc">Another cool thing you built. Keep descriptions tight — one or two sentences.</p>
+                    <p class="project-desc">Another cool thing you built. Keep descriptions tight — one or two
+                        sentences.</p>
                 </div>
                 <div class="project-tags">
                     <span class="tag">Python</span>
@@ -522,7 +688,8 @@
                 <span class="project-num">03</span>
                 <div>
                     <p class="project-title">Project Three</p>
-                    <p class="project-desc">Your third project. You can add more by duplicating the project-item block above.</p>
+                    <p class="project-desc">Your third project. You can add more by duplicating the project-item block
+                        above.</p>
                 </div>
                 <div class="project-tags">
                     <span class="tag">C++</span>
