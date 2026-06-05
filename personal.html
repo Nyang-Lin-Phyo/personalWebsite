@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ramsey — Personal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" href="assets/R.png" type="image/png">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        #hero-personal { background: var(--bg); }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="nav-logo">Nyang Lin Phyo</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── HERO ── -->
+    <section class="layer" id="hero-personal">
+
+        <div class="hero-gradient"></div>
+
+        <p class="hero-eyebrow fade-up">The other side</p>
+        <h1 class="hero-name fade-up">Ramsey,<br /><em>personally.</em></h1>
+        <p class="hero-sub fade-up">
+            Hobbies, interests, and whatever else is going on.
+        </p>
+
+        <a class="hero-cta fade-up" href="index.html">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="12" y1="7" x2="2" y2="7" />
+                <polyline points="6,3 2,7 6,11" />
+            </svg>
+            <span>Back to portfolio</span>
+        </a>
+    </section>
+
+    <!-- ── PLACEHOLDER — add sections here ── -->
+
+    <!-- FADE-IN OBSERVER -->
+    <script>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const els = e.target.querySelectorAll('.fade-up');
+                    els.forEach((el, i) => {
+                        setTimeout(() => el.classList.add('visible'), i * 90);
+                    });
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.layer').forEach(s => observer.observe(s));
+    </script>
+
+</body>
+</html>
