@@ -554,6 +554,22 @@ footer {
 }
 
 /* ═══════════════════════════════════════════════════
+   SWAY
+═══════════════════════════════════════════════════ */
+@keyframes sway {
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(6px); }
+    100% { transform: translateX(0); }
+}
+
+footer span:last-child {
+    display:          inline-block;
+    animation:        sway 3s ease-in-out infinite;
+    animation-delay:  2s;
+    cursor:           pointer;
+}
+
+/* ═══════════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════════ */
 @media (max-width: 700px) {
@@ -564,3 +580,4 @@ footer {
     .nav-links { display: none; }
     .hero-photo { display: none; }
 }
+
