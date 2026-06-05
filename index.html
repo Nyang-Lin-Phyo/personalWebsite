@@ -460,6 +460,73 @@
         });
     </script>
 
+    <!-- CAT NOISES -->
+    <script>
+        const catSounds = [
+            'assets/catSounds/mixkit-angry-cartoon-kitty-meow-94.wav',
+            'assets/catSounds/mixkit-cartoon-kitty-begging-meow-92.wav',
+            'assets/catSounds/mixkit-cartoon-little-cat-meow-91.wav',
+            'assets/catSounds/mixkit-domestic-cat-hungry-meow-45.wav',
+            'assets/catSounds/mixkit-little-cat-attention-meow-86.wav',
+            'assets/catSounds/mixkit-little-cat-pain-meow-87.wav',
+            'assets/catSounds/mixkit-sweet-kitty-meow-93.wav',
+        ];
+
+        const meowVariants = ['meow', 'mrrrow', 'meow!!', 'mew', 'MEOW', 'prrrmeow', 'meow~'];
+
+        function spawnMeow(anchorEl) {
+            const word = meowVariants[Math.floor(Math.random() * meowVariants.length)];
+            const span = document.createElement('span');
+            span.textContent = word;
+            Object.assign(span.style, {
+                position: 'fixed',
+                fontFamily: 'var(--serif)',
+                fontSize: clamp(1.1, 1.8) + 'rem',
+                color: 'var(--purple)',
+                pointerEvents: 'none',
+                whiteSpace: 'nowrap',
+                zIndex: 9999,
+                opacity: 1,
+                transition: 'opacity 0.8s ease, transform 1.2s ease',
+            });
+
+            const rect = anchorEl.getBoundingClientRect();
+            span.style.left = (rect.left + Math.random() * rect.width - 20) + 'px';
+            span.style.top = (rect.top - 10) + 'px';
+
+            document.body.appendChild(span);
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    span.style.transform = `translateY(-${40 + Math.random() * 30}px) rotate(${(Math.random() - 0.5) * 20}deg)`;
+                    span.style.opacity = '0';
+                });
+            });
+
+            setTimeout(() => span.remove(), 1300);
+        }
+
+        function clamp(min, max) {
+            return min + Math.random() * (max - min);
+        }
+
+        const footer = document.querySelector('footer');
+        if (footer) {
+            const spans = footer.querySelectorAll('span');
+            spans.forEach(span => {
+                if (span.textContent.trim() === 'Built with Cats') {
+                    span.style.cursor = 'pointer';
+                    span.addEventListener('click', () => {
+                        const sound = new Audio(catSounds[Math.floor(Math.random() * catSounds.length)]);
+                        sound.volume = 0.6;
+                        sound.play().catch(() => { });
+                        spawnMeow(span);
+                    });
+                }
+            });
+        }
+    </script>
+
 </body>
 
 </html>
