@@ -558,7 +558,7 @@ footer {
 ═══════════════════════════════════════════════════ */
 @keyframes sway {
     0%   { transform: translateX(0); }
-    50%  { transform: translateX(6px); }
+    50%  { transform: translateX(10px); }
     100% { transform: translateX(0); }
 }
 
@@ -581,3 +581,28 @@ footer span:last-child {
     .hero-photo { display: none; }
 }
 
+/* ═══════════════════════════════════════════════════
+   FLOATING CAT
+═══════════════════════════════════════════════════ */
+.floating-cat {
+    position:       fixed;
+    left:           0;
+    top:            0;
+    width:          clamp(80px, 10vw, 140px);
+    pointer-events: auto;
+    z-index:        11;
+    opacity:        0.72;
+    visibility:     hidden;
+    cursor:         grab;
+    will-change:    transform;
+}
+
+.floating-cat img {
+    width:   100%;
+    display: block;
+    filter:  drop-shadow(0 0 18px rgba(201, 184, 240, 0.18));
+}
+
+@media (max-width: 900px) {
+    .floating-cat { display: none; }
+}
