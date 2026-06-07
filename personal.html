@@ -13,7 +13,13 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <style>
-        #hero-personal { background: var(--bg); }
+        #hero-personal {
+            background: var(--bg);
+        }
+
+        #analytics {
+            background: var(--bg2);
+        }
     </style>
 </head>
 
@@ -23,24 +29,18 @@
     <nav>
         <a href="index.html" class="nav-logo">Nyang Lin Phyo</a>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#about">About</a></li>
-            <li><a href="index.html#projects">Projects</a></li>
-            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="#hero-personal">Home</a></li>
+            <li><a href="#analytics">Analytics</a></li>
+            <li><a href="index.html">← Portfolio</a></li>
         </ul>
     </nav>
 
     <!-- ── HERO ── -->
     <section class="layer" id="hero-personal">
-
         <div class="hero-gradient"></div>
-
         <p class="hero-eyebrow fade-up">The other side</p>
         <h1 class="hero-name fade-up">Ramsey,<br /><em>personally.</em></h1>
-        <p class="hero-sub fade-up">
-            Hobbies, interests, and whatever else is going on.
-        </p>
-
+        <p class="hero-sub fade-up">Hobbies, interests, and whatever else is going on.</p>
         <a class="hero-cta fade-up" href="index.html">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
                 <line x1="12" y1="7" x2="2" y2="7" />
@@ -50,23 +50,134 @@
         </a>
     </section>
 
-    <!-- ── PLACEHOLDER — add sections here ── -->
+    <!-- ── ANALYTICS ── -->
+    <section class="layer" id="analytics">
+        <p class="section-label fade-up">01 — Personal Analytics</p>
+        <h2 class="section-header fade-up">Numbers<br /><em>about me.</em></h2>
+        <div class="stat-grid" id="analyticsGrid"></div>
+    </section>
 
     <!-- FADE-IN OBSERVER -->
     <script>
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
-                    const els = e.target.querySelectorAll('.fade-up');
-                    els.forEach((el, i) => {
+                    e.target.querySelectorAll('.fade-up').forEach((el, i) => {
                         setTimeout(() => el.classList.add('visible'), i * 90);
                     });
                 }
             });
         }, { threshold: 0.15 });
-
         document.querySelectorAll('.layer').forEach(s => observer.observe(s));
     </script>
 
+    <!-- ANALYTICS CALCULATIONS + TICK-UP -->
+    <script>
+        (function () {
+            const now = new Date();
+
+            function daysSince(dateStr) {
+                return (now - new Date(dateStr)) / (1000 * 60 * 60 * 24);
+            }
+
+            const coffeeDays = daysSince('2021-08-21');
+            const coffeeCups = Math.floor(coffeeDays / 4);
+            const redbullCans = Math.floor(coffeeDays * 0.75);
+
+            const mangaBaseDays = (new Date('2025-05-15') - new Date('2021-08-21')) / (1000 * 60 * 60 * 24);
+            const mangaTotal = Math.floor((1235 / mangaBaseDays) * coffeeDays);
+
+            const animeTotal = 318; // known total as of today; update manually
+
+            const stats = [
+                { label: 'Cups of Coffee', target: coffeeCups, note: 'Since Aug 21, 2021 · 1 every 4 days' },
+                { label: 'Cans of Red Bull', target: redbullCans, note: 'Since Aug 21, 2021 · on non-coffee days' },
+                { label: 'Mangas Read', target: mangaTotal, note: 'Since Aug 21, 2021 · ~0.9/day' },
+                { label: 'Animes Watched', target: animeTotal, note: 'Since Aug 21, 2020 · ~0.15/day' },
+                { label: 'Cat Interruptions', target: null, note: 'No further comment.', text: 'Too Many' },
+            ];
+
+            const grid = document.getElementById('analyticsGrid');
+            const valueEls = [];
+
+            stats.forEach(s => {
+                const label = document.createElement('span');
+                label.className = 'stat-label';
+                label.textContent = s.label;
+
+                const val = document.createElement('span');
+                val.className = 'stat-value';
+                val.textContent = s.text ?? '0';
+
+                const note = document.createElement('span');
+                note.className = 'stat-note';
+                note.textContent = s.note;
+
+                const cell = document.createElement('div');
+                cell.className = 'stat-cell fade-up';
+                cell.append(label, val, note);
+                grid.appendChild(cell);
+
+                valueEls.push({ el: val, target: s.target });
+            });
+
+            // tick-up on scroll into view (fires once)
+            let animated = false;
+
+            function animateCounters() {
+                if (animated) return;
+                animated = true;
+                const duration = 1600;
+                const start = performance.now();
+
+                function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+                const tooManyEl = valueEls.find(v => v.target == null)?.el;
+                const tooManyDuration = 2600;
+
+                (function tick(ts) {
+                    const p = Math.min((ts - start) / duration, 1);
+                    const ease = easeOut(p);
+
+                    valueEls.forEach(({ el, target }) => {
+                        if (target == null) return;
+                        el.textContent = Math.floor(ease * target).toLocaleString();
+                    });
+
+                    // Cat interruptions
+                    if (tooManyEl) {
+                        const tp = Math.min((ts - start) / tooManyDuration, 1);
+
+                        if (tp < 1) {
+                            const count = Math.floor(easeOut(tp) * 1048576);
+                            tooManyEl.textContent = count.toLocaleString();
+                        } else {
+                            tooManyEl.textContent = 'Too Many';
+                        }
+                    }
+
+                    if (p < 1 || (tooManyEl && (ts - start) < tooManyDuration)) {
+                        requestAnimationFrame(tick);
+                    }
+                })(start);
+            }
+
+            const counterObserver = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        document.getElementById('analytics')
+                            .querySelectorAll('.fade-up')
+                            .forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * 80));
+                        animateCounters();
+                        counterObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            counterObserver.observe(document.getElementById('analytics'));
+        })();
+    </script>
+
 </body>
+
 </html>

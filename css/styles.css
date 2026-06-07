@@ -475,7 +475,6 @@ footer {
     min-height: 160px;
     overflow:  hidden;
     border:    1px solid var(--line);
-    /* sit above the gradient layer */
     z-index:   1;
 }
 
@@ -605,4 +604,52 @@ footer span:last-child {
 
 @media (max-width: 900px) {
     .floating-cat { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════
+   STAT GRID  (reusable — personal analytics, etc.)
+═══════════════════════════════════════════════════ */
+.stat-grid {
+    display:               grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap:                   1px;
+    border:                1px solid var(--line);
+    max-width:             900px;
+    margin-top:            3rem;
+}
+
+.stat-cell {
+    padding:        2rem 1.8rem;
+    border:         1px solid var(--line);
+    display:        flex;
+    flex-direction: column;
+    gap:            0.5rem;
+    transition:     background 0.2s;
+}
+
+.stat-cell:hover { background: var(--glow); }
+
+.stat-label {
+    font-size:      0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color:          var(--muted);
+}
+
+.stat-value {
+    font-family: var(--serif);
+    font-size:   clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    color:       var(--purple);
+    line-height: 1;
+}
+
+.stat-note {
+    font-size:   0.65rem;
+    color:       var(--muted);
+    margin-top:  0.2rem;
+}
+
+@media (max-width: 700px) {
+    .stat-grid { grid-template-columns: 1fr 1fr; }
 }
