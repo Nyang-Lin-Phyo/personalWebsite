@@ -14,29 +14,12 @@
 
     <style>
         /* ── PAGE-SPECIFIC BACKGROUNDS ── */
-        #hero {
-            background: var(--bg);
-        }
-
-        #about {
-            background: var(--bg2);
-        }
-
-        #skills {
-            background: var(--bg3);
-        }
-
-        #projects {
-            background: var(--bg2);
-        }
-
-        #personal {
-            background: var(--bg3);
-        }
-
-        #contact {
-            background: var(--bg);
-        }
+        #hero { background: var(--bg); }
+        #about { background: var(--bg2); }
+        #skills { background: var(--bg3); }
+        #projects { background: var(--bg2); }
+        #personal { background: var(--bg3); }
+        #contact { background: var(--bg); }
 
         /* ── SKILLS HEADER ── */
         .skills-header {
@@ -60,9 +43,7 @@
         }
 
         /* ── PROJECTS MORE LINK ── */
-        .projects-more {
-            margin-top: 2rem;
-        }
+        .projects-more { margin-top: 2rem; }
 
         /* ── PHOTO WRAP (absolute container) ── */
         .hero-photo-wrap {
@@ -97,7 +78,6 @@
             filter: grayscale(0%) brightness(1);
         }
 
-        /* subtle "click me" hint */
         .hero-photo-wrap::after {
             content: '→ personal';
             position: absolute;
@@ -113,15 +93,10 @@
             transition: opacity 0.3s;
         }
 
-        .hero-photo-wrap:hover::after {
-            opacity: 1;
-        }
+        .hero-photo-wrap:hover::after { opacity: 1; }
 
-        /* hide before it gets cramped */
         @media (max-width: 900px) {
-            .hero-photo-wrap {
-                display: none;
-            }
+            .hero-photo-wrap { display: none; }
         }
     </style>
 </head>
@@ -131,6 +106,52 @@
     <!-- floating cat (fixed, always visible) -->
     <div class="floating-cat" id="floatingCat">
         <img src="assets/floatingCat.png" alt="" />
+    </div>
+
+    <!-- ══ CAT JAIL ══ -->
+    <div id="catJail" class="jail-small">
+        <img id="jailedCatImg" src="assets/floatingCatHeld.png" alt="jailed cat" />
+
+        <div id="jailLabel" style="
+            position: absolute;
+            top: -1.6rem;
+            left: 0; right: 0;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--purple-dim);
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            pointer-events: none;
+        ">cat jail</div>
+
+        <svg class="jail-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- rounded cell -->
+            <rect x="3" y="3" width="94" height="94" rx="14"
+                  fill="rgba(42,30,74,0.45)" stroke="rgba(201,184,240,0.3)" stroke-width="1.5"/>
+            <!-- vertical bars -->
+            <line x1="22"  y1="3"  x2="22"  y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="40"  y1="3"  x2="40"  y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="60"  y1="3"  x2="60"  y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="78"  y1="3"  x2="78"  y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+
+        <div id="jailDropHint" style="
+            position: absolute;
+            bottom: -1.4rem;
+            left: 0; right: 0;
+            text-align: center;
+            font-size: 0.55rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--purple-dim);
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        ">drop here</div>
     </div>
 
     <!-- NAV -->
@@ -148,7 +169,6 @@
     <!-- ── LAYER 1: HERO ── -->
     <section class="layer" id="hero">
 
-        <!-- clickable photo -->
         <div class="hero-photo-wrap" id="photoWrap">
             <a href="personal.html">
                 <img src="assets/me.jpg" alt="Nyang Lin Phyo — click to see personal page" />
@@ -163,7 +183,6 @@
 
         <div class="hero-scroll-indicator">
             <span>Scroll to see more</span>
-
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
                 <line x1="9" y1="2" x2="9" y2="14" />
                 <polyline points="5,10 9,14 13,10" />
@@ -215,17 +234,14 @@
     <!-- ── LAYER 3: SKILLS ── -->
     <section class="layer" id="skills">
         <p class="section-label fade-up">02 — Skills</p>
-
         <h2 class="skills-header fade-up">
             Technologies<br /><em>& Expertise.</em>
         </h2>
-
         <div class="about-grid fade-up">
             <div class="about-details">
                 <div class="detail-row">
                     <span class="detail-key">Languages</span>
-                    <span class="detail-val">Python · C++ · C · Java · JavaScript · SQL · HTML · CSS · R · MATLAB · Bash
-                        · YAML</span>
+                    <span class="detail-val">Python · C++ · C · Java · JavaScript · SQL · HTML · CSS · R · MATLAB · Bash · YAML</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-key">Frontend</span>
@@ -249,11 +265,9 @@
                 </div>
                 <div class="detail-row">
                     <span class="detail-key">Concepts</span>
-                    <span class="detail-val">Operating Systems · Distributed Systems · Information Retrieval · Computer
-                        Architecture · Concurrent Programming</span>
+                    <span class="detail-val">Operating Systems · Distributed Systems · Information Retrieval · Computer Architecture · Concurrent Programming</span>
                 </div>
             </div>
-
             <div class="about-text">
                 Over the past several years I've worked across machine learning,
                 computer vision, operating systems, networking, distributed systems,
@@ -267,14 +281,10 @@
     <!-- ── LAYER 4: PROJECTS ── -->
     <section class="layer" id="projects">
         <p class="section-label fade-up">03 — Projects</p>
-
         <h2 class="projects-header fade-up">
             Things<br /><em>I've built.</em>
         </h2>
-
         <div class="project-list">
-
-            <!-- HSRN -->
             <div class="project-item fade-up">
                 <span class="project-num">01</span>
                 <div>
@@ -304,7 +314,6 @@
                 </div>
             </div>
 
-            <!-- M-FLY -->
             <div class="project-item fade-up">
                 <span class="project-num">02</span>
                 <div>
@@ -334,7 +343,6 @@
                 </div>
             </div>
 
-            <!-- Scaling Laws -->
             <div class="project-item fade-up">
                 <span class="project-num">03</span>
                 <div>
@@ -360,9 +368,7 @@
                     <span class="tag">NLP</span>
                 </div>
             </div>
-
         </div>
-
         <div class="projects-more fade-up">
             <a href="projects.html" class="link link-right">
                 Here's all the projects I've worked on →
@@ -373,11 +379,9 @@
     <!-- ── LAYER 5: PERSONAL PROJECTS ── -->
     <section class="layer" id="personal">
         <p class="section-label fade-up">04 — Personal Labs</p>
-
         <h2 class="projects-header fade-up">
             Things I built<br /><em>for fun.</em>
         </h2>
-
         <div class="project-list">
             <div class="project-item fade-up">
                 <span class="project-num">01</span>
@@ -393,7 +397,6 @@
                         Originally created as a simple alternative to Live2D-style avatars for streaming
                         and online content creation.
                     </p>
-
                     <div class="project-demo-container fade-up">
                         <div class="demo-placeholder" id="demoPlaceholder">
                             <button class="demo-btn" id="loadDemoBtn">Load Demo</button>
@@ -413,11 +416,9 @@
     <!-- ── LAYER 6: CONTACT ── -->
     <section class="layer" id="contact">
         <p class="section-label fade-up">05 — Contact</p>
-
         <h2 class="contact-big fade-up">
             Let's<br /><em>connect.</em>
         </h2>
-
         <div class="contact-links fade-up">
             <div class="contact-link">
                 <span class="contact-link-label">Email</span>
@@ -436,7 +437,6 @@
                 <a href="assets/Resume.pdf" target="_blank">Download PDF</a>
             </div>
         </div>
-
         <footer>
             <span>© 2026 Nyang Lin Phyo</span>
             <span>Built with Cats</span>
@@ -458,7 +458,6 @@
 
         document.querySelectorAll('.layer').forEach(section => observer.observe(section));
 
-        // photo fades in on opacity only — no transform so the click region stays accurate
         const photo = document.getElementById('photoWrap');
         photo.style.opacity = '0';
         photo.style.transition = 'opacity 0.7s ease';
@@ -475,7 +474,7 @@
         });
     </script>
 
-    <!-- CAT NOISES -->
+    <!-- CAT NOISES (shared util) -->
     <script>
         const catSounds = [
             'assets/catSounds/mixkit-angry-cartoon-kitty-meow-94.wav',
@@ -489,14 +488,20 @@
 
         const meowVariants = ['meow', 'mrrrow', 'meow!!', 'mew', 'MEOW', 'prrrmeow', 'meow~'];
 
-        function spawnMeow(anchorEl) {
+        function playRandomMeow() {
+            const sound = new Audio(catSounds[Math.floor(Math.random() * catSounds.length)]);
+            sound.volume = 0.6;
+            sound.play().catch(() => { });
+        }
+
+        function spawnMeowFrom(anchorEl) {
             const word = meowVariants[Math.floor(Math.random() * meowVariants.length)];
             const span = document.createElement('span');
             span.textContent = word;
             Object.assign(span.style, {
                 position: 'fixed',
                 fontFamily: 'var(--serif)',
-                fontSize: clamp(1.1, 1.8) + 'rem',
+                fontSize: (1.1 + Math.random() * 0.7) + 'rem',
                 color: 'var(--purple)',
                 pointerEvents: 'none',
                 whiteSpace: 'nowrap',
@@ -504,25 +509,17 @@
                 opacity: 1,
                 transition: 'opacity 0.8s ease, transform 1.2s ease',
             });
-
             const rect = anchorEl.getBoundingClientRect();
             span.style.left = (rect.left + Math.random() * rect.width - 20) + 'px';
             span.style.top = (rect.top - 10) + 'px';
-
             document.body.appendChild(span);
-
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     span.style.transform = `translateY(-${40 + Math.random() * 30}px) rotate(${(Math.random() - 0.5) * 20}deg)`;
                     span.style.opacity = '0';
                 });
             });
-
             setTimeout(() => span.remove(), 1300);
-        }
-
-        function clamp(min, max) {
-            return min + Math.random() * (max - min);
         }
 
         const footer = document.querySelector('footer');
@@ -532,14 +529,115 @@
                 if (span.textContent.trim() === 'Built with Cats') {
                     span.style.cursor = 'pointer';
                     span.addEventListener('click', () => {
-                        const sound = new Audio(catSounds[Math.floor(Math.random() * catSounds.length)]);
-                        sound.volume = 0.6;
-                        sound.play().catch(() => { });
-                        spawnMeow(span);
+                        playRandomMeow();
+                        spawnMeowFrom(span);
                     });
                 }
             });
         }
+    </script>
+
+    <!-- ══════════════════════════════════════════
+         CAT JAIL LOGIC
+    ══════════════════════════════════════════ -->
+    <script>
+        (function () {
+            const jail = document.getElementById('catJail');
+            const cat  = document.getElementById('floatingCat');
+            const hint  = document.getElementById('jailDropHint');
+            const label = document.getElementById('jailLabel');
+            if (!jail || !cat) return;
+
+            let jailed         = false;
+            let jailMeowTimer  = null;
+            let mouseOverJail  = false;
+            let catOverJail    = false;
+
+            /* ── Expand / shrink helpers ── */
+            function expandJail() { jail.classList.replace('jail-small', 'jail-big'); if (label) label.style.opacity = '1'; }
+            function shrinkJail() { jail.classList.replace('jail-big',   'jail-small'); if (label) label.style.opacity = '0'; }
+            function maybeExpand() { if (mouseOverJail || catOverJail) expandJail(); }
+            function maybeShrink() { if (!mouseOverJail && !catOverJail) shrinkJail(); }
+
+            /* ── Mouse hover ── */
+            jail.addEventListener('mouseenter', () => { mouseOverJail = true;  maybeExpand(); });
+            jail.addEventListener('mouseleave', () => { mouseOverJail = false; maybeShrink(); });
+
+            /* ── AABB overlap ── */
+            function rectsOverlap(a, b) {
+                return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+            }
+
+            /* ── Jailing ── */
+            function jailCat() {
+                jailed = true;
+                jail.classList.add('jailed');
+                jail.style.cursor = 'grab';
+                cat.style.display = 'none';
+                scheduleNextMeow();
+            }
+
+            /* ── Unjailing ── */
+            function unjailCat(mouseX, mouseY) {
+                jailed = false;
+                clearTimeout(jailMeowTimer);
+                jailMeowTimer = null;
+                jail.classList.remove('jailed');
+                jail.style.cursor = 'default';
+                mouseOverJail = false;
+                shrinkJail();
+                /* bring cat back, centered on mouse */
+                cat.style.display = '';
+                if (window._unjailCat) window._unjailCat(mouseX, mouseY);
+            }
+
+            /* ── Drag-out: mousedown on jail when jailed starts the unjail drag ── */
+            jail.addEventListener('mousedown', e => {
+                if (!jailed) return;
+                e.preventDefault();
+                unjailCat(e.clientX, e.clientY);
+            });
+
+            function scheduleNextMeow() {
+                const delay = 6000 + Math.random() * 6000; /* 6–12 s */
+                jailMeowTimer = setTimeout(() => {
+                    if (!jailed) return;
+                    playRandomMeow();
+                    spawnMeowFrom(jail);
+                    scheduleNextMeow();
+                }, delay);
+            }
+
+            /* ── Hooks for floating-cat script ── */
+            window._onCatDragStart = function () {
+                if (!jailed) hint.style.opacity = '0';
+            };
+
+            window._onCatDragMove = function (catX, catY, catW, catH) {
+                if (jailed) return;
+                const catRect  = { left: catX, top: catY, right: catX + catW, bottom: catY + catH };
+                const jailRect = jail.getBoundingClientRect();
+                const over = rectsOverlap(catRect, jailRect);
+                if (over !== catOverJail) {
+                    catOverJail = over;
+                    if (over) { expandJail(); hint.style.opacity = '1'; }
+                    else      { maybeShrink(); hint.style.opacity = '0'; }
+                }
+            };
+
+            window._onCatDrop = function (catX, catY, catW, catH) {
+                if (jailed) return;
+                const catRect  = { left: catX, top: catY, right: catX + catW, bottom: catY + catH };
+                const jailRect = jail.getBoundingClientRect();
+                hint.style.opacity = '0';
+                catOverJail = false;
+                if (rectsOverlap(catRect, jailRect)) {
+                    jailCat();
+                } else {
+                    maybeShrink();
+                }
+            };
+        })();
     </script>
 
     <!-- FLOATING CAT -->
@@ -552,33 +650,49 @@
                 const PAD = 0;
                 const nav = document.querySelector('nav');
                 const TOP = nav ? nav.offsetHeight : 0;
-                // to change top speed
                 const MIN_SPEED = 0.07;
                 const MAX_SPEED = 0.8;
                 const CAT_W = cat.offsetWidth;
                 const CAT_H = cat.offsetHeight;
 
-                // always start at right-center
                 let x = window.innerWidth - CAT_W - 20;
                 let y = TOP + (window.innerHeight - TOP) / 2 - CAT_H / 2;
 
-                // random direction, speed between min and max
                 const angle = Math.random() * Math.PI * 2;
                 const speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
                 let vx = Math.cos(angle) * speed;
                 let vy = Math.sin(angle) * speed;
 
-                // ── DRAG STATE ──
-                let dragging = false;
-                let dragOffX = 0;
-                let dragOffY = 0;
+                let dragging   = false;
+                let dragOffX   = 0;
+                let dragOffY   = 0;
                 let lastMouseX = 0;
                 let lastMouseY = 0;
-                let throwVX = 0;
-                let throwVY = 0;
+                let throwVX    = 0;
+                let throwVY    = 0;
 
                 cat.style.pointerEvents = 'auto';
                 cat.style.cursor = 'grab';
+
+                /* ── Unjail hook: called by jail logic to hand the cat back ── */
+                window._unjailCat = function (mouseX, mouseY) {
+                    x = mouseX - CAT_W / 2;
+                    y = mouseY - CAT_H / 2;
+                    cat.style.transform = `translate(${x}px, ${y}px)`;
+                    dragging = true;
+                    dragOffX = CAT_W / 2;
+                    dragOffY = CAT_H / 2;
+                    lastMouseX = mouseX;
+                    lastMouseY = mouseY;
+                    throwVX = 0; throwVY = 0;
+                    vx = 0; vy = 0;
+                    cat.style.cursor = 'grabbing';
+                    cat.querySelector('img').src = 'assets/floatingCatHeld.png';
+                    shakeInterval = setInterval(() => {
+                        shakeX = (Math.random() - 0.5) * 4;
+                        shakeY = (Math.random() - 0.5) * 4;
+                    }, 40);
+                };
 
                 cat.addEventListener('mousedown', e => {
                     dragging = true;
@@ -586,8 +700,7 @@
                     dragOffY = e.clientY - y;
                     lastMouseX = e.clientX;
                     lastMouseY = e.clientY;
-                    throwVX = 0;
-                    throwVY = 0;
+                    throwVX = 0; throwVY = 0;
                     cat.style.cursor = 'grabbing';
                     cat.querySelector('img').src = 'assets/floatingCatHeld.png';
                     shakeInterval = setInterval(() => {
@@ -595,20 +708,15 @@
                         shakeY = (Math.random() - 0.5) * 4;
                     }, 40);
                     e.preventDefault();
+                    if (window._onCatDragStart) window._onCatDragStart();
                 });
 
-                let shakeX = 0;
-                let shakeY = 0;
-                let shakeInterval = null;
+                let shakeX = 0, shakeY = 0, shakeInterval = null;
 
-                // ── BLINK ──
                 function scheduleBlink() {
                     const delay = (3 + Math.random() * 5) * 1000;
                     setTimeout(() => {
-                        if (dragging) {
-                            scheduleBlink(); // reschedule, don't skip entirely
-                            return;
-                        }
+                        if (dragging) { scheduleBlink(); return; }
                         cat.querySelector('img').src = 'assets/floatingCatBlinking.png';
                         setTimeout(() => {
                             cat.querySelector('img').src = 'assets/floatingCat.png';
@@ -616,7 +724,6 @@
                         }, 150);
                     }, delay);
                 }
-
                 scheduleBlink();
 
                 document.addEventListener('mousemove', e => {
@@ -627,6 +734,7 @@
                     lastMouseY = e.clientY;
                     x = e.clientX - dragOffX;
                     y = e.clientY - dragOffY;
+                    if (window._onCatDragMove) window._onCatDragMove(x, y, CAT_W, CAT_H);
                 });
 
                 document.addEventListener('mouseup', () => {
@@ -634,19 +742,17 @@
                     dragging = false;
                     clearInterval(shakeInterval);
                     shakeInterval = null;
-                    shakeX = 0;
-                    shakeY = 0;
+                    shakeX = 0; shakeY = 0;
                     cat.style.cursor = 'grab';
                     cat.querySelector('img').src = 'assets/floatingCat.png';
-                    vx = throwVX;
-                    vy = throwVY;
+                    vx = throwVX; vy = throwVY;
+                    if (window._onCatDrop) window._onCatDrop(x, y, CAT_W, CAT_H);
                 });
 
                 function tick() {
                     cat.style.visibility = 'visible';
 
                     if (!dragging) {
-                        // ── SPEED CORRECTION ──
                         const spd = Math.sqrt(vx * vx + vy * vy);
                         if (spd > MAX_SPEED) {
                             const factor = MAX_SPEED / spd;
@@ -662,18 +768,15 @@
                             vy = Math.sin(a) * MIN_SPEED;
                         }
 
-                        x += vx;
-                        y += vy;
+                        x += vx; y += vy;
 
-                        // ── BOUNCE ──
                         if (x <= PAD) { x = PAD; vx = Math.abs(vx); }
                         if (x >= window.innerWidth - CAT_W - PAD) { x = window.innerWidth - CAT_W - PAD; vx = -Math.abs(vx); }
                         if (y <= TOP) { y = TOP; vy = Math.abs(vy); }
                         if (y >= window.innerHeight - CAT_H) { y = window.innerHeight - CAT_H; vy = -Math.abs(vy); }
 
                         cat.style.transform = `translate(${x}px, ${y}px)`;
-
-                    } else if (dragging) {
+                    } else {
                         cat.style.transform = `translate(${x + shakeX}px, ${y + shakeY}px)`;
                     }
 
