@@ -599,7 +599,7 @@
             });
 
             function scheduleNextMeow() {
-                const delay = 6000 + Math.random() * 6000; /* 6–12 s */
+                const delay = 10000 + Math.random() * 20000; /* 10–20 s */
                 jailMeowTimer = setTimeout(() => {
                     if (!jailed) return;
                     playRandomMeow();
