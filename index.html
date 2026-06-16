@@ -14,12 +14,29 @@
 
     <style>
         /* ── PAGE-SPECIFIC BACKGROUNDS ── */
-        #hero { background: var(--bg); }
-        #about { background: var(--bg2); }
-        #skills { background: var(--bg3); }
-        #projects { background: var(--bg2); }
-        #personal { background: var(--bg3); }
-        #contact { background: var(--bg); }
+        #hero {
+            background: var(--bg);
+        }
+
+        #about {
+            background: var(--bg2);
+        }
+
+        #skills {
+            background: var(--bg3);
+        }
+
+        #projects {
+            background: var(--bg2);
+        }
+
+        #personal {
+            background: var(--bg3);
+        }
+
+        #contact {
+            background: var(--bg);
+        }
 
         /* ── SKILLS HEADER ── */
         .skills-header {
@@ -43,7 +60,9 @@
         }
 
         /* ── PROJECTS MORE LINK ── */
-        .projects-more { margin-top: 2rem; }
+        .projects-more {
+            margin-top: 2rem;
+        }
 
         /* ── PHOTO WRAP (absolute container) ── */
         .hero-photo-wrap {
@@ -93,10 +112,14 @@
             transition: opacity 0.3s;
         }
 
-        .hero-photo-wrap:hover::after { opacity: 1; }
+        .hero-photo-wrap:hover::after {
+            opacity: 1;
+        }
 
         @media (max-width: 900px) {
-            .hero-photo-wrap { display: none; }
+            .hero-photo-wrap {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -130,13 +153,13 @@
 
         <svg class="jail-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <!-- rounded cell -->
-            <rect x="3" y="3" width="94" height="94" rx="14"
-                  fill="rgba(42,30,74,0.45)" stroke="rgba(201,184,240,0.3)" stroke-width="1.5"/>
+            <rect x="3" y="3" width="94" height="94" rx="14" fill="rgba(42,30,74,0.45)" stroke="rgba(201,184,240,0.3)"
+                stroke-width="1.5" />
             <!-- vertical bars -->
-            <line x1="22"  y1="3"  x2="22"  y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="40"  y1="3"  x2="40"  y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="60"  y1="3"  x2="60"  y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="78"  y1="3"  x2="78"  y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="22" y1="3" x2="22" y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="40" y1="3" x2="40" y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="60" y1="3" x2="60" y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="78" y1="3" x2="78" y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round" />
         </svg>
 
         <div id="jailDropHint" style="
@@ -158,7 +181,6 @@
     <nav>
         <span class="nav-logo">Nyang Lin Phyo</span>
         <ul class="nav-links">
-            <li><a href="#hero">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
@@ -175,10 +197,10 @@
             </a>
         </div>
 
-        <p class="hero-eyebrow fade-up">Open to job offers · Graduating 2027</p>
+        <p class="hero-eyebrow fade-up">Open to job offers · M.S. Graduating May 2027</p>
         <h1 class="hero-name fade-up">Nyang Lin Phyo<br /><em>(Ramsey)</em></h1>
         <p class="hero-sub fade-up">
-            Software engineer · NYU CS · builder of things that occasionally work on the first try.
+            Software engineer · NYU M.S. CS · builder of things that occasionally work on the first try.
         </p>
 
         <div class="hero-scroll-indicator">
@@ -194,6 +216,9 @@
     <!-- ── LAYER 2: ABOUT ── -->
     <section class="layer" id="about">
         <p class="section-label fade-up">01 — About</p>
+        <h2 class="skills-header fade-up">
+            TLDR about <em>ME!</em>
+        </h2>
         <div class="about-grid">
             <p class="about-text fade-up">
                 I'm a developer who approaches every project with curiosity, persistence, and determination. If
@@ -208,11 +233,7 @@
                 </div>
                 <div class="detail-row">
                     <span class="detail-key">School</span>
-                    <span class="detail-val">New York University, Class of '27</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">Degree</span>
-                    <span class="detail-val">M.S. Computer Science</span>
+                    <span class="detail-val">New York University — M.S. Computer Science, 2027</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-key">Focus</span>
@@ -237,11 +258,21 @@
         <h2 class="skills-header fade-up">
             Technologies<br /><em>& Expertise.</em>
         </h2>
+
         <div class="about-grid fade-up">
+            <div class="about-text">
+                Over the past several years I've worked across machine learning,
+                computer vision, operating systems, networking, distributed systems,
+                and full-stack web development. My interests are centered around
+                building reliable systems that combine rigorous engineering with
+                intelligent software.
+            </div>
+
             <div class="about-details">
                 <div class="detail-row">
                     <span class="detail-key">Languages</span>
-                    <span class="detail-val">Python · C++ · C · Java · JavaScript · SQL · HTML · CSS · R · MATLAB · Bash · YAML</span>
+                    <span class="detail-val">Python · C++ · C · Java · JavaScript · SQL · HTML · CSS · R · MATLAB · Bash
+                        · YAML</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-key">Frontend</span>
@@ -265,16 +296,11 @@
                 </div>
                 <div class="detail-row">
                     <span class="detail-key">Concepts</span>
-                    <span class="detail-val">Operating Systems · Distributed Systems · Information Retrieval · Computer Architecture · Concurrent Programming</span>
+                    <span class="detail-val">Operating Systems · Distributed Systems · Information Retrieval · Computer
+                        Architecture · Concurrent Programming</span>
                 </div>
             </div>
-            <div class="about-text">
-                Over the past several years I've worked across machine learning,
-                computer vision, operating systems, networking, distributed systems,
-                and full-stack web development. My interests are centered around
-                building reliable systems that combine rigorous engineering with
-                intelligent software.
-            </div>
+
         </div>
     </section>
 
@@ -371,7 +397,7 @@
         </div>
         <div class="projects-more fade-up">
             <a href="projects.html" class="link link-right">
-                Here's all the projects I've worked on →
+                View all my projects →
             </a>
         </div>
     </section>
@@ -401,6 +427,9 @@
                         <div class="demo-placeholder" id="demoPlaceholder">
                             <button class="demo-btn" id="loadDemoBtn">Load Demo</button>
                         </div>
+                        <p class="demo-hover-hint" id="demoHoverHint">Hover over the demo to activate key tracking.</p>
+                        <p class="demo-mobile-note">Best experienced on desktop — check it out there to see it in
+                            action.</p>
                     </div>
                 </div>
                 <div class="project-tags">
@@ -465,12 +494,35 @@
 
         document.getElementById('loadDemoBtn').addEventListener('click', () => {
             const container = document.getElementById('demoPlaceholder');
+            const hint = document.getElementById('demoHoverHint');
+
             const iframe = document.createElement('iframe');
             iframe.src = 'demos/pngvtuber-demo.html';
             iframe.className = 'project-demo';
             iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+
+            let hintDismissed = false;
+
+            iframe.addEventListener('mouseenter', () => {
+                iframe.contentWindow?.postMessage({ type: 'focus' }, '*');
+                // fade out hint permanently on first hover
+                if (!hintDismissed) {
+                    hintDismissed = true;
+                    hint.style.opacity = '0';
+                }
+            });
+
+            iframe.addEventListener('mouseleave', () => {
+                iframe.contentWindow?.postMessage({ type: 'blur' }, '*');
+            });
+
             container.innerHTML = '';
             container.appendChild(iframe);
+
+            // show hint now that demo is loaded
+            requestAnimationFrame(() => {
+                hint.style.opacity = '1';
+            });
         });
     </script>
 
@@ -543,24 +595,24 @@
     <script>
         (function () {
             const jail = document.getElementById('catJail');
-            const cat  = document.getElementById('floatingCat');
-            const hint  = document.getElementById('jailDropHint');
+            const cat = document.getElementById('floatingCat');
+            const hint = document.getElementById('jailDropHint');
             const label = document.getElementById('jailLabel');
             if (!jail || !cat) return;
 
-            let jailed         = false;
-            let jailMeowTimer  = null;
-            let mouseOverJail  = false;
-            let catOverJail    = false;
+            let jailed = false;
+            let jailMeowTimer = null;
+            let mouseOverJail = false;
+            let catOverJail = false;
 
             /* ── Expand / shrink helpers ── */
             function expandJail() { jail.classList.replace('jail-small', 'jail-big'); if (label) label.style.opacity = '1'; }
-            function shrinkJail() { jail.classList.replace('jail-big',   'jail-small'); if (label) label.style.opacity = '0'; }
+            function shrinkJail() { jail.classList.replace('jail-big', 'jail-small'); if (label) label.style.opacity = '0'; }
             function maybeExpand() { if (mouseOverJail || catOverJail) expandJail(); }
             function maybeShrink() { if (!mouseOverJail && !catOverJail) shrinkJail(); }
 
             /* ── Mouse hover ── */
-            jail.addEventListener('mouseenter', () => { mouseOverJail = true;  maybeExpand(); });
+            jail.addEventListener('mouseenter', () => { mouseOverJail = true; maybeExpand(); });
             jail.addEventListener('mouseleave', () => { mouseOverJail = false; maybeShrink(); });
 
             /* ── AABB overlap ── */
@@ -615,19 +667,19 @@
 
             window._onCatDragMove = function (catX, catY, catW, catH) {
                 if (jailed) return;
-                const catRect  = { left: catX, top: catY, right: catX + catW, bottom: catY + catH };
+                const catRect = { left: catX, top: catY, right: catX + catW, bottom: catY + catH };
                 const jailRect = jail.getBoundingClientRect();
                 const over = rectsOverlap(catRect, jailRect);
                 if (over !== catOverJail) {
                     catOverJail = over;
                     if (over) { expandJail(); hint.style.opacity = '1'; }
-                    else      { maybeShrink(); hint.style.opacity = '0'; }
+                    else { maybeShrink(); hint.style.opacity = '0'; }
                 }
             };
 
             window._onCatDrop = function (catX, catY, catW, catH) {
                 if (jailed) return;
-                const catRect  = { left: catX, top: catY, right: catX + catW, bottom: catY + catH };
+                const catRect = { left: catX, top: catY, right: catX + catW, bottom: catY + catH };
                 const jailRect = jail.getBoundingClientRect();
                 hint.style.opacity = '0';
                 catOverJail = false;
@@ -663,13 +715,13 @@
                 let vx = Math.cos(angle) * speed;
                 let vy = Math.sin(angle) * speed;
 
-                let dragging   = false;
-                let dragOffX   = 0;
-                let dragOffY   = 0;
+                let dragging = false;
+                let dragOffX = 0;
+                let dragOffY = 0;
                 let lastMouseX = 0;
                 let lastMouseY = 0;
-                let throwVX    = 0;
-                let throwVY    = 0;
+                let throwVX = 0;
+                let throwVY = 0;
 
                 cat.style.pointerEvents = 'auto';
                 cat.style.cursor = 'grab';
