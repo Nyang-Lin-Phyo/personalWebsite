@@ -806,40 +806,51 @@ footer {
     }
 }
 
-/* hero photo (index page, absolute container) */
-.hero-photo-wrap {
-    position: absolute;
-    right: clamp(1rem, 8vw, 10rem);
-    top: 245px;
-    z-index: 10;
-}
-
-.hero-photo-wrap a {
-    display: block;
-    width: 18vw;
-    height: 25vw;
-    max-width: 260px;
-    max-height: 360px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    cursor: pointer;
-}
-
-.hero-photo-wrap a img {
+/* hero: text column on the left, photo on the right.
+   Flex keeps the photo's top edge level with the eyebrow
+   at every viewport size — no absolute pixel offsets. */
+.hero-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: clamp(2rem, 5vw, 5rem);
     width: 100%;
-    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-text {
+    min-width: 0;
+}
+
+/* the whole photo is one anchor to personal.html.
+   (overflow lives on the img, so the labels above and
+   below the frame never get clipped) */
+.hero-photo {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: clamp(150px, 18vw, 260px);
+    display: block;
+}
+
+.hero-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 18 / 25;
     object-fit: cover;
     object-position: center top;
     filter: grayscale(20%) brightness(0.88);
     transition: filter 0.4s;
-    display: block;
+    border: 1px solid var(--line);
 }
 
-.hero-photo-wrap a:hover img {
+.hero-photo:hover img {
     filter: grayscale(0%) brightness(1);
 }
 
-.hero-photo-wrap::after {
+/* hover label, bottom of the frame */
+.hero-photo::after {
     content: '→ personal';
     position: absolute;
     bottom: -1.6rem;
@@ -854,7 +865,48 @@ footer {
     transition: opacity 0.3s;
 }
 
-.hero-photo-wrap:hover::after {
+.hero-photo:hover::after {
+    opacity: 1;
+}
+
+/* "click me..." — randomly timed hint floating above the frame,
+   same style as the → personal label */
+.hero-photo-hint {
+    position: absolute;
+    bottom: calc(100% + 0.55rem);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--purple-dim);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    z-index: 2;
+}
+
+.hero-photo-hint svg {
+    animation: hintArrowBounce 1.4s ease-in-out infinite;
+}
+
+@keyframes hintArrowBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(3px);
+    }
+}
+
+.hero-photo-hint.show {
     opacity: 1;
 }
 
@@ -1009,7 +1061,7 @@ footer {
 @media (max-width: 900px) {
 
     .floating-cat,
-    .hero-photo-wrap {
+    .hero-photo {
         display: none;
     }
 }
