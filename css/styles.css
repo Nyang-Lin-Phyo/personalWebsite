@@ -1060,7 +1060,6 @@ footer {
     max-height: min(75vh, 680px);
     width: auto;
     height: auto;
-    border: 1px solid var(--line);
 }
 
 .art-loading {
