@@ -51,6 +51,7 @@
                 <li><a href="index.html" class="nav-back">← Back to Portfolio</a></li>
                 <li><a href="#hero-personal">Home</a></li>
                 <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#drawing">Drawing</a></li>
                 <li>
                     <button type="button" id="themeToggle" class="theme-toggle" aria-pressed="false">
                         <svg class="icon-sun" width="14" height="14" aria-hidden="true">
@@ -92,6 +93,23 @@
             <div class="stat-grid" id="analyticsGrid"></div>
         </section>
 
+        <!-- ── DRAWING ── -->
+        <section class="layer" id="drawing" aria-labelledby="drawing-heading">
+            <p class="section-label fade-up">02 — Drawing</p>
+            <h2 class="section-header fade-up" id="drawing-heading">
+                Drawn between<br /><em>debugging sessions.</em>
+            </h2>
+
+            <div class="art-gif-row fade-up">
+                <img src="assets/art/cursorPresentation.gif"
+                    alt="Animation of a custom cursor presentation" loading="lazy" />
+            </div>
+
+            <div class="art-row fade-up" id="artRow" aria-label="Recent drawings">
+                <p class="art-loading" id="artLoading">Loading recent drawings…</p>
+            </div>
+        </section>
+
     </main>
 
     <!-- page behaviour -->
@@ -112,6 +130,11 @@
             const coffeeDays = daysSince('2021-08-21');
             const coffeeCups = Math.floor(coffeeDays / 4);
             const redbullCans = Math.floor(coffeeDays * 0.75);
+            const bobaCount = Math.floor(daysSince('2021-08-01') / 2);
+
+            /* Stack Overflow tabs: random walk, clamped to 10..20,
+               nudged every 2-9 seconds while the page is open */
+            let soTabs = 10 + Math.floor(Math.random() * 11);
 
             const mangaBaseDays = (new Date('2025-05-15') - new Date('2021-08-21')) / (1000 * 60 * 60 * 24);
             const mangaTotal = Math.floor((1235 / mangaBaseDays) * coffeeDays);
@@ -119,11 +142,43 @@
             const animeTotal = 318; // known total as of today; update manually
 
             const stats = [
-                { label: 'Cups of Coffee', target: coffeeCups, note: 'Since Aug 21, 2021 · 1 every 4 days' },
-                { label: 'Cans of Red Bull', target: redbullCans, note: 'Since Aug 21, 2021 · on non-coffee days' },
-                { label: 'Mangas Read', target: mangaTotal, note: 'Since Aug 21, 2021 · ~0.9/day' },
-                { label: 'Animes Watched', target: animeTotal, note: 'Since Aug 21, 2020 · ~0.15/day' },
-                { label: 'Cat Interruptions', target: null, note: 'No further comment.', text: 'Too Many' },
+                {
+                    label: 'Cups of Coffee', target: coffeeCups,
+                    note: 'Since Aug 21, 2021 · 1 every 4 days',
+                    hoverNote: 'Mostly a personality now',
+                },
+                {
+                    label: 'Cans of Red Bull', target: redbullCans,
+                    note: 'Since Aug 21, 2021 · on non-coffee days',
+                    hoverNote: 'Wings: still pending',
+                },
+                {
+                    label: 'Bobas Drank', target: bobaCount,
+                    note: 'Since Aug 2021 · 1 every other day',
+                    hoverNote: '≈ ' + (bobaCount * 0.25).toFixed(1) + ' L drank', // 250 ml per boba
+                },
+                {
+                    label: 'Stack Overflow Tabs',
+                    target: null,
+                    note: 'Real-time estimate',
+                    hoverNote: 'Better than AI',
+                    text: String(soTabs),
+                    live: true,
+                },
+                {
+                    label: 'Mangas Read', target: mangaTotal,
+                    note: 'Since Aug 21, 2021 · ~0.9/day',
+                    hoverNote: 'Faster than I ship features',
+                },
+                {
+                    label: 'Animes Watched', target: animeTotal,
+                    note: 'Since Aug 21, 2020 · ~0.15/day',
+                    hoverNote: 'Sleep was optional',
+                },
+                {
+                    label: 'Cat Interruptions', target: null,
+                    note: 'No further comment.', text: 'Too Many', tooMany: true,
+                },
             ];
 
             const grid = document.getElementById('analyticsGrid');
@@ -147,11 +202,40 @@
                 cell.append(label, val, note);
                 grid.appendChild(cell);
 
-                valueEls.push({ el: val, target: s.target });
+                /* hover jokes: the note swaps while hovering, reverts on leave.
+                   Cat Interruptions keeps a persistent +N counter — every
+                   hover or click bumps it by one. */
+                if (s.tooMany) {
+                    let extra = 0;
+                    const bump = () => {
+                        extra++;
+                        note.textContent = 'Too Many + ' + extra;
+                    };
+                    cell.addEventListener('mouseenter', bump);
+                    cell.addEventListener('mouseleave', () => { note.textContent = s.note; });
+                    cell.addEventListener('click', bump);
+                } else if (s.hoverNote) {
+                    cell.addEventListener('mouseenter', () => { note.textContent = s.hoverNote; });
+                    cell.addEventListener('mouseleave', () => { note.textContent = s.note; });
+                }
+
+                valueEls.push({ el: val, target: s.target, tooMany: s.tooMany, live: s.live });
             });
 
             /* Count-up animation on first scroll into view */
             if (reducedMotion) return; // values were set to their final state above
+
+            /* Stack Overflow tabs: gentle live random walk (2-9s ticks) */
+            const soEl = valueEls.find(v => v.live)?.el;
+            if (soEl) {
+                (function bumpTabs() {
+                    const dir = soTabs >= 20 ? -1 : soTabs <= 10 ? 1 : (Math.random() < 0.5 ? -1 : 1);
+                    const mag = Math.random() < 0.5 ? 1 : 2;
+                    soTabs = Math.min(20, Math.max(10, soTabs + dir * mag));
+                    soEl.textContent = soTabs;
+                    setTimeout(bumpTabs, 2000 + Math.random() * 7000);
+                })();
+            }
 
             let animated = false;
 
@@ -164,7 +248,7 @@
 
                 const easeOut = t => 1 - Math.pow(1 - t, 3);
 
-                const tooManyEl = valueEls.find(v => v.target == null)?.el;
+                const tooManyEl = valueEls.find(v => v.tooMany)?.el;
                 const tooManyDuration = 2600;
 
                 (function tick(ts) {
@@ -202,6 +286,62 @@
             }, { threshold: 0.2 });
 
             counterObserver.observe(document.getElementById('analytics'));
+        })();
+    </script>
+
+    <!-- ART GALLERY: auto-lists PNGs from assets/art in the pushed repo -->
+    <script>
+        (function () {
+            'use strict';
+
+            const row = document.getElementById('artRow');
+            const loading = document.getElementById('artLoading');
+            if (!row || !loading) return;
+
+            /* contents of assets/art on the default branch — add or remove
+               PNGs there and they update here without touching this page */
+            const API_URL =
+                'https://api.github.com/repos/Nyang-Lin-Phyo/personalWebsite/contents/assets/art';
+
+            function fail(msg) {
+                loading.textContent = msg;
+                loading.classList.add('art-error');
+            }
+
+            async function loadArt() {
+                try {
+                    const res = await fetch(API_URL, { headers: { Accept: 'application/vnd.github+json' } });
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+                    const files = await res.json();
+                    const pngs = files
+                        .filter(f => f.type === 'file' && f.name.toLowerCase().endsWith('.png'))
+                        .map(f => ({ src: f.download_url, name: f.name }));
+
+                    if (!pngs.length) {
+                        fail('No drawings in the gallery yet.');
+                        return;
+                    }
+
+                    loading.remove();
+                    pngs.forEach(({ src, name }) => {
+                        const item = document.createElement('div');
+                        item.className = 'art-item';
+
+                        const img = document.createElement('img');
+                        img.loading = 'lazy';
+                        img.alt = name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ');
+                        img.src = encodeURI(src);
+
+                        item.appendChild(img);
+                        row.appendChild(item);
+                    });
+                } catch (err) {
+                    fail('Drawings could not load right now (GitHub API). Try again later.');
+                }
+            }
+
+            loadArt();
         })();
     </script>
 
