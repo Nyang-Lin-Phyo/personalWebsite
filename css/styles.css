@@ -542,11 +542,89 @@ nav {
     color: var(--text);
 }
 
+/* Heading on the left, QR card on the right, level with it.
+   The QR shrinks and drifts toward the heading as space narrows. */
+.contact-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: clamp(1.5rem, 6vw, 5rem);
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 1;
+}
+
+.contact-head .contact-big {
+    margin-bottom: 0;
+}
+
+/* QR card (hidden on mobile, where a plain link shows instead).
+   Dark theme shows light-on-dark modules; light theme swaps to
+   the white card with dark modules. */
+.contact-qr {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1rem 0.8rem;
+    border: 1px solid var(--line);
+    background: #171122;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.contact-qr .qr-dark {
+    display: block;
+}
+
+.contact-qr .qr-light {
+    display: none;
+}
+
+:root[data-theme='light'] .contact-qr {
+    background: #ffffff;
+}
+
+:root[data-theme='light'] .contact-qr .qr-dark {
+    display: none;
+}
+
+:root[data-theme='light'] .contact-qr .qr-light {
+    display: block;
+}
+
+.contact-qr:hover {
+    border-color: var(--purple-dim);
+    transform: translateY(-3px);
+}
+
+.contact-qr img {
+    display: block;
+    width: clamp(110px, 13vw, 176px);
+    height: auto;
+}
+
+.contact-qr-caption {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: var(--mono);
+    white-space: nowrap;
+}
+
+:root[data-theme='light'] .contact-qr-caption {
+    color: #2b2340;
+}
+
+.contact-social {
+    display: none;
+}
+
 .contact-links {
     display: flex;
     gap: 3rem;
     flex-wrap: wrap;
-    margin-bottom: 4rem;
 }
 
 .contact-link {
@@ -967,6 +1045,15 @@ footer {
 
     .contact-links {
         gap: 2rem;
+    }
+
+    /* on mobile, swap the QR card for a plain link */
+    .contact-qr {
+        display: none;
+    }
+
+    .contact-social {
+        display: flex;
     }
 
     .stat-grid {
