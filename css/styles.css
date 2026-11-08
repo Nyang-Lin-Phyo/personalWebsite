@@ -374,17 +374,23 @@ nav {
     margin-top: 2rem;
 }
 
-/* ── PROJECT GRID (index "Things I've built") ─────
-   Two columns × three rows; the left column holds the
-   original three projects, the right the newer ones.
-   Mobile falls back to one column, original projects only. */
+/* ── PROJECT GRID card layout (index + projects pages) ─
+   Full-width two-column card grid; each card has the
+   number on top, text on the left and a vertical tag
+   rail on the right. On mobile the cards stack and the
+   tags wrap along the bottom. */
 .projects-grid {
     display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(3, auto);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 3rem;
     border-bottom: 1px solid var(--line);
+}
+
+/* index "Things I've built": fill column-by-column
+   (01-03 left, 04-06 right) */
+#projects .projects-grid {
+    grid-auto-flow: column;
+    grid-template-rows: repeat(3, auto);
 }
 
 .projects-grid .project-item {
@@ -419,7 +425,8 @@ nav {
 }
 
 @media (max-width: 700px) {
-    .projects-grid {
+    .projects-grid,
+    #projects .projects-grid {
         grid-auto-flow: row;
         grid-template-rows: auto;
         grid-template-columns: 1fr;
@@ -445,8 +452,8 @@ nav {
         margin-top: 1rem;
     }
 
-    /* on mobile keep only the first three (original) projects */
-    .projects-grid .project-item:nth-child(n + 4) {
+    /* index: keep only the first three (original) projects */
+    #projects .projects-grid .project-item:nth-child(n + 4) {
         display: none;
     }
 }
@@ -853,7 +860,6 @@ footer {
 .projects-page {
     min-height: 100vh;
     padding: 6rem clamp(2rem, 8vw, 9rem);
-    max-width: 1100px;
 }
 
 .page-header {
