@@ -140,11 +140,13 @@
                         <span class="detail-key">Status</span>
                         <span class="detail-val">Open to full-time offers (6/2027 Onwards)</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-key">GitHub</span>
-                        <span class="detail-val"><a href="https://github.com/Nyang-Lin-Phyo"
-                                target="_blank" rel="noopener noreferrer">@Nyang-Lin-Phyo</a></span>
-                    </div>
+                </div>
+
+                <div class="about-now fade-up">
+                    <h3 class="section-header about-now-title">
+                        What is Ramsey<br /><em>up to now?</em>
+                    </h3>
+                    <p class="about-now-status" id="nowStatus"></p>
                 </div>
             </div>
         </section>
@@ -532,6 +534,218 @@
                     hint.style.opacity = '1';
                 });
             });
+
+            /* ── "What is Ramsey up to now?" ──
+               Picks the line pool from the visitor's local hour and
+               crossfades to a random (non-repeating) line every 10s */
+            const nowStatus = document.getElementById('nowStatus');
+
+            if (nowStatus) {
+                const NOW_POOLS = [
+                    {
+                        // 2am – 10am
+                        from: 2,
+                        to: 10,
+                        lines: [
+                            "Ramsey's petting a cat in his dream",
+                            "Ramsey is winning an argument with a penguin",
+                            "Ramsey is teaching a cat how to code",
+                            "Ramsey is being chased by a giant rubber duck (it's friendly)",
+                            "Ramsey is hosting a talk show for sleepy raccoons",
+                            "Ramsey's training a model in his sleep, loss is going down",
+                            "Ramsey is debugging a dream with zero stack traces",
+                            "Ramsey's neurons are running a very long epoch",
+                            "Ramsey is currently buffering…",
+                        ],
+                    },
+                    {
+                        // 10am – 11am
+                        from: 10,
+                        to: 11,
+                        lines: [
+                            "Ramsey is peeling a banana with great focus",
+                            "Ramsey is eating strawberries and pretending it's a salad",
+                            "Ramsey is slicing mango like a professional",
+                            "Ramsey is pouring his first mocha of the day",
+                            "Ramsey is 40% chocolate, 60% coffee until further notice",
+                            "Ramsey is waiting for the mocha to kick in",
+                            "Ramsey's brain is loading, mocha is the progress bar",
+                            "Ramsey is sipping a mocha and thinking about nothing",
+                            "Ramsey is shaking his boba with great confidence",
+                            "Ramsey is sipping boba and calling it a balanced breakfast",
+                            "Ramsey is on a boba run, back soon",
+                            "Ramsey is having breakfast. Today's menu: fruit, mocha, or boba (chef's choice).",
+                        ],
+                    },
+                    {
+                        // 11am – 2pm
+                        from: 11,
+                        to: 14,
+                        lines: [
+                            'Ramsey is typing "Hope this finds you well" for the 47th time',
+                            'Ramsey is hitting "send" with great confidence',
+                            'Ramsey is inbox-zero-ing. Fingers crossed.',
+                            "Ramsey is writing emails that definitely could have been a one-liner",
+                            "Ramsey is mentally scheduling the day (it will not go as planned)",
+                            "Ramsey is booting up today's game plan",
+                            "Ramsey is doing a quick brain-sync with the day ahead",
+                            "Ramsey is in a meeting, nodding thoughtfully",
+                            "Ramsey is in a meeting that was probably an email",
+                            "Ramsey is taking notes (or doodling, it's a mystery)",
+                            "Ramsey is in a meeting, camera on, brain buffering",
+                        ],
+                    },
+                    {
+                        // 2pm – 9pm
+                        from: 14,
+                        to: 21,
+                        lines: [
+                            "Ramsey is coding. Send snacks, not questions.",
+                            "Ramsey is in the zone, 3 tabs deep into Stack Overflow",
+                            "Ramsey is writing code that works (he doesn't know why yet)",
+                            "Ramsey is fixing one bug and creating two new ones",
+                            "Ramsey is staring at a diff and feeling things",
+                            'Ramsey is committing with the message "fix stuff"',
+                            "Ramsey's code just compiled on the first try. Suspicious.",
+                            "Ramsey is training a model, loss is going down (probably)",
+                            "Ramsey is reading a paper and pretending to understand the appendix",
+                            "Ramsey is trying to see around corners, literally",
+                            "Ramsey is squinting at shadows to reconstruct a hidden scene",
+                            "Ramsey is waiting on an epoch, watching the loss like it's a pot of water",
+                            "Ramsey is turning blurry penumbras into answers",
+                            "Ramsey is physically in class, mentally on a beach",
+                            "Ramsey is nodding at a slide he did not read",
+                            "Ramsey is on a boba run, back in 10 minutes",
+                            "Ramsey is being paged by a professor, the website is down",
+                            "Ramsey is rebooting the website and his will to live",
+                            'Ramsey is yelling "it worked on my machine"',
+                            "Ramsey is firefighting a very important 404",
+                            "Ramsey is thinking about petting a cat",
+                            "Ramsey is currently daydreaming about cat fluff",
+                            "Ramsey is plotting how to pet the next cat he sees",
+                            "Ramsey is 90% cat thoughts, 10% everything else",
+                            "Ramsey is one cat away from a perfect day",
+                        ],
+                    },
+                    {
+                        // 9pm – 2am (wraps midnight)
+                        from: 21,
+                        to: 2,
+                        lines: [
+                            "Ramsey is sketching something he'll never finish (it's still great)",
+                            "Ramsey is shading a masterpiece, one line at a time",
+                            "Ramsey is erasing and redrawing the same eye for the 9th time",
+                            "Ramsey is doodling his way to enlightenment",
+                            "Ramsey is animating a tiny cursor frame by frame",
+                            "Ramsey is making your mouse pointer way cooler",
+                            "Ramsey is giving a cursor a personality",
+                            "Ramsey is crafting a pointer that will never be just a pointer again",
+                            "Ramsey is 32 pixels into a very important animation",
+                            "Ramsey is cutting clips from last weekend's hike",
+                            "Ramsey is syncing a mountain view to the perfect beat",
+                            "Ramsey is editing hike footage, trail dust included",
+                            "Ramsey is trimming 4 hours of hiking into 2 minutes of glory",
+                            "Ramsey is adding transitions to a very scenic summit",
+                            "Ramsey is in Hollows, fighting Ethereals",
+                            "Ramsey is farming drive discs, one more run",
+                            "Ramsey is pulling on the banner and trusting the pity",
+                            "Ramsey is saving New Eridu (again)",
+                            "Ramsey is learning to deflect, one parry at a time",
+                            "Ramsey is bonking a samurai with a sword",
+                            "Ramsey is Wolf now, and the posture bar is winning",
+                            'Ramsey is reciting "never give up" to a boss with 3 health bars',
+                            "Ramsey is running, nowhere in particular",
+                            "Ramsey is outrunning his to-do list",
+                            "Ramsey is pacing himself, mostly",
+                            "Ramsey is on a run, no snacks, no regrets",
+                            "Ramsey is reading one more chapter (it's been four)",
+                            "Ramsey is watching an anime that's definitely going to make him cry",
+                            "Ramsey is turning the page, the plot is thickening",
+                            "Ramsey is bath-buffering, back when he's fully steeped",
+                            "Ramsey is out of office, in the tub",
+                        ],
+                    },
+                ];
+
+                function poolForHour() {
+                    const h = new Date().getHours();
+                    for (const p of NOW_POOLS) {
+                        const inRange = p.from < p.to
+                            ? (h >= p.from && h < p.to)
+                            : (h >= p.from || h < p.to); // wraps midnight
+                        if (inRange) return p;
+                    }
+                    return NOW_POOLS[0];
+                }
+
+                let lastIdx = -1;
+
+                function nextLine() {
+                    const pool = poolForHour();
+                    let i;
+                    do {
+                        i = Math.floor(Math.random() * pool.lines.length);
+                    } while (pool.lines.length > 1 && i === lastIdx);
+                    lastIdx = i;
+                    return pool.lines[i];
+                }
+
+                /* one-line mode: shrink the font just enough that the
+                   longest line fits its column; once the shrink would
+                   drop below ~12px (narrow screens), fall back to
+                   natural wrapping */
+                function fitNowLine() {
+                    const col = nowStatus.parentElement.clientWidth;
+                    const basePx = parseFloat(getComputedStyle(nowStatus).fontSize);
+
+                    nowStatus.style.fontSize = '';
+                    nowStatus.style.whiteSpace = 'nowrap';
+                    const textW = nowStatus.scrollWidth;
+
+                    if (textW <= col) {
+                        /* fits at the base size */
+                        nowStatus.style.removeProperty('white-space');
+                        return;
+                    }
+
+                    const scaled = basePx * (col / textW) * 0.98;
+                    if (scaled >= 12) {
+                        /* keep it on one row, slightly smaller */
+                        nowStatus.style.fontSize = scaled + 'px';
+                    } else {
+                        /* too narrow to read on one row — wrap instead */
+                        nowStatus.style.removeProperty('white-space');
+                        nowStatus.style.fontSize = '';
+                    }
+                }
+
+                /* first line appears immediately, later ones drift-swap */
+                nowStatus.textContent = nextLine();
+                fitNowLine();
+
+                let fitTimer;
+                window.addEventListener('resize', () => {
+                    clearTimeout(fitTimer);
+                    fitTimer = setTimeout(fitNowLine, 120);
+                });
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(fitNowLine);
+                }
+
+                setInterval(() => {
+                    const line = nextLine();
+                    nowStatus.classList.add('fade');
+                    setTimeout(() => {
+                        nowStatus.style.transition = 'none';
+                        nowStatus.classList.add('preload');
+                        nowStatus.textContent = line;
+                        void nowStatus.offsetWidth;
+                        fitNowLine();
+                        nowStatus.style.transition = '';
+                        nowStatus.classList.remove('preload', 'fade');
+                    }, 400);
+                }, 10000);
+            }
         })();
     </script>
 

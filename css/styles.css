@@ -313,6 +313,42 @@ nav {
     color: var(--text);
 }
 
+/* About only: three equal columns — text | details | "up to now" */
+#about .about-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: none;
+}
+
+.about-now-title {
+    margin-bottom: 2rem;
+}
+
+.about-now-status {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--text);
+    max-width: 30ch;
+    min-height: 3.4em;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* fading out: drift right while disappearing */
+.about-now-status.fade {
+    opacity: 0;
+    transform: translateX(14px);
+}
+
+/* snap state for the incoming line (no transition): slightly left, invisible,
+   then released so it drifts right into place while fading in */
+.about-now-status.preload {
+    opacity: 0;
+    transform: translateX(-14px);
+    transition: none;
+}
+
 /* ── 7. PROJECTS ────────────────────────────────── */
 .project-list {
     display: flex;
@@ -1085,6 +1121,15 @@ footer {
     .about-grid {
         grid-template-columns: 1fr;
         gap: 2.5rem;
+    }
+
+    /* about's third column collapses into the stack too */
+    #about .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-now-status {
+        min-height: 0;
     }
 
     .project-item {
