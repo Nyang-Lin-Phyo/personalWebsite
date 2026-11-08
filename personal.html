@@ -331,7 +331,9 @@
                         const img = document.createElement('img');
                         img.loading = 'lazy';
                         img.alt = name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ');
-                        img.src = encodeURI(src);
+                        /* download_url is already URL-encoded by the GitHub API —
+                           re-encoding it would turn %20 into %2520 and 404 */
+                        img.src = src;
 
                         item.appendChild(img);
                         row.appendChild(item);
