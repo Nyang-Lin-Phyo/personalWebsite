@@ -61,7 +61,6 @@
     /* ── Cat + jail shared state ── */
     const cat = document.getElementById('floatingCat');
     const jail = document.getElementById('catJail');
-    const jailHint = document.getElementById('jailDropHint');
     const jailLabel = document.getElementById('jailLabel');
 
     if (!cat || !jail) return;
@@ -79,28 +78,48 @@
     const CAT_IMG_BLINK = 'assets/floatingCatBlinking.png';
     const catImg = cat.querySelector('img');
 
-    /* ── Cat jail ── */
+    /* ── Cat jail ──
+       One label above the cage whose text depends on the state:
+         hovering, cat free        → "cat jail"
+         dragging cat over cage    → "Put in Jail?"
+         jailed + hovering         → "drag me out~" */
+    const LABEL_IDLE = 'cat jail';
+    const LABEL_DROP = 'Put in Jail?';
+    const LABEL_DRAG_OUT = 'drag me out~';
+
     let jailed = false;
     let jailMeowTimer = null;
     let mouseOverJail = false;
-    let catOverJail = false;
+    let catDragging = false;    /* the cat is being dragged by the mouse */
+    let catOverJail = false;    /* dragged cat overlaps the cage */
 
     function rectsOverlap(a, b) {
         return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
     }
 
-    function expandJail() {
-        jail.classList.replace('jail-small', 'jail-big');
-        if (jailLabel) jailLabel.style.opacity = '1';
-    }
+    /* The cage grows only while it is hovered — with the mouse alone
+       or while holding the cat over it. Jailed stays small otherwise. */
+    function refreshJail() {
+        const big = mouseOverJail || catOverJail;
+        jail.classList.toggle('jail-big', big);
+        jail.classList.toggle('jail-small', !big);
 
-    function shrinkJail() {
-        jail.classList.replace('jail-big', 'jail-small');
-        if (jailLabel) jailLabel.style.opacity = '0';
-    }
-
-    function maybeShrink() {
-        if (!mouseOverJail && !catOverJail) shrinkJail();
+        let text = null;
+        if (catDragging) {
+            /* once the held cat is over the cage (or the mouse is on it),
+               it can be dropped inside */
+            text = (catOverJail || mouseOverJail) ? LABEL_DROP : null;
+        } else if (jailed) {
+            text = mouseOverJail ? LABEL_DRAG_OUT : null;
+        } else if (mouseOverJail) {
+            text = LABEL_IDLE;
+        }
+        if (text) {
+            jailLabel.textContent = text;
+            jailLabel.style.opacity = '1';
+        } else {
+            jailLabel.style.opacity = '0';
+        }
     }
 
     function scheduleNextMeow() {
@@ -118,29 +137,29 @@
         jail.classList.add('jailed');
         jail.style.cursor = 'grab';
         cat.style.display = 'none';
+        refreshJail();
         scheduleNextMeow();
     }
 
-    /* Called from freeCat when the cat leaves the jail */
     function unjailCat() {
         jailed = false;
         clearTimeout(jailMeowTimer);
         jailMeowTimer = null;
         jail.classList.remove('jailed');
         jail.style.cursor = 'default';
-        mouseOverJail = false;
-        shrinkJail();
         cat.style.display = '';
+        refreshJail();
     }
 
+    /* ── Hover on the cage ── */
     jail.addEventListener('mouseenter', () => {
         mouseOverJail = true;
-        if (mouseOverJail || catOverJail) expandJail();
+        refreshJail();
     });
 
     jail.addEventListener('mouseleave', () => {
         mouseOverJail = false;
-        maybeShrink();
+        refreshJail();
     });
 
     /* Drag-out: mousedown on the jailed cat starts the release drag */
@@ -150,6 +169,27 @@
         unjailCat();
         handCatToMouse(e.clientX, e.clientY);
     });
+
+    /* ── Hooks the floating cat calls while being dragged ── */
+    function onCatDragStart() {
+        catDragging = true;
+        catOverJail = false;
+        refreshJail();
+    }
+
+    function onCatDragMove(over) {
+        if (!catDragging || over === catOverJail) return;
+        catOverJail = over;
+        refreshJail();
+    }
+
+    function onCatDrop(over) {
+        catDragging = false;
+        catOverJail = false;
+        if (!jailed && over) jailCat();
+        else refreshJail();
+    }
+
 
     /* ── Floating cat ──
        handCatToMouse is used by the jail to hand the cat back mid-drag. */
@@ -214,6 +254,7 @@
             cat.style.cursor = 'grabbing';
             catImg.src = CAT_IMG_HELD;
             startShake();
+            onCatDragStart();
         };
 
         cat.addEventListener('mousedown', e => {
@@ -228,7 +269,7 @@
             catImg.src = CAT_IMG_HELD;
             startShake();
             e.preventDefault();
-            if (jailHint) jailHint.style.opacity = '0';
+            onCatDragStart();
         });
 
         function scheduleBlink() {
@@ -255,15 +296,9 @@
             lastMouseY = e.clientY;
             x = e.clientX - dragOffX;
             y = e.clientY - dragOffY;
-            if (!jailed && jailHint) {
+            if (!jailed) {
                 const catRect = { left: x, top: y, right: x + CAT_W, bottom: y + CAT_H };
-                const over = rectsOverlap(catRect, jail.getBoundingClientRect());
-                if (over !== catOverJail) {
-                    catOverJail = over;
-                    jailHint.style.opacity = over ? '1' : '0';
-                    if (over) expandJail();
-                    else maybeShrink();
-                }
+                onCatDragMove(rectsOverlap(catRect, jail.getBoundingClientRect()));
             }
         });
 
@@ -275,15 +310,9 @@
             catImg.src = CAT_IMG_FREE;
             vx = throwVX;
             vy = throwVY;
-            if (!jailed && jailHint) {
-                jailHint.style.opacity = '0';
+            if (!jailed) {
                 const catRect = { left: x, top: y, right: x + CAT_W, bottom: y + CAT_H };
-                catOverJail = false;
-                if (rectsOverlap(catRect, jail.getBoundingClientRect())) {
-                    jailCat();
-                } else {
-                    maybeShrink();
-                }
+                onCatDrop(rectsOverlap(catRect, jail.getBoundingClientRect()));
             }
         });
 

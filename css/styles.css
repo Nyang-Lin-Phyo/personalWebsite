@@ -720,12 +720,12 @@ footer {
 #catJail {
     position: fixed;
     right: clamp(1rem, 3vw, 3rem);
-    top: 50%;
-    translate: 0 -50%;
+    bottom: clamp(1rem, 3vw, 3rem);
     z-index: 12;
     cursor: default;
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-origin: center right;
+    /* grow up-and-left from the corner so it never goes off-screen */
+    transform-origin: bottom right;
 }
 
 #catJail.jail-small {
@@ -773,11 +773,11 @@ footer {
     display: block;
 }
 
-.jail-label,
-.jail-drop-hint {
+.jail-label {
     position: absolute;
-    left: 0;
-    right: 0;
+    bottom: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
     font-size: 0.65rem;
     letter-spacing: 0.2em;
@@ -785,17 +785,9 @@ footer {
     color: var(--purple-dim);
     opacity: 0;
     transition: opacity 0.3s;
-    white-space: nowrap;
-    pointer-events: none;
-}
-
-.jail-label {
-    top: -1.6rem;
     font-family: var(--mono);
-}
-
-.jail-drop-hint {
-    bottom: -1.4rem;
+    pointer-events: none;
+    white-space: nowrap;
 }
 
 /* ── 14. STAT GRID (personal page) ──────────────── */
