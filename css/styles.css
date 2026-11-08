@@ -41,6 +41,11 @@
     --cat-shadow: rgba(201, 184, 240, 0.18);
     --noise-opacity: 0.4;
 
+    /* hero gradient blobs (personal page) */
+    --gradient-a: rgba(90, 60, 180, 0.18);
+    --gradient-b: rgba(140, 80, 200, 0.12);
+    --gradient-c: rgba(60, 30, 120, 0.15);
+
     --serif: 'Cormorant Garamond', Georgia, serif;
     --mono: 'DM Mono', monospace;
 }
@@ -63,6 +68,11 @@
     --jail-bar: #6a52c4;
     --cat-shadow: rgba(106, 82, 196, 0.25);
     --noise-opacity: 0.3;
+
+    /* much subtler hero blobs on the light background */
+    --gradient-a: rgba(150, 130, 225, 0.1);
+    --gradient-b: rgba(170, 150, 235, 0.07);
+    --gradient-c: rgba(140, 120, 220, 0.08);
 }
 
 /* ── 2. RESET & BASE ─────────────────────────────── */
@@ -540,13 +550,18 @@ footer {
 .hero-gradient {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 20% 60%, rgba(90, 60, 180, 0.18) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 30%, rgba(140, 80, 200, 0.12) 0%, transparent 55%),
-        radial-gradient(ellipse at 50% 90%, rgba(60, 30, 120, 0.15) 0%, transparent 50%);
+    background: radial-gradient(ellipse at 20% 60%, var(--gradient-a) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, var(--gradient-b) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 90%, var(--gradient-c) 0%, transparent 50%);
     background-size: 200% 200%;
     animation: gradientShift 12s ease infinite;
     pointer-events: none;
     z-index: 0;
+}
+
+/* light mode: the blobs are already subtle — keep them perfectly still */
+:root[data-theme='light'] .hero-gradient {
+    animation: none;
 }
 
 @keyframes gradientShift {
