@@ -1,24 +1,71 @@
 /* ═══════════════════════════════════════════════════
-   TOKENS
+   NYANG LIN PHYO — styles.css
+
+   Contents
+     1. Tokens            (dark default + light theme)
+     2. Reset & base
+     3. Accessibility helpers
+     4. Nav
+     5. Layout: layers, labels, headers
+     6. About grid
+     7. Projects
+     8. Demo embed
+     9. Contact & footer
+    10. Links
+    11. Hero
+    12. Fade-up reveal
+    13. Floating cat & cat jail
+    14. Stat grid        (personal page)
+    15. Projects page
+    16. Section backgrounds
+    17. Responsive
 ═══════════════════════════════════════════════════ */
+
+/* ── 1. TOKENS ────────────────────────────────────── */
 :root {
+    color-scheme: dark;
+
     --bg: #0d0b14;
     --bg2: #120f1e;
     --bg3: #0f0c1a;
     --purple: #d4b8ff;
     --purple-dim: #a87fe8;
-    --purple-lo: #2a1e4a;
     --text: #ede8ff;
-    --muted: #7a6fa0;
+    --muted: #9286b8;
     --line: rgba(201, 184, 240, 0.15);
     --glow: rgba(201, 184, 240, 0.08);
+    --nav-bg: rgba(13, 11, 20, 0.85);
+    --surface: rgba(255, 255, 255, 0.02);
+    --jail-fill: rgba(42, 30, 74, 0.45);
+    --jail-bar: #c9b8f0;
+    --cat-shadow: rgba(201, 184, 240, 0.18);
+    --noise-opacity: 0.4;
+
     --serif: 'Cormorant Garamond', Georgia, serif;
     --mono: 'DM Mono', monospace;
 }
 
-/* ═══════════════════════════════════════════════════
-   RESET
-═══════════════════════════════════════════════════ */
+:root[data-theme='light'] {
+    color-scheme: light;
+
+    --bg: #f4f1fb;
+    --bg2: #ece7f5;
+    --bg3: #f0ecf8;
+    --purple: #573bb5;
+    --purple-dim: #6a52c4;
+    --text: #2b2340;
+    --muted: #5e5478;
+    --line: rgba(86, 62, 145, 0.25);
+    --glow: rgba(87, 59, 181, 0.07);
+    --nav-bg: rgba(244, 241, 251, 0.88);
+    --surface: rgba(87, 59, 181, 0.03);
+    --jail-fill: rgba(87, 59, 181, 0.1);
+    --jail-bar: #6a52c4;
+    --cat-shadow: rgba(106, 82, 196, 0.25);
+    --noise-opacity: 0.3;
+}
+
+/* ── 2. RESET & BASE ─────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -29,6 +76,8 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    background: var(--bg);
 }
 
 body {
@@ -38,6 +87,7 @@ body {
     font-size: 14px;
     line-height: 1.7;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -45,9 +95,30 @@ a {
     text-decoration: none;
 }
 
-/* ═══════════════════════════════════════════════════
-   NAV
-═══════════════════════════════════════════════════ */
+/* ── 3. ACCESSIBILITY HELPERS ────────────────────── */
+.skip-link {
+    position: fixed;
+    top: -100%;
+    left: 0;
+    z-index: 200;
+    background: var(--purple);
+    color: var(--bg);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.4rem;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+:focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 3px;
+}
+
+/* ── 4. NAV ──────────────────────────────────────── */
 nav {
     position: fixed;
     top: 0;
@@ -58,9 +129,10 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 1.4rem clamp(2rem, 8vw, 9rem);
-    background: rgba(13, 11, 20, 0.85);
+    background: var(--nav-bg);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
+    transition: background 0.3s ease;
 }
 
 .nav-logo {
@@ -87,12 +159,8 @@ nav {
 
 .nav-links a:hover {
     color: var(--purple);
-    text-decoration: none;
 }
 
-/* ═══════════════════════════════════════════════════
-   NAV BACK
-═══════════════════════════════════════════════════ */
 .nav-back {
     color: var(--purple) !important;
     border: 1px solid var(--line);
@@ -104,15 +172,47 @@ nav {
     color: var(--text) !important;
     border-color: var(--purple-dim);
     background: var(--glow);
-    text-decoration: none;
 }
 
-/* ═══════════════════════════════════════════════════
-   LAYER  (full-height section)
-═══════════════════════════════════════════════════ */
+/* theme toggle (dark: shows sun → switch to light) */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: 0.3rem 0.55rem;
+    font: inherit;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.theme-toggle:hover {
+    color: var(--purple);
+    border-color: var(--purple-dim);
+    background: var(--glow);
+}
+
+.theme-toggle svg {
+    display: block;
+}
+
+.theme-toggle .icon-moon {
+    display: none;
+}
+
+:root[data-theme='light'] .theme-toggle .icon-sun {
+    display: none;
+}
+
+:root[data-theme='light'] .theme-toggle .icon-moon {
+    display: block;
+}
+
+/* ── 5. LAYOUT ───────────────────────────────────── */
 .layer {
     min-height: 100vh;
-    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -120,6 +220,7 @@ nav {
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid var(--line);
+    transition: background 0.3s ease;
 }
 
 /* noise texture overlay on every layer */
@@ -131,12 +232,9 @@ nav {
     background-repeat: repeat;
     background-size: 200px;
     pointer-events: none;
-    opacity: 0.4;
+    opacity: var(--noise-opacity);
 }
 
-/* ═══════════════════════════════════════════════════
-   SECTION LABEL
-═══════════════════════════════════════════════════ */
 .section-label {
     font-size: 0.65rem;
     letter-spacing: 0.3em;
@@ -156,9 +254,16 @@ nav {
     background: var(--line);
 }
 
-/* ═══════════════════════════════════════════════════
-   ABOUT GRID  (2-col layout used in About + Skills)
-═══════════════════════════════════════════════════ */
+.section-header {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 300;
+    color: var(--purple);
+    margin-bottom: 3.5rem;
+    line-height: 1.1;
+}
+
+/* ── 6. ABOUT GRID (About + Skills) ─────────────── */
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -202,50 +307,10 @@ nav {
     color: var(--text);
 }
 
-/* ═══════════════════════════════════════════════════
-   SECTION HEADER
-═══════════════════════════════════════════════════ */
-.section-header {
-    font-family: var(--serif);
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 300;
-    color: var(--purple);
-    margin-bottom: 3.5rem;
-    line-height: 1.1;
-}
-
-/* ═══════════════════════════════════════════════════
-   SKILLS GRID
-═══════════════════════════════════════════════════ */
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 1px;
-    border: 1px solid var(--line);
-    max-width: 820px;
-}
-
-.skill-cell {
-    padding: 1.3rem 1.5rem;
-    border: 1px solid var(--line);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    transition: background 0.2s, color 0.2s;
-}
-
-.skill-cell:hover {
-    background: var(--glow);
-    color: var(--purple);
-}
-
-/* ═══════════════════════════════════════════════════
-   PROJECT LIST
-═══════════════════════════════════════════════════ */
+/* ── 7. PROJECTS ────────────────────────────────── */
 .project-list {
     display: flex;
     flex-direction: column;
-    gap: 0;
     max-width: 860px;
 }
 
@@ -299,15 +364,16 @@ nav {
     color: var(--purple-dim);
 }
 
-/* ═══════════════════════════════════════════════════
-   DEMO EMBED
-═══════════════════════════════════════════════════ */
+.projects-more {
+    margin-top: 2rem;
+}
+
+/* ── 8. DEMO EMBED ──────────────────────────────── */
 .project-demo-container {
     margin-top: 1.5rem;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: flex-start;
 }
 
@@ -330,7 +396,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--surface);
     backdrop-filter: blur(6px);
 }
 
@@ -371,15 +437,7 @@ nav {
     text-transform: uppercase;
 }
 
-@media (max-width: 700px) {
-    .demo-mobile-note {
-        display: block;
-    }
-}
-
-/* ═══════════════════════════════════════════════════
-   CONTACT
-═══════════════════════════════════════════════════ */
+/* ── 9. CONTACT & FOOTER ────────────────────────── */
 .contact-big {
     font-family: var(--serif);
     font-size: clamp(2.5rem, 8vw, 7rem);
@@ -422,12 +480,8 @@ nav {
 
 .contact-link a:hover {
     color: var(--text);
-    text-decoration: none;
 }
 
-/* ═══════════════════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════════════════ */
 footer {
     position: absolute;
     bottom: 2.5rem;
@@ -435,6 +489,7 @@ footer {
     right: clamp(2rem, 8vw, 9rem);
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 0.65rem;
     color: var(--muted);
     letter-spacing: 0.1em;
@@ -442,22 +497,38 @@ footer {
     padding-top: 1rem;
 }
 
-/* ═══════════════════════════════════════════════════
-   LINKS
-═══════════════════════════════════════════════════ */
+.footer-meow {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    display: inline-block;
+    animation: sway 3s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+@keyframes sway {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+}
+
+/* ── 10. LINKS ──────────────────────────────────── */
 .link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     font-size: 1.1rem;
     color: var(--purple);
-    text-decoration: none;
     transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.link-left:hover {
-    opacity: 0.85;
-    transform: translateX(-3px);
 }
 
 .link-right:hover {
@@ -465,37 +536,7 @@ footer {
     transform: translateX(3px);
 }
 
-/* ═══════════════════════════════════════════════════
-   FADE-UP ANIMATION
-═══════════════════════════════════════════════════ */
-.fade-up {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ═══════════════════════════════════════════════════
-   ANIMATED NOISE GRADIENT  (hero use)
-═══════════════════════════════════════════════════ */
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
+/* ── 11. HERO ───────────────────────────────────── */
 .hero-gradient {
     position: absolute;
     inset: 0;
@@ -508,50 +549,18 @@ footer {
     z-index: 0;
 }
 
-.hero-gradient::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
-    background-size: 256px;
-    pointer-events: none;
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
-/* ═══════════════════════════════════════════════════
-   HERO PHOTO
-═══════════════════════════════════════════════════ */
-.hero-photo {
-    position: absolute;
-    right: clamp(1rem, 8vw, 10rem);
-    top: 20%;
-    transform: translateY(-50%);
-    width: 22vw;
-    height: 30vw;
-    max-width: 300px;
-    max-height: 420px;
-    min-width: 120px;
-    min-height: 160px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    z-index: 1;
-}
-
-.hero-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    filter: grayscale(20%) brightness(0.88);
-    transition: filter 0.4s;
-}
-
-.hero-photo:hover img {
-    filter: grayscale(0%) brightness(1);
-}
-
-/* ═══════════════════════════════════════════════════
-   HERO TEXT
-═══════════════════════════════════════════════════ */
 .hero-eyebrow {
     font-size: 0.7rem;
     letter-spacing: 0.25em;
@@ -589,164 +598,6 @@ footer {
     z-index: 1;
 }
 
-.hero-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--purple);
-    border: 1px solid var(--line);
-    padding: 0.75rem 1.6rem;
-    transition: background 0.2s, border-color 0.2s;
-    position: relative;
-    z-index: 1;
-}
-
-.hero-cta:hover {
-    background: var(--glow);
-    border-color: var(--purple-dim);
-    text-decoration: none;
-}
-
-/* ═══════════════════════════════════════════════════
-   SWAY
-═══════════════════════════════════════════════════ */
-@keyframes sway {
-    0% {
-        transform: translateX(0);
-    }
-
-    50% {
-        transform: translateX(10px);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
-}
-
-footer span:last-child {
-    display: inline-block;
-    animation: sway 3s ease-in-out infinite;
-    animation-delay: 2s;
-    cursor: pointer;
-}
-
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════════════ */
-@media (max-width: 700px) {
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-
-    .project-item {
-        grid-template-columns: 2rem 1fr;
-    }
-
-    .project-tags {
-        display: none;
-    }
-
-    .contact-links {
-        gap: 2rem;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .hero-photo {
-        display: none;
-    }
-}
-
-/* ═══════════════════════════════════════════════════
-   FLOATING CAT
-═══════════════════════════════════════════════════ */
-.floating-cat {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: clamp(80px, 10vw, 140px);
-    pointer-events: auto;
-    z-index: 11;
-    opacity: 0.72;
-    visibility: hidden;
-    cursor: grab;
-    will-change: transform;
-}
-
-.floating-cat img {
-    width: 100%;
-    display: block;
-    filter: drop-shadow(0 0 18px rgba(201, 184, 240, 0.18));
-}
-
-@media (max-width: 900px) {
-    .floating-cat {
-        display: none;
-    }
-}
-
-/* ═══════════════════════════════════════════════════
-   STAT GRID
-═══════════════════════════════════════════════════ */
-.stat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1px;
-    border: 1px solid var(--line);
-    max-width: 900px;
-    margin-top: 3rem;
-}
-
-.stat-cell {
-    padding: 2rem 1.8rem;
-    border: 1px solid var(--line);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    transition: background 0.2s;
-}
-
-.stat-cell:hover {
-    background: var(--glow);
-}
-
-.stat-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--muted);
-}
-
-.stat-value {
-    font-family: var(--serif);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 300;
-    color: var(--purple);
-    line-height: 1;
-}
-
-.stat-note {
-    font-size: 0.65rem;
-    color: var(--muted);
-    margin-top: 0.2rem;
-}
-
-@media (max-width: 700px) {
-    .stat-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-/* ═══════════════════════════════════════════════════
-   HERO SCROLL INDICATOR
-═══════════════════════════════════════════════════ */
 .hero-scroll-indicator {
     position: absolute;
     left: 50%;
@@ -757,7 +608,7 @@ footer span:last-child {
     align-items: center;
     gap: 0.35rem;
     color: var(--purple-dim);
-    font-size: 0.55rem;
+    font-size: 0.68rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     z-index: 5;
@@ -782,9 +633,90 @@ footer span:last-child {
     }
 }
 
-/* ═══════════════════════════════════════════════════
-   CAT JAIL
-═══════════════════════════════════════════════════ */
+/* hero photo (index page, absolute container) */
+.hero-photo-wrap {
+    position: absolute;
+    right: clamp(1rem, 8vw, 10rem);
+    top: 245px;
+    z-index: 10;
+}
+
+.hero-photo-wrap a {
+    display: block;
+    width: 18vw;
+    height: 25vw;
+    max-width: 260px;
+    max-height: 360px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    cursor: pointer;
+}
+
+.hero-photo-wrap a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(20%) brightness(0.88);
+    transition: filter 0.4s;
+    display: block;
+}
+
+.hero-photo-wrap a:hover img {
+    filter: grayscale(0%) brightness(1);
+}
+
+.hero-photo-wrap::after {
+    content: '→ personal';
+    position: absolute;
+    bottom: -1.6rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--purple-dim);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.hero-photo-wrap:hover::after {
+    opacity: 1;
+}
+
+/* ── 12. FADE-UP REVEAL ─────────────────────────── */
+.fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── 13. FLOATING CAT & CAT JAIL ────────────────── */
+.floating-cat {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: clamp(80px, 10vw, 140px);
+    pointer-events: auto;
+    z-index: 11;
+    opacity: 0.72;
+    visibility: hidden;
+    cursor: grab;
+    will-change: transform;
+}
+
+.floating-cat img {
+    width: 100%;
+    display: block;
+    filter: drop-shadow(0 0 18px var(--cat-shadow));
+}
+
 #catJail {
     position: fixed;
     right: clamp(1rem, 3vw, 3rem);
@@ -808,11 +740,23 @@ footer span:last-child {
     display: block;
     width: 100px;
     height: 100px;
-    filter: drop-shadow(0 0 8px rgba(201, 184, 240, 0.18));
+    filter: drop-shadow(0 0 8px var(--cat-shadow));
+}
+
+.jail-svg rect {
+    fill: var(--jail-fill);
+    stroke: var(--jail-bar);
+    stroke-width: 1.5;
+}
+
+.jail-svg line {
+    stroke: var(--jail-bar);
+    stroke-width: 2.5;
+    stroke-linecap: round;
 }
 
 #catJail.jailed .jail-svg {
-    filter: drop-shadow(0 0 14px rgba(201, 184, 240, 0.45));
+    filter: drop-shadow(0 0 14px var(--cat-shadow));
 }
 
 #jailedCatImg {
@@ -829,8 +773,217 @@ footer span:last-child {
     display: block;
 }
 
+.jail-label,
+.jail-drop-hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--purple-dim);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.jail-label {
+    top: -1.6rem;
+    font-family: var(--mono);
+}
+
+.jail-drop-hint {
+    bottom: -1.4rem;
+}
+
+/* ── 14. STAT GRID (personal page) ──────────────── */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--line);
+    max-width: 900px;
+    margin-top: 3rem;
+}
+
+.stat-cell {
+    padding: 2rem 1.8rem;
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background 0.2s;
+}
+
+.stat-cell:hover {
+    background: var(--glow);
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.stat-value {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    color: var(--purple);
+    line-height: 1;
+}
+
+.stat-note {
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+}
+
+/* ── 15. PROJECTS PAGE ──────────────────────────── */
+.projects-page {
+    min-height: 100vh;
+    padding: 6rem clamp(2rem, 8vw, 9rem);
+    max-width: 1100px;
+}
+
+.page-header {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 300;
+    color: var(--purple);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}
+
+.page-header em {
+    font-style: italic;
+    color: var(--text);
+}
+
+.project-section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--purple-dim);
+    padding: 2.5rem 0 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.project-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+}
+
+/* ── 16. SECTION BACKGROUNDS ────────────────────── */
+#hero {
+    background: var(--bg);
+}
+
+#about {
+    background: var(--bg2);
+}
+
+#skills {
+    background: var(--bg3);
+}
+
+#projects {
+    background: var(--bg2);
+}
+
+#personal {
+    background: var(--bg3);
+}
+
+#contact {
+    background: var(--bg);
+}
+
+#hero-personal {
+    background: var(--bg);
+}
+
+#analytics {
+    background: var(--bg2);
+}
+
+/* ── 17. RESPONSIVE ─────────────────────────────── */
 @media (max-width: 900px) {
-    #catJail {
+
+    .floating-cat,
+    #catJail,
+    .hero-photo-wrap {
         display: none;
+    }
+}
+
+@media (max-width: 700px) {
+
+    /* on small screens keep only the theme toggle visible */
+    .nav-links {
+        gap: 0;
+    }
+
+    .nav-links li {
+        display: none;
+    }
+
+    .nav-links li:last-child {
+        display: inline-flex;
+        margin-left: -1rem;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .project-item {
+        grid-template-columns: 2rem 1fr;
+    }
+
+    .project-tags {
+        display: none;
+    }
+
+    .contact-links {
+        gap: 2rem;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .demo-mobile-note {
+        display: block;
+    }
+}
+
+/* ── REDUCED MOTION ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    /* reveal content immediately instead of animating */
+    .fade-up {
+        opacity: 1;
+        transform: none;
     }
 }

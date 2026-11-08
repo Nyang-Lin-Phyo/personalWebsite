@@ -5,844 +5,432 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>welcome every-nyan~</title>
+    <meta name="description" content="Portfolio of Nyang Lin Phyo (Ramsey) — software engineer, NYU M.S. CS. Machine learning, computer vision, systems and full-stack projects." />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap"
         rel="stylesheet" />
-    <link rel="icon" href="assets/R.png" type="image/png">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="assets/R.png" type="image/png" />
 
-    <style>
-        /* ── PAGE-SPECIFIC BACKGROUNDS ── */
-        #hero {
-            background: var(--bg);
-        }
+    <!-- apply saved / OS theme before paint to avoid a flash -->
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            document.documentElement.dataset.theme =
+                saved ?? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        })();
+    </script>
 
-        #about {
-            background: var(--bg2);
-        }
-
-        #skills {
-            background: var(--bg3);
-        }
-
-        #projects {
-            background: var(--bg2);
-        }
-
-        #personal {
-            background: var(--bg3);
-        }
-
-        #contact {
-            background: var(--bg);
-        }
-
-        /* ── SKILLS HEADER ── */
-        .skills-header {
-            font-family: var(--serif);
-            font-size: clamp(2rem, 5vw, 4rem);
-            font-weight: 300;
-            color: var(--purple);
-            margin-bottom: 3.5rem;
-            max-width: 20ch;
-            line-height: 1.1;
-        }
-
-        /* ── PROJECTS HEADER ── */
-        .projects-header {
-            font-family: var(--serif);
-            font-size: clamp(2rem, 5vw, 4rem);
-            font-weight: 300;
-            color: var(--purple);
-            margin-bottom: 3.5rem;
-            line-height: 1.1;
-        }
-
-        /* ── PROJECTS MORE LINK ── */
-        .projects-more {
-            margin-top: 2rem;
-        }
-
-        /* ── PHOTO WRAP (absolute container) ── */
-        .hero-photo-wrap {
-            position: absolute;
-            right: clamp(1rem, 8vw, 10rem);
-            top: 245px;
-            z-index: 10;
-        }
-
-        .hero-photo-wrap a {
-            display: block;
-            width: 18vw;
-            height: 25vw;
-            max-width: 260px;
-            max-height: 360px;
-            overflow: hidden;
-            border: 1px solid var(--line);
-            cursor: pointer;
-        }
-
-        .hero-photo-wrap a img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center top;
-            filter: grayscale(20%) brightness(0.88);
-            transition: filter 0.4s;
-            display: block;
-        }
-
-        .hero-photo-wrap a:hover img {
-            filter: grayscale(0%) brightness(1);
-        }
-
-        .hero-photo-wrap::after {
-            content: '→ personal';
-            position: absolute;
-            bottom: -1.6rem;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--purple-dim);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .hero-photo-wrap:hover::after {
-            opacity: 1;
-        }
-
-        @media (max-width: 900px) {
-            .hero-photo-wrap {
-                display: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
 
-    <!-- floating cat (fixed, always visible) -->
-    <div class="floating-cat" id="floatingCat">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <!-- floating cat (fixed, decorative — drag & drop easter egg) -->
+    <div class="floating-cat" id="floatingCat" aria-hidden="true">
         <img src="assets/floatingCat.png" alt="" />
     </div>
 
-    <!-- ══ CAT JAIL ══ -->
-    <div id="catJail" class="jail-small">
-        <img id="jailedCatImg" src="assets/floatingCatHeld.png" alt="jailed cat" />
-
-        <div id="jailLabel" style="
-            position: absolute;
-            top: -1.6rem;
-            left: 0; right: 0;
-            text-align: center;
-            font-family: var(--mono);
-            font-size: 0.55rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--purple-dim);
-            opacity: 0;
-            transition: opacity 0.3s;
-            white-space: nowrap;
-            pointer-events: none;
-        ">cat jail</div>
-
+    <!-- ══ CAT JAIL (decorative easter egg) ══ -->
+    <div id="catJail" class="jail-small" aria-hidden="true">
+        <img id="jailedCatImg" src="assets/floatingCatHeld.png" alt="" />
+        <div id="jailLabel" class="jail-label">cat jail</div>
         <svg class="jail-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <!-- rounded cell -->
-            <rect x="3" y="3" width="94" height="94" rx="14" fill="rgba(42,30,74,0.45)" stroke="rgba(201,184,240,0.3)"
-                stroke-width="1.5" />
-            <!-- vertical bars -->
-            <line x1="22" y1="3" x2="22" y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round" />
-            <line x1="40" y1="3" x2="40" y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round" />
-            <line x1="60" y1="3" x2="60" y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round" />
-            <line x1="78" y1="3" x2="78" y2="97" stroke="#c9b8f0" stroke-width="2.5" stroke-linecap="round" />
+            <rect x="3" y="3" width="94" height="94" rx="14" />
+            <line x1="22" y1="3" x2="22" y2="97" />
+            <line x1="40" y1="3" x2="40" y2="97" />
+            <line x1="60" y1="3" x2="60" y2="97" />
+            <line x1="78" y1="3" x2="78" y2="97" />
         </svg>
-
-        <div id="jailDropHint" style="
-            position: absolute;
-            bottom: -1.4rem;
-            left: 0; right: 0;
-            text-align: center;
-            font-size: 0.55rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--purple-dim);
-            opacity: 0;
-            transition: opacity 0.3s;
-            white-space: nowrap;
-        ">drop here</div>
+        <div id="jailDropHint" class="jail-drop-hint">drop here</div>
     </div>
 
-    <!-- NAV -->
-    <nav>
-        <span class="nav-logo">Nyang Lin Phyo</span>
-        <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+    <!-- ══ ICON LIBRARY ══ -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+        <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <circle cx="12" cy="12" r="4" />
+            <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        </symbol>
+        <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </symbol>
+    </svg>
 
-    <!-- ── LAYER 1: HERO ── -->
-    <section class="layer" id="hero">
+    <!-- ══ HEADER / NAV ══ -->
+    <header>
+        <nav aria-label="Primary">
+            <span class="nav-logo">Nyang Lin Phyo</span>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li>
+                    <button type="button" id="themeToggle" class="theme-toggle" aria-pressed="false">
+                        <svg class="icon-sun" width="14" height="14" aria-hidden="true">
+                            <use href="#icon-sun" />
+                        </svg>
+                        <svg class="icon-moon" width="14" height="14" aria-hidden="true">
+                            <use href="#icon-moon" />
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-        <div class="hero-photo-wrap" id="photoWrap">
-            <a href="personal.html">
-                <img src="assets/me.jpg" alt="Nyang Lin Phyo — click to see personal page" />
-            </a>
-        </div>
+    <main id="main">
 
-        <p class="hero-eyebrow fade-up">Open to job offers · M.S. Graduating May 2027</p>
-        <h1 class="hero-name fade-up">Nyang Lin Phyo<br /><em>(Ramsey)</em></h1>
-        <p class="hero-sub fade-up">
-            Software engineer · NYU M.S. CS · builder of things that occasionally work on the first try.
-        </p>
+        <!-- ── LAYER 1: HERO ── -->
+        <section class="layer" id="hero" aria-labelledby="hero-heading">
 
-        <div class="hero-scroll-indicator">
-            <span>Scroll to see more</span>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
-                <line x1="9" y1="2" x2="9" y2="14" />
-                <polyline points="5,10 9,14 13,10" />
-            </svg>
-        </div>
+            <div class="hero-photo-wrap" id="photoWrap">
+                <a href="personal.html">
+                    <img src="assets/me.jpg" alt="Portrait of Nyang Lin Phyo — click to visit the personal page" />
+                </a>
+            </div>
 
-    </section>
-
-    <!-- ── LAYER 2: ABOUT ── -->
-    <section class="layer" id="about">
-        <p class="section-label fade-up">01 — About</p>
-        <h2 class="skills-header fade-up">
-            TLDR about<br /><em>ME!</em>
-        </h2>
-        <div class="about-grid">
-            <p class="about-text fade-up">
-                I'm a developer who approaches every project with curiosity, persistence, and determination. If
-                something captures my interest, I'm committed to seeing it through until it works. My research interest
-                is in <em>passive NLOS imaging</em> — using ML to
-                reconstruct scenes that are literally hidden from view.
+            <p class="hero-eyebrow fade-up">Open to job offers · M.S. Graduating May 2027</p>
+            <h1 class="hero-name fade-up" id="hero-heading">
+                Nyang Lin Phyo<br /><em>(Ramsey)</em>
+            </h1>
+            <p class="hero-sub fade-up">
+                Software engineer · NYU M.S. CS · builder of things that occasionally work on the first try.
             </p>
-            <div class="about-details fade-up">
-                <div class="detail-row">
-                    <span class="detail-key">Location</span>
-                    <span class="detail-val">Brooklyn, NY</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">School</span>
-                    <span class="detail-val">New York University — M.S. Computer Science, 2027</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">Focus</span>
-                    <span class="detail-val">Machine Learning · Passive NLOS Imaging</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">Status</span>
-                    <span class="detail-val">Open to full-time offers (6/2027 Onwards)</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">GitHub</span>
-                    <span class="detail-val"><a href="https://github.com/Nyang-Lin-Phyo"
-                            target="_blank">@Nyang-Lin-Phyo</a></span>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ── LAYER 3: SKILLS ── -->
-    <section class="layer" id="skills">
-        <p class="section-label fade-up">02 — Skills</p>
-        <h2 class="skills-header fade-up">
-            Technologies<br /><em>& Expertise.</em>
-        </h2>
-
-        <div class="about-grid fade-up">
-            <div class="about-text">
-                Over the past several years I've worked across machine learning,
-                computer vision, operating systems, networking, distributed systems,
-                and full-stack web development. My interests are centered around
-                building reliable systems that combine rigorous engineering with
-                intelligent software.
+            <div class="hero-scroll-indicator" aria-hidden="true">
+                <span>Scroll to see more</span>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="9" y1="2" x2="9" y2="14" />
+                    <polyline points="5,10 9,14 13,10" />
+                </svg>
             </div>
 
-            <div class="about-details">
-                <div class="detail-row">
-                    <span class="detail-key">Languages</span>
-                    <span class="detail-val">Python · C++ · C · Java · JavaScript · SQL · HTML · CSS · R · MATLAB · Bash
-                        · YAML</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">Frontend</span>
-                    <span class="detail-val">React · JavaScript · HTML/CSS · AJAX</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">Backend</span>
-                    <span class="detail-val">Flask · Node.js · REST APIs · Jinja2</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">Databases</span>
-                    <span class="detail-val">SQLite · MySQL · PostgreSQL · MongoDB</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">Systems</span>
-                    <span class="detail-val">Linux · Docker · Networking · Socket Programming · Multithreading</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">ML / CV</span>
-                    <span class="detail-val">OpenCV · YOLOv7 · PaddleOCR · Machine Learning · Computer Vision</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-key">Concepts</span>
-                    <span class="detail-val">Operating Systems · Distributed Systems · Information Retrieval · Computer
-                        Architecture · Concurrent Programming</span>
-                </div>
-            </div>
+        </section>
 
-        </div>
-    </section>
-
-    <!-- ── LAYER 4: PROJECTS ── -->
-    <section class="layer" id="projects">
-        <p class="section-label fade-up">03 — Projects</p>
-        <h2 class="projects-header fade-up">
-            Things<br /><em>I've built.</em>
-        </h2>
-        <div class="project-list">
-            <div class="project-item fade-up">
-                <span class="project-num">01</span>
-                <div>
-                    <p class="project-title">High-Speed Research Network (HSRN)</p>
-                    <p class="project-desc">
-                        Audio Systems Team Lead • NYU Tandon
-                        <br><br>
-                        Refactored a legacy distributed real-time audio receiver from a dual-stream architecture
-                        into a scalable multi-sender pipeline capable of supporting synchronized audio from
-                        globally distributed performers.
-                        <br><br>
-                        Designed lock-free audio processing pipelines with per-sender jitter buffers, dynamic
-                        stream subscription, and real-time audio mixing, allowing new performers to join without
-                        interrupting active sessions.
-                        <br><br>
-                        Resolved long-standing plugin lifecycle crashes, simplified stream management, and
-                        established a maintainable architecture that significantly improved reliability for
-                        large-scale collaborative live audio applications.
-                    </p>
-                </div>
-                <div class="project-tags">
-                    <span class="tag">C++</span>
-                    <span class="tag">Audio</span>
-                    <span class="tag">Distributed</span>
-                    <span class="tag">Networking</span>
-                    <span class="tag">Concurrency</span>
-                </div>
-            </div>
-
-            <div class="project-item fade-up">
-                <span class="project-num">02</span>
-                <div>
-                    <p class="project-title">M-Fly</p>
-                    <p class="project-desc">
-                        Autonomous Aircraft Computer Vision Platform • UMICH
-                        <br><br>
-                        Collaboratively developed software for an autonomous aircraft capable of terrain mapping,
-                        object detection, object classification, and payload delivery using computer vision and
-                        machine learning.
-                        <br><br>
-                        Integrated OpenCV, YOLOv7, and PaddleOCR into a unified perception pipeline that enabled
-                        the aircraft to identify targets and navigate using visual information collected during
-                        flight.
-                        <br><br>
-                        Worked closely with hardware and software teams to resolve integration challenges,
-                        establishing structured engineering discussions that improved cross-team decision making
-                        and project execution.
-                    </p>
-                </div>
-                <div class="project-tags">
-                    <span class="tag">Python</span>
-                    <span class="tag">OpenCV</span>
-                    <span class="tag">YOLOv7</span>
-                    <span class="tag">OCR</span>
-                    <span class="tag">ML</span>
-                </div>
-            </div>
-
-            <div class="project-item fade-up">
-                <span class="project-num">03</span>
-                <div>
-                    <p class="project-title">Scaling Laws for Transformer Language Models on SVG Code</p>
-                    <p class="project-desc">
-                        Investigated scaling behavior of decoder-only transformer models trained on structured
-                        SVG code, evaluating 10 model variants under Standard Parameterization and Maximal
-                        Update Parameterization (µP).
-                        <br><br>
-                        Conducted systematic learning rate sweeps and cross-width transfer experiments,
-                        demonstrating stable zero-shot hyperparameter transfer under µP and unstable scaling
-                        behavior under standard parameterization.
-                        <br><br>
-                        Trained up to 91M-parameter models on a 4K BPE SVG dataset, achieving 1.57 test
-                        perplexity with 100% SVG validity and fully renderable outputs.
-                    </p>
-                </div>
-                <div class="project-tags">
-                    <span class="tag">PyTorch</span>
-                    <span class="tag">Transformers</span>
-                    <span class="tag">µP</span>
-                    <span class="tag">Scaling Laws</span>
-                    <span class="tag">NLP</span>
-                </div>
-            </div>
-        </div>
-        <div class="projects-more fade-up">
-            <a href="projects.html" class="link link-right">
-                View all my projects →
-            </a>
-        </div>
-    </section>
-
-    <!-- ── LAYER 5: PERSONAL PROJECTS ── -->
-    <section class="layer" id="personal">
-        <p class="section-label fade-up">04 — Personal Labs</p>
-        <h2 class="projects-header fade-up">
-            Things I built<br /><em>for fun.</em>
-        </h2>
-        <div class="project-list">
-            <div class="project-item fade-up">
-                <span class="project-num">01</span>
-                <div class="project-content">
-                    <p class="project-title">PNG VTuber Overlay</p>
-                    <p class="project-desc">
-                        Built a lightweight PNG VTuber system that reacts to keyboard input and mouse
-                        movement using a browser-based interface.
-                        <br><br>
-                        Supports custom expressions triggered by key presses, dynamic mouse-following
-                        overlays, and can be packaged as a standalone desktop application.
-                        <br><br>
-                        Originally created as a simple alternative to Live2D-style avatars for streaming
-                        and online content creation.
-                    </p>
-                    <div class="project-demo-container fade-up">
-                        <div class="demo-placeholder" id="demoPlaceholder">
-                            <button class="demo-btn" id="loadDemoBtn">Load Demo</button>
-                        </div>
-                        <p class="demo-hover-hint" id="demoHoverHint">Hover over the demo to activate key tracking.</p>
-                        <p class="demo-mobile-note">Best experienced on desktop — check it out there to see it in
-                            action.</p>
+        <!-- ── LAYER 2: ABOUT ── -->
+        <section class="layer" id="about" aria-labelledby="about-heading">
+            <p class="section-label fade-up">01 — About</p>
+            <h2 class="section-header fade-up" id="about-heading">
+                TLDR about<br /><em>ME!</em>
+            </h2>
+            <div class="about-grid">
+                <p class="about-text fade-up">
+                    I'm a developer who approaches every project with curiosity, persistence, and determination. If
+                    something captures my interest, I'm committed to seeing it through until it works. My research
+                    interest is in <em>passive NLOS imaging</em> — using ML to
+                    reconstruct scenes that are literally hidden from view.
+                </p>
+                <div class="about-details fade-up">
+                    <div class="detail-row">
+                        <span class="detail-key">Location</span>
+                        <span class="detail-val">Brooklyn, NY</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">School</span>
+                        <span class="detail-val">New York University — M.S. Computer Science, 2027</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Focus</span>
+                        <span class="detail-val">Machine Learning · Passive NLOS Imaging</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Status</span>
+                        <span class="detail-val">Open to full-time offers (6/2027 Onwards)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">GitHub</span>
+                        <span class="detail-val"><a href="https://github.com/Nyang-Lin-Phyo"
+                                target="_blank" rel="noopener noreferrer">@Nyang-Lin-Phyo</a></span>
                     </div>
                 </div>
-                <div class="project-tags">
-                    <span class="tag">Python</span>
-                    <span class="tag">OBS</span>
-                    <span class="tag">WebSocket</span>
-                    <span class="tag">PyInstaller</span>
+            </div>
+        </section>
+
+        <!-- ── LAYER 3: SKILLS ── -->
+        <section class="layer" id="skills" aria-labelledby="skills-heading">
+            <p class="section-label fade-up">02 — Skills</p>
+            <h2 class="section-header fade-up" id="skills-heading">
+                Technologies<br /><em>&amp; Expertise.</em>
+            </h2>
+
+            <div class="about-grid fade-up">
+                <p class="about-text">
+                    Over the past several years I've worked across machine learning,
+                    computer vision, operating systems, networking, distributed systems,
+                    and full-stack web development. My interests are centered around
+                    building reliable systems that combine rigorous engineering with
+                    intelligent software.
+                </p>
+
+                <div class="about-details">
+                    <div class="detail-row">
+                        <span class="detail-key">Languages</span>
+                        <span class="detail-val">Python · C++ · C · Java · JavaScript · SQL · HTML · CSS · R · MATLAB
+                            · Bash · YAML</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Frontend</span>
+                        <span class="detail-val">React · JavaScript · HTML/CSS · AJAX</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Backend</span>
+                        <span class="detail-val">Flask · Node.js · REST APIs · Jinja2</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Databases</span>
+                        <span class="detail-val">SQLite · MySQL · PostgreSQL · MongoDB</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Systems</span>
+                        <span class="detail-val">Linux · Docker · Networking · Socket Programming ·
+                            Multithreading</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">ML / CV</span>
+                        <span class="detail-val">OpenCV · YOLOv7 · PaddleOCR · Machine Learning · Computer
+                            Vision</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-key">Concepts</span>
+                        <span class="detail-val">Operating Systems · Distributed Systems · Information Retrieval ·
+                            Computer Architecture · Concurrent Programming</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ── LAYER 6: CONTACT ── -->
-    <section class="layer" id="contact">
-        <p class="section-label fade-up">05 — Contact</p>
-        <h2 class="contact-big fade-up">
-            Let's<br /><em>connect.</em>
-        </h2>
-        <div class="contact-links fade-up">
-            <div class="contact-link">
-                <span class="contact-link-label">Email</span>
-                <a href="mailto:nlphyo.ramsey@gmail.com">nlphyo.ramsey@gmail.com</a>
+        <!-- ── LAYER 4: PROJECTS ── -->
+        <section class="layer" id="projects" aria-labelledby="projects-heading">
+            <p class="section-label fade-up">03 — Projects</p>
+            <h2 class="section-header fade-up" id="projects-heading">
+                Things<br /><em>I've built.</em>
+            </h2>
+            <div class="project-list">
+                <div class="project-item fade-up">
+                    <span class="project-num" aria-hidden="true">01</span>
+                    <div>
+                        <p class="project-title">High-Speed Research Network (HSRN)</p>
+                        <p class="project-desc">
+                            Audio Systems Team Lead • NYU Tandon
+                            <br><br>
+                            Refactored a legacy distributed real-time audio receiver from a dual-stream
+                            architecture into a scalable multi-sender pipeline capable of supporting synchronized
+                            audio from globally distributed performers.
+                            <br><br>
+                            Designed lock-free audio processing pipelines with per-sender jitter buffers, dynamic
+                            stream subscription, and real-time audio mixing, allowing new performers to join
+                            without interrupting active sessions.
+                            <br><br>
+                            Resolved long-standing plugin lifecycle crashes, simplified stream management, and
+                            established a maintainable architecture that significantly improved reliability for
+                            large-scale collaborative live audio applications.
+                        </p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">C++</span>
+                        <span class="tag">Audio</span>
+                        <span class="tag">Distributed</span>
+                        <span class="tag">Networking</span>
+                        <span class="tag">Concurrency</span>
+                    </div>
+                </div>
+
+                <div class="project-item fade-up">
+                    <span class="project-num" aria-hidden="true">02</span>
+                    <div>
+                        <p class="project-title">M-Fly</p>
+                        <p class="project-desc">
+                            Autonomous Aircraft Computer Vision Platform • UMICH
+                            <br><br>
+                            Collaboratively developed software for an autonomous aircraft capable of terrain
+                            mapping, object detection, object classification, and payload delivery using computer
+                            vision and machine learning.
+                            <br><br>
+                            Integrated OpenCV, YOLOv7, and PaddleOCR into a unified perception pipeline that
+                            enabled the aircraft to identify targets and navigate using visual information
+                            collected during flight.
+                            <br><br>
+                            Worked closely with hardware and software teams to resolve integration challenges,
+                            establishing structured engineering discussions that improved cross-team decision
+                            making and project execution.
+                        </p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">YOLOv7</span>
+                        <span class="tag">OCR</span>
+                        <span class="tag">ML</span>
+                    </div>
+                </div>
+
+                <div class="project-item fade-up">
+                    <span class="project-num" aria-hidden="true">03</span>
+                    <div>
+                        <p class="project-title">Scaling Laws for Transformer Language Models on SVG Code</p>
+                        <p class="project-desc">
+                            Investigated scaling behavior of decoder-only transformer models trained on
+                            structured SVG code, evaluating 10 model variants under Standard Parameterization and
+                            Maximal Update Parameterization (µP).
+                            <br><br>
+                            Conducted systematic learning rate sweeps and cross-width transfer experiments,
+                            demonstrating stable zero-shot hyperparameter transfer under µP and unstable scaling
+                            behavior under standard parameterization.
+                            <br><br>
+                            Trained up to 91M-parameter models on a 4K BPE SVG dataset, achieving 1.57 test
+                            perplexity with 100% SVG validity and fully renderable outputs.
+                        </p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">Transformers</span>
+                        <span class="tag">µP</span>
+                        <span class="tag">Scaling Laws</span>
+                        <span class="tag">NLP</span>
+                    </div>
+                </div>
             </div>
-            <div class="contact-link">
-                <span class="contact-link-label">GitHub</span>
-                <a href="https://github.com/Nyang-Lin-Phyo" target="_blank">github.com/Nyang-Lin-Phyo</a>
+            <div class="projects-more fade-up">
+                <a href="projects.html" class="link link-right">
+                    View all my projects →
+                </a>
             </div>
-            <div class="contact-link">
-                <span class="contact-link-label">LinkedIn</span>
-                <a href="https://www.linkedin.com/in/nyang-lin-phyo/" target="_blank">linkedin.com/in/nyang-lin-phyo</a>
+        </section>
+
+        <!-- ── LAYER 5: PERSONAL PROJECTS ── -->
+        <section class="layer" id="personal" aria-labelledby="personal-heading">
+            <p class="section-label fade-up">04 — Personal Labs</p>
+            <h2 class="section-header fade-up" id="personal-heading">
+                Things I built<br /><em>for fun.</em>
+            </h2>
+            <div class="project-list">
+                <div class="project-item fade-up">
+                    <span class="project-num" aria-hidden="true">01</span>
+                    <div class="project-content">
+                        <p class="project-title">PNG VTuber Overlay</p>
+                        <p class="project-desc">
+                            Built a lightweight PNG VTuber system that reacts to keyboard input and mouse
+                            movement using a browser-based interface.
+                            <br><br>
+                            Supports custom expressions triggered by key presses, dynamic mouse-following
+                            overlays, and can be packaged as a standalone desktop application.
+                            <br><br>
+                            Originally created as a simple alternative to Live2D-style avatars for streaming
+                            and online content creation.
+                        </p>
+                        <div class="project-demo-container fade-up">
+                            <div class="demo-placeholder" id="demoPlaceholder">
+                                <button class="demo-btn" id="loadDemoBtn">Load Demo</button>
+                            </div>
+                            <p class="demo-hover-hint" id="demoHoverHint">Hover over the demo to activate key
+                                tracking.</p>
+                            <p class="demo-mobile-note">Best experienced on desktop — check it out there to see
+                                it in action.</p>
+                        </div>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">OBS</span>
+                        <span class="tag">WebSocket</span>
+                        <span class="tag">PyInstaller</span>
+                    </div>
+                </div>
             </div>
-            <div class="contact-link">
-                <span class="contact-link-label">Resume</span>
-                <a href="assets/Resume.pdf" target="_blank">Download PDF</a>
+        </section>
+
+        <!-- ── LAYER 6: CONTACT ── -->
+        <section class="layer" id="contact" aria-labelledby="contact-heading">
+            <p class="section-label fade-up">05 — Contact</p>
+            <h2 class="contact-big fade-up" id="contact-heading">
+                Let's<br /><em>connect.</em>
+            </h2>
+            <div class="contact-links fade-up">
+                <div class="contact-link">
+                    <span class="contact-link-label">Email</span>
+                    <a href="mailto:nlphyo.ramsey@gmail.com">nlphyo.ramsey@gmail.com</a>
+                </div>
+                <div class="contact-link">
+                    <span class="contact-link-label">GitHub</span>
+                    <a href="https://github.com/Nyang-Lin-Phyo" target="_blank"
+                        rel="noopener noreferrer">github.com/Nyang-Lin-Phyo</a>
+                </div>
+                <div class="contact-link">
+                    <span class="contact-link-label">LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/nyang-lin-phyo/" target="_blank"
+                        rel="noopener noreferrer">linkedin.com/in/nyang-lin-phyo</a>
+                </div>
+                <div class="contact-link">
+                    <span class="contact-link-label">Resume</span>
+                    <a href="assets/Resume.pdf" target="_blank" rel="noopener">Download PDF</a>
+                </div>
             </div>
-        </div>
-        <footer>
-            <span>© 2026 Nyang Lin Phyo</span>
-            <span>Built with Cats</span>
-        </footer>
-    </section>
+            <footer>
+                <span>© 2026 Nyang Lin Phyo</span>
+                <button type="button" class="footer-meow" id="footerMeow">Built with Cats</button>
+            </footer>
+        </section>
 
-    <!-- FADE-IN OBSERVER -->
-    <script>
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    const els = e.target.querySelectorAll('.fade-up');
-                    els.forEach((el, i) => {
-                        setTimeout(() => el.classList.add('visible'), i * 90);
-                    });
-                }
-            });
-        }, { threshold: 0.15 });
+    </main>
 
-        document.querySelectorAll('.layer').forEach(section => observer.observe(section));
+    <!-- page behaviour -->
+    <script src="js/main.js"></script>
+    <script src="js/cat.js"></script>
 
-        const photo = document.getElementById('photoWrap');
-        photo.style.opacity = '0';
-        photo.style.transition = 'opacity 0.7s ease';
-        setTimeout(() => { photo.style.opacity = '1'; }, 300);
-
-        document.getElementById('loadDemoBtn').addEventListener('click', () => {
-            const container = document.getElementById('demoPlaceholder');
-            const hint = document.getElementById('demoHoverHint');
-
-            const iframe = document.createElement('iframe');
-            iframe.src = 'demos/pngvtuber-demo.html';
-            iframe.className = 'project-demo';
-            iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-
-            let hintDismissed = false;
-
-            iframe.addEventListener('mouseenter', () => {
-                iframe.contentWindow?.postMessage({ type: 'focus' }, '*');
-                // fade out hint permanently on first hover
-                if (!hintDismissed) {
-                    hintDismissed = true;
-                    hint.style.opacity = '0';
-                }
-            });
-
-            iframe.addEventListener('mouseleave', () => {
-                iframe.contentWindow?.postMessage({ type: 'blur' }, '*');
-            });
-
-            container.innerHTML = '';
-            container.appendChild(iframe);
-
-            // show hint now that demo is loaded
-            requestAnimationFrame(() => {
-                hint.style.opacity = '1';
-            });
-        });
-    </script>
-
-    <!-- CAT NOISES (shared util) -->
-    <script>
-        const catSounds = [
-            'assets/catSounds/mixkit-angry-cartoon-kitty-meow-94.wav',
-            'assets/catSounds/mixkit-cartoon-kitty-begging-meow-92.wav',
-            'assets/catSounds/mixkit-cartoon-little-cat-meow-91.wav',
-            'assets/catSounds/mixkit-domestic-cat-hungry-meow-45.wav',
-            'assets/catSounds/mixkit-little-cat-attention-meow-86.wav',
-            'assets/catSounds/mixkit-little-cat-pain-meow-87.wav',
-            'assets/catSounds/mixkit-sweet-kitty-meow-93.wav',
-        ];
-
-        const meowVariants = ['meow', 'mrrrow', 'meow!!', 'mew', 'MEOW', 'prrrmeow', 'meow~'];
-
-        function playRandomMeow() {
-            const sound = new Audio(catSounds[Math.floor(Math.random() * catSounds.length)]);
-            sound.volume = 0.6;
-            sound.play().catch(() => { });
-        }
-
-        function spawnMeowFrom(anchorEl) {
-            const word = meowVariants[Math.floor(Math.random() * meowVariants.length)];
-            const span = document.createElement('span');
-            span.textContent = word;
-            Object.assign(span.style, {
-                position: 'fixed',
-                fontFamily: 'var(--serif)',
-                fontSize: (1.1 + Math.random() * 0.7) + 'rem',
-                color: 'var(--purple)',
-                pointerEvents: 'none',
-                whiteSpace: 'nowrap',
-                zIndex: 9999,
-                opacity: 1,
-                transition: 'opacity 0.8s ease, transform 1.2s ease',
-            });
-            const rect = anchorEl.getBoundingClientRect();
-            span.style.left = (rect.left + Math.random() * rect.width - 20) + 'px';
-            span.style.top = (rect.top - 10) + 'px';
-            document.body.appendChild(span);
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    span.style.transform = `translateY(-${40 + Math.random() * 30}px) rotate(${(Math.random() - 0.5) * 20}deg)`;
-                    span.style.opacity = '0';
-                });
-            });
-            setTimeout(() => span.remove(), 1300);
-        }
-
-        const footer = document.querySelector('footer');
-        if (footer) {
-            const spans = footer.querySelectorAll('span');
-            spans.forEach(span => {
-                if (span.textContent.trim() === 'Built with Cats') {
-                    span.style.cursor = 'pointer';
-                    span.addEventListener('click', () => {
-                        playRandomMeow();
-                        spawnMeowFrom(span);
-                    });
-                }
-            });
-        }
-    </script>
-
-    <!-- ══════════════════════════════════════════
-         CAT JAIL LOGIC
-    ══════════════════════════════════════════ -->
-    <script>
-        (function () {
-            const jail = document.getElementById('catJail');
-            const cat = document.getElementById('floatingCat');
-            const hint = document.getElementById('jailDropHint');
-            const label = document.getElementById('jailLabel');
-            if (!jail || !cat) return;
-
-            let jailed = false;
-            let jailMeowTimer = null;
-            let mouseOverJail = false;
-            let catOverJail = false;
-
-            /* ── Expand / shrink helpers ── */
-            function expandJail() { jail.classList.replace('jail-small', 'jail-big'); if (label) label.style.opacity = '1'; }
-            function shrinkJail() { jail.classList.replace('jail-big', 'jail-small'); if (label) label.style.opacity = '0'; }
-            function maybeExpand() { if (mouseOverJail || catOverJail) expandJail(); }
-            function maybeShrink() { if (!mouseOverJail && !catOverJail) shrinkJail(); }
-
-            /* ── Mouse hover ── */
-            jail.addEventListener('mouseenter', () => { mouseOverJail = true; maybeExpand(); });
-            jail.addEventListener('mouseleave', () => { mouseOverJail = false; maybeShrink(); });
-
-            /* ── AABB overlap ── */
-            function rectsOverlap(a, b) {
-                return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
-            }
-
-            /* ── Jailing ── */
-            function jailCat() {
-                jailed = true;
-                jail.classList.add('jailed');
-                jail.style.cursor = 'grab';
-                cat.style.display = 'none';
-                scheduleNextMeow();
-            }
-
-            /* ── Unjailing ── */
-            function unjailCat(mouseX, mouseY) {
-                jailed = false;
-                clearTimeout(jailMeowTimer);
-                jailMeowTimer = null;
-                jail.classList.remove('jailed');
-                jail.style.cursor = 'default';
-                mouseOverJail = false;
-                shrinkJail();
-                /* bring cat back, centered on mouse */
-                cat.style.display = '';
-                if (window._unjailCat) window._unjailCat(mouseX, mouseY);
-            }
-
-            /* ── Drag-out: mousedown on jail when jailed starts the unjail drag ── */
-            jail.addEventListener('mousedown', e => {
-                if (!jailed) return;
-                e.preventDefault();
-                unjailCat(e.clientX, e.clientY);
-            });
-
-            function scheduleNextMeow() {
-                const delay = 10000 + Math.random() * 20000; /* 10–20 s */
-                jailMeowTimer = setTimeout(() => {
-                    if (!jailed) return;
-                    playRandomMeow();
-                    spawnMeowFrom(jail);
-                    scheduleNextMeow();
-                }, delay);
-            }
-
-            /* ── Hooks for floating-cat script ── */
-            window._onCatDragStart = function () {
-                if (!jailed) hint.style.opacity = '0';
-            };
-
-            window._onCatDragMove = function (catX, catY, catW, catH) {
-                if (jailed) return;
-                const catRect = { left: catX, top: catY, right: catX + catW, bottom: catY + catH };
-                const jailRect = jail.getBoundingClientRect();
-                const over = rectsOverlap(catRect, jailRect);
-                if (over !== catOverJail) {
-                    catOverJail = over;
-                    if (over) { expandJail(); hint.style.opacity = '1'; }
-                    else { maybeShrink(); hint.style.opacity = '0'; }
-                }
-            };
-
-            window._onCatDrop = function (catX, catY, catW, catH) {
-                if (jailed) return;
-                const catRect = { left: catX, top: catY, right: catX + catW, bottom: catY + catH };
-                const jailRect = jail.getBoundingClientRect();
-                hint.style.opacity = '0';
-                catOverJail = false;
-                if (rectsOverlap(catRect, jailRect)) {
-                    jailCat();
-                } else {
-                    maybeShrink();
-                }
-            };
-        })();
-    </script>
-
-    <!-- FLOATING CAT -->
+    <!-- hero photo fade-in + PNG VTuber demo loader (index-specific) -->
     <script>
         (function () {
-            const cat = document.getElementById('floatingCat');
-            if (!cat) return;
+            'use strict';
 
-            function init() {
-                const PAD = 0;
-                const nav = document.querySelector('nav');
-                const TOP = nav ? nav.offsetHeight : 0;
-                const MIN_SPEED = 0.07;
-                const MAX_SPEED = 0.8;
-                const CAT_W = cat.offsetWidth;
-                const CAT_H = cat.offsetHeight;
+            /* hero photo fade-in */
+            const photo = document.getElementById('photoWrap');
+            if (photo) {
+                photo.style.opacity = '0';
+                photo.style.transition = 'opacity 0.7s ease';
+                setTimeout(() => { photo.style.opacity = '1'; }, 300);
+            }
 
-                let x = window.innerWidth - CAT_W - 20;
-                let y = TOP + (window.innerHeight - TOP) / 2 - CAT_H / 2;
+            /* PNG VTuber demo loader */
+            document.getElementById('loadDemoBtn').addEventListener('click', () => {
+                const container = document.getElementById('demoPlaceholder');
+                const hint = document.getElementById('demoHoverHint');
 
-                const angle = Math.random() * Math.PI * 2;
-                const speed = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
-                let vx = Math.cos(angle) * speed;
-                let vy = Math.sin(angle) * speed;
+                const iframe = document.createElement('iframe');
+                iframe.src = 'demos/pngvtuber-demo.html';
+                iframe.className = 'project-demo';
+                iframe.title = 'PNG VTuber overlay demo';
+                iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
 
-                let dragging = false;
-                let dragOffX = 0;
-                let dragOffY = 0;
-                let lastMouseX = 0;
-                let lastMouseY = 0;
-                let throwVX = 0;
-                let throwVY = 0;
+                let hintDismissed = false;
 
-                cat.style.pointerEvents = 'auto';
-                cat.style.cursor = 'grab';
-
-                /* ── Unjail hook: called by jail logic to hand the cat back ── */
-                window._unjailCat = function (mouseX, mouseY) {
-                    x = mouseX - CAT_W / 2;
-                    y = mouseY - CAT_H / 2;
-                    cat.style.transform = `translate(${x}px, ${y}px)`;
-                    dragging = true;
-                    dragOffX = CAT_W / 2;
-                    dragOffY = CAT_H / 2;
-                    lastMouseX = mouseX;
-                    lastMouseY = mouseY;
-                    throwVX = 0; throwVY = 0;
-                    vx = 0; vy = 0;
-                    cat.style.cursor = 'grabbing';
-                    cat.querySelector('img').src = 'assets/floatingCatHeld.png';
-                    shakeInterval = setInterval(() => {
-                        shakeX = (Math.random() - 0.5) * 4;
-                        shakeY = (Math.random() - 0.5) * 4;
-                    }, 40);
-                };
-
-                cat.addEventListener('mousedown', e => {
-                    dragging = true;
-                    dragOffX = e.clientX - x;
-                    dragOffY = e.clientY - y;
-                    lastMouseX = e.clientX;
-                    lastMouseY = e.clientY;
-                    throwVX = 0; throwVY = 0;
-                    cat.style.cursor = 'grabbing';
-                    cat.querySelector('img').src = 'assets/floatingCatHeld.png';
-                    shakeInterval = setInterval(() => {
-                        shakeX = (Math.random() - 0.5) * 4;
-                        shakeY = (Math.random() - 0.5) * 4;
-                    }, 40);
-                    e.preventDefault();
-                    if (window._onCatDragStart) window._onCatDragStart();
-                });
-
-                let shakeX = 0, shakeY = 0, shakeInterval = null;
-
-                function scheduleBlink() {
-                    const delay = (3 + Math.random() * 5) * 1000;
-                    setTimeout(() => {
-                        if (dragging) { scheduleBlink(); return; }
-                        cat.querySelector('img').src = 'assets/floatingCatBlinking.png';
-                        setTimeout(() => {
-                            cat.querySelector('img').src = 'assets/floatingCat.png';
-                            scheduleBlink();
-                        }, 150);
-                    }, delay);
-                }
-                scheduleBlink();
-
-                document.addEventListener('mousemove', e => {
-                    if (!dragging) return;
-                    throwVX = e.clientX - lastMouseX;
-                    throwVY = e.clientY - lastMouseY;
-                    lastMouseX = e.clientX;
-                    lastMouseY = e.clientY;
-                    x = e.clientX - dragOffX;
-                    y = e.clientY - dragOffY;
-                    if (window._onCatDragMove) window._onCatDragMove(x, y, CAT_W, CAT_H);
-                });
-
-                document.addEventListener('mouseup', () => {
-                    if (!dragging) return;
-                    dragging = false;
-                    clearInterval(shakeInterval);
-                    shakeInterval = null;
-                    shakeX = 0; shakeY = 0;
-                    cat.style.cursor = 'grab';
-                    cat.querySelector('img').src = 'assets/floatingCat.png';
-                    vx = throwVX; vy = throwVY;
-                    if (window._onCatDrop) window._onCatDrop(x, y, CAT_W, CAT_H);
-                });
-
-                function tick() {
-                    cat.style.visibility = 'visible';
-
-                    if (!dragging) {
-                        const spd = Math.sqrt(vx * vx + vy * vy);
-                        if (spd > MAX_SPEED) {
-                            const factor = MAX_SPEED / spd;
-                            vx += (vx * factor - vx) * 0.05;
-                            vy += (vy * factor - vy) * 0.05;
-                        } else if (spd < MIN_SPEED && spd > 0.001) {
-                            const factor = MIN_SPEED / spd;
-                            vx += (vx * factor - vx) * 0.05;
-                            vy += (vy * factor - vy) * 0.05;
-                        } else if (spd <= 0.001) {
-                            const a = Math.random() * Math.PI * 2;
-                            vx = Math.cos(a) * MIN_SPEED;
-                            vy = Math.sin(a) * MIN_SPEED;
-                        }
-
-                        x += vx; y += vy;
-
-                        if (x <= PAD) { x = PAD; vx = Math.abs(vx); }
-                        if (x >= window.innerWidth - CAT_W - PAD) { x = window.innerWidth - CAT_W - PAD; vx = -Math.abs(vx); }
-                        if (y <= TOP) { y = TOP; vy = Math.abs(vy); }
-                        if (y >= window.innerHeight - CAT_H) { y = window.innerHeight - CAT_H; vy = -Math.abs(vy); }
-
-                        cat.style.transform = `translate(${x}px, ${y}px)`;
-                    } else {
-                        cat.style.transform = `translate(${x + shakeX}px, ${y + shakeY}px)`;
+                iframe.addEventListener('mouseenter', () => {
+                    iframe.contentWindow?.postMessage({ type: 'focus' }, '*');
+                    if (!hintDismissed) {
+                        hintDismissed = true;
+                        hint.style.opacity = '0';
                     }
+                });
 
-                    requestAnimationFrame(tick);
-                }
+                iframe.addEventListener('mouseleave', () => {
+                    iframe.contentWindow?.postMessage({ type: 'blur' }, '*');
+                });
 
-                tick();
-            }
+                container.innerHTML = '';
+                container.appendChild(iframe);
 
-            const img = cat.querySelector('img');
-            if (img.complete) init();
-            else img.addEventListener('load', init);
+                requestAnimationFrame(() => {
+                    hint.style.opacity = '1';
+                });
+            });
         })();
     </script>
+
 </body>
 
 </html>
