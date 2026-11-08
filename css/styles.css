@@ -36,8 +36,6 @@
     --glow: rgba(201, 184, 240, 0.08);
     --nav-bg: rgba(13, 11, 20, 0.85);
     --surface: rgba(255, 255, 255, 0.02);
-    --jail-fill: rgba(42, 30, 74, 0.45);
-    --jail-bar: #c9b8f0;
     --cat-shadow: rgba(201, 184, 240, 0.18);
     --noise-opacity: 0.4;
 
@@ -64,8 +62,6 @@
     --glow: rgba(87, 59, 181, 0.07);
     --nav-bg: rgba(244, 241, 251, 0.88);
     --surface: rgba(87, 59, 181, 0.03);
-    --jail-fill: rgba(87, 59, 181, 0.1);
-    --jail-bar: #6a52c4;
     --cat-shadow: rgba(106, 82, 196, 0.25);
     --noise-opacity: 0.3;
 
@@ -789,7 +785,7 @@ footer {
     transform: translateY(0);
 }
 
-/* ── 13. FLOATING CAT & CAT JAIL ────────────────── */
+/* ── 13. FLOATING CAT ───────────────────────────── */
 .floating-cat {
     position: fixed;
     left: 0;
@@ -807,79 +803,6 @@ footer {
     width: 100%;
     display: block;
     filter: drop-shadow(0 0 18px var(--cat-shadow));
-}
-
-#catJail {
-    position: fixed;
-    right: clamp(1rem, 3vw, 3rem);
-    bottom: clamp(1rem, 3vw, 3rem);
-    z-index: 12;
-    cursor: default;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* grow up-and-left from the corner so it never goes off-screen */
-    transform-origin: bottom right;
-}
-
-#catJail.jail-small {
-    transform: scale(0.38);
-}
-
-#catJail.jail-big {
-    transform: scale(1);
-}
-
-.jail-svg {
-    display: block;
-    width: 100px;
-    height: 100px;
-    filter: drop-shadow(0 0 8px var(--cat-shadow));
-}
-
-.jail-svg rect {
-    fill: var(--jail-fill);
-    stroke: var(--jail-bar);
-    stroke-width: 1.5;
-}
-
-.jail-svg line {
-    stroke: var(--jail-bar);
-    stroke-width: 2.5;
-    stroke-linecap: round;
-}
-
-#catJail.jailed .jail-svg {
-    filter: drop-shadow(0 0 14px var(--cat-shadow));
-}
-
-#jailedCatImg {
-    position: absolute;
-    width: 52px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: none;
-    pointer-events: none;
-}
-
-#catJail.jailed #jailedCatImg {
-    display: block;
-}
-
-.jail-label {
-    position: absolute;
-    bottom: calc(100% + 0.5rem);
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--purple-dim);
-    opacity: 0;
-    transition: opacity 0.3s;
-    font-family: var(--mono);
-    pointer-events: none;
-    white-space: nowrap;
 }
 
 /* ── 14. STAT GRID (personal page) ──────────────── */
@@ -1002,7 +925,6 @@ footer {
 @media (max-width: 900px) {
 
     .floating-cat,
-    #catJail,
     .hero-photo-wrap {
         display: none;
     }
