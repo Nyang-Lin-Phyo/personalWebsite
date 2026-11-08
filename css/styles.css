@@ -378,6 +378,83 @@ nav {
     margin-top: 2rem;
 }
 
+/* ── PROJECT GRID (index "Things I've built") ─────
+   Two columns × three rows; the left column holds the
+   original three projects, the right the newer ones.
+   Mobile falls back to one column, original projects only. */
+.projects-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 3rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.projects-grid .project-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    grid-template-areas:
+        'num  tags'
+        'text tags';
+    column-gap: 1.5rem;
+    align-items: start;
+    padding: 1.8rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.projects-grid .project-num {
+    grid-area: num;
+    margin-bottom: 0.35rem;
+}
+
+.projects-grid .project-content {
+    grid-area: text;
+}
+
+/* tags sit as a vertical rail along the side of each card */
+.projects-grid .project-tags {
+    grid-area: tags;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.45rem;
+    margin-top: 0.1rem;
+    padding-top: 0;
+}
+
+@media (max-width: 700px) {
+    .projects-grid {
+        grid-auto-flow: row;
+        grid-template-rows: auto;
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+    .projects-grid .project-item {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            'num'
+            'text'
+            'tags';
+        column-gap: 0;
+    }
+
+    /* keep the tags visible on mobile as a wrapping row */
+    .projects-grid .project-tags {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+
+    /* on mobile keep only the first three (original) projects */
+    .projects-grid .project-item:nth-child(n + 4) {
+        display: none;
+    }
+}
+
 /* ── 8. DEMO EMBED ──────────────────────────────── */
 .project-demo-container {
     margin-top: 1.5rem;
