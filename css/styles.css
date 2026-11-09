@@ -319,6 +319,12 @@ nav {
     max-width: none;
 }
 
+/* Skills: same three equal columns as About — text | details | (left open) */
+#skills .about-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: none;
+}
+
 .about-now-title {
     margin-bottom: 2rem;
 }
@@ -1187,6 +1193,11 @@ footer {
 
     /* about's third column collapses into the stack too */
     #about .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* skills collapses the same way on phones */
+    #skills .about-grid {
         grid-template-columns: 1fr;
     }
 
