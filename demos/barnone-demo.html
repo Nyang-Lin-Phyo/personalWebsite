@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar None — live demo</title>
+
+    <!-- same fonts as the parent page (this runs in an iframe) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #0d0b14;
+            --surface: rgba(212, 184, 255, 0.05);
+            --purple: #d4b8ff;
+            --purple-dim: rgba(212, 184, 255, 0.55);
+            --text: #ede8ff;
+            --muted: rgba(237, 232, 255, 0.55);
+            --line: rgba(212, 184, 255, 0.18);
+            --err: #ff9d9d;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --mono: 'DM Mono', 'Courier New', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 1.25rem 1.25rem 1.5rem;
+        }
+
+        .wrap {
+            max-width: 470px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: 1.7rem;
+            color: var(--purple);
+            line-height: 1.1;
+        }
+
+        .tagline {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.3rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .tagline em {
+            font-style: normal;
+            color: var(--purple-dim);
+        }
+
+        .key {
+            display: block;
+            font-size: 0.58rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.35rem;
+        }
+
+        /* file row */
+        .file-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--surface);
+            padding: 0.6rem 0.75rem;
+            margin-bottom: 0.9rem;
+            cursor: pointer;
+        }
+
+        .file-row .key {
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .file-name {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--text);
+            font-size: 0.72rem;
+        }
+
+        .file-name.empty {
+            color: var(--muted);
+        }
+
+        .file-btn {
+            flex-shrink: 0;
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 0.35rem 0.7rem;
+            color: var(--purple);
+            transition: 0.2s;
+        }
+
+        .file-row:hover .file-btn {
+            background: rgba(212, 184, 255, 0.1);
+            border-color: var(--purple-dim);
+        }
+
+        .file-row input[type="file"] {
+            display: none;
+        }
+
+        /* controls */
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.7rem 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        select {
+            width: 100%;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 0.45rem 0.5rem;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: var(--purple-dim);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        option {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* buttons */
+        .primary {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--purple);
+            padding: 0.6rem 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .primary:hover:not(:disabled) {
+            background: rgba(212, 184, 255, 0.1);
+            border-color: var(--purple-dim);
+        }
+
+        .primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* status + results */
+        .status {
+            min-height: 1.2rem;
+            font-size: 0.68rem;
+            color: var(--purple-dim);
+            margin-top: 0.7rem;
+            letter-spacing: 0.04em;
+        }
+
+        .status.error {
+            color: var(--err);
+        }
+
+        .results {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--surface);
+            padding: 0.8rem 0.85rem;
+            margin-top: 0.6rem;
+        }
+
+        .readout {
+            font-size: 0.75rem;
+            color: var(--text);
+        }
+
+        .tc {
+            font-size: 0.66rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+            letter-spacing: 0.06em;
+        }
+
+        .results .primary {
+            margin-top: 0.7rem;
+            width: 100%;
+        }
+
+        .resolve-hint {
+            font-size: 0.6rem;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            margin-top: 1rem;
+            border-top: 1px solid var(--line);
+            padding-top: 0.7rem;
+        }
+
+        .resolve-hint b {
+            font-weight: 400;
+            color: var(--purple-dim);
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 430px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .file-row {
+                flex-wrap: wrap;
+            }
+
+            .file-name {
+                flex-basis: 100%;
+                order: 3;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <h1>Bar None - Lite Version</h1>
+            <p class="tagline">beat detection → <em>Resolve markers</em></p>
+        </header>
+
+        <label class="file-row" for="fileInput">
+            <span class="key">Track</span>
+            <span class="file-name empty" id="fileName">no file chosen</span>
+            <span class="file-btn">Choose file</span>
+            <input id="fileInput" type="file" accept="audio/*" />
+        </label>
+
+        <div class="controls">
+            <label>
+                <span class="key">Marker mode</span>
+                <select id="modeSelect">
+                    <option value="both" selected>Both (bars + beats)</option>
+                    <option value="all">All beats</option>
+                    <option value="downbeats">Downbeats only</option>
+                    <option value="cut">Cut points</option>
+                </select>
+            </label>
+
+            <label id="densityRow" hidden>
+                <span class="key">Cut spacing</span>
+                <select id="densitySelect">
+                    <option value="tight">Tight 0.5 s</option>
+                    <option value="medium" selected>Medium 1.0 s</option>
+                    <option value="loose">Loose 1.5 s</option>
+                </select>
+            </label>
+
+            <label>
+                <span class="key">Frame rate</span>
+                <select id="fpsSelect">
+                    <option value="23.976">23.976</option>
+                    <option value="24" selected>24</option>
+                    <option value="25">25</option>
+                    <option value="29.97">29.97</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="59.94">59.94</option>
+                    <option value="60">60</option>
+                </select>
+            </label>
+        </div>
+
+        <button id="detectBtn" class="primary" disabled>Detect beats</button>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+
+        <section id="results" class="results" hidden>
+            <p id="readout" class="readout"></p>
+            <p id="firstTc" class="tc"></p>
+            <button id="downloadBtn" class="primary" disabled>Download EDL</button>
+        </section>
+
+        <p class="resolve-hint">
+            <b>In Resolve:</b> select your timeline → Timelines → Import → Timeline
+            Markers from EDL.
+        </p>
+    </div>
+
+    <script src="../js/barnone.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            var fileInput = document.getElementById('fileInput');
+            var fileName = document.getElementById('fileName');
+            var modeSelect = document.getElementById('modeSelect');
+            var densityRow = document.getElementById('densityRow');
+            var densitySelect = document.getElementById('densitySelect');
+            var fpsSelect = document.getElementById('fpsSelect');
+            var detectBtn = document.getElementById('detectBtn');
+            var statusEl = document.getElementById('status');
+            var results = document.getElementById('results');
+            var readout = document.getElementById('readout');
+            var firstTc = document.getElementById('firstTc');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            var file = null;
+            var worker = null;
+            var running = false;
+            var lastResult = null; // last successful detection
+            var markers = null; // marker list of that result
+            var autoTitle = 'timeline'; // EDL title, derived from the filename
+
+            /* ── helpers ── */
+
+            function setStatus(text, isError) {
+                statusEl.textContent = text || '';
+                statusEl.classList.toggle('error', !!isError);
+            }
+
+            function isCutMode() {
+                return modeSelect.value === 'cut';
+            }
+
+            function syncModeWidgets() {
+                densityRow.hidden = !isCutMode();
+                detectBtn.textContent = isCutMode()
+                    ? 'Detect cut points'
+                    : 'Detect beats';
+            }
+
+            function updateFirstTc() {
+                if (!markers || !markers.length) {
+                    firstTc.textContent = 'first marker —';
+                    return;
+                }
+                var rate = BarNone.getFrameRate(fpsSelect.value);
+                var base = BarNone.parseTimecode(BarNone.DEFAULT_TIMELINE_START_TC, rate);
+                var tc = BarNone.framesToTimecode(
+                    base + BarNone.secondsToFrames(markers[0].t, rate),
+                    rate
+                );
+                firstTc.textContent = 'first marker ' + tc;
+            }
+
+            function round1(x) {
+                return Math.round(x * 10) / 10;
+            }
+
+            /* ── invalidation (mirrors the desktop app) ── */
+
+            function invalidate() {
+                if (!lastResult) return;
+                lastResult = null;
+                markers = null;
+                results.hidden = true;
+                downloadBtn.disabled = true;
+                setStatus('Options changed — press Detect again.', false);
+            }
+
+            /* ── file picking ── */
+
+            fileInput.addEventListener('change', function () {
+                file = fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+                if (file) {
+                    fileName.textContent = file.name;
+                    fileName.classList.remove('empty');
+                    autoTitle = file.name.replace(/\.[^.]+$/, '') || 'timeline';
+                    detectBtn.disabled = false;
+                } else {
+                    fileName.textContent = 'no file chosen';
+                    fileName.classList.add('empty');
+                    autoTitle = 'timeline';
+                    detectBtn.disabled = true;
+                }
+                invalidate();
+            });
+
+            modeSelect.addEventListener('change', function () {
+                syncModeWidgets();
+                invalidate();
+            });
+
+            densitySelect.addEventListener('change', invalidate);
+
+            fpsSelect.addEventListener('change', function () {
+                if (markers) updateFirstTc(); // no re-detect needed for fps
+            });
+
+            /* ── detection ── */
+
+            function setControlsDisabled(disabled) {
+                fileInput.disabled = disabled;
+                modeSelect.disabled = disabled;
+                densitySelect.disabled = disabled;
+                fpsSelect.disabled = disabled;
+            }
+
+            function fail(message) {
+                running = false;
+                detectBtn.disabled = !file;
+                setControlsDisabled(false);
+                setStatus(message, true);
+            }
+
+            function succeed(result) {
+                running = false;
+                detectBtn.disabled = false;
+                setControlsDisabled(false);
+                lastResult = result;
+                markers = result.markers;
+
+                var duration = BarNone.formatDuration(result.duration);
+                if (isCutMode()) {
+                    var gap = BarNone.CUT_DENSITY_GAPS[densitySelect.value];
+                    readout.textContent =
+                        result.cutCount + ' cut points · ≥' + gap + 's apart · ' + duration;
+                } else {
+                    readout.textContent =
+                        round1(result.tempo) + ' BPM · ' +
+                        result.beatCount + ' beats · ' +
+                        result.barCount + ' bars · ' + duration;
+                }
+                updateFirstTc();
+                results.hidden = false;
+                downloadBtn.disabled = false;
+                setStatus('', false);
+            }
+
+            function onWorkerMessage(event) {
+                var data = event.data;
+                if (data.progress) {
+                    setStatus(data.progress, false);
+                    return;
+                }
+                if (data.error) {
+                    fail(data.error.message);
+                    return;
+                }
+                if (data.result) {
+                    succeed(data.result);
+                }
+            }
+
+            detectBtn.addEventListener('click', function () {
+                if (running) return;
+                if (!file) {
+                    setStatus('Choose a music file first.', true);
+                    return;
+                }
+                running = true;
+                detectBtn.disabled = true;
+                results.hidden = true;
+                downloadBtn.disabled = true;
+                setControlsDisabled(true);
+                setStatus('Loading audio…', false);
+
+                file
+                    .arrayBuffer()
+                    .then(function (arrayBuffer) {
+                        // decode + browser resample run here (Web Audio is
+                        // main-thread only); all detection runs in the worker
+                        return BarNone.decodeAndResample(arrayBuffer);
+                    })
+                    .then(function (pcm) {
+                        if (!worker) {
+                            worker = new Worker('../js/barnone-worker.js');
+                            worker.onmessage = onWorkerMessage;
+                            worker.onerror = function (e) {
+                                fail(e.message || 'worker failed to start');
+                            };
+                        }
+                        worker.postMessage(
+                            {
+                                pcm: pcm,
+                                sr: BarNone.SR,
+                                mode: modeSelect.value,
+                                gap: BarNone.CUT_DENSITY_GAPS[densitySelect.value],
+                                fps: fpsSelect.value,
+                                title: autoTitle,
+                                clipTC: BarNone.DEFAULT_CLIP_SOURCE_TC,
+                                timelineTC: BarNone.DEFAULT_TIMELINE_START_TC,
+                            },
+                            [pcm.buffer]
+                        );
+                    })
+                    .catch(function (err) {
+                        fail(
+                            'Could not decode this file — ' +
+                            ((err && err.message) || err) +
+                            '. Try an mp3, wav, or flac.'
+                        );
+                    });
+            });
+
+            /* ── EDL download ── */
+
+            downloadBtn.addEventListener('click', function () {
+                if (!markers) return;
+                var title = autoTitle;
+                var rate = BarNone.getFrameRate(fpsSelect.value);
+                var edl = BarNone.buildEdl(
+                    title,
+                    markers,
+                    rate,
+                    BarNone.DEFAULT_CLIP_SOURCE_TC,
+                    BarNone.DEFAULT_TIMELINE_START_TC
+                );
+                var blob = new Blob([edl], { type: 'text/plain' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = title + '.edl';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(function () {
+                    URL.revokeObjectURL(url);
+                }, 1000);
+            });
+
+            syncModeWidgets();
+        })();
+    </script>
+</body>
+
+</html>

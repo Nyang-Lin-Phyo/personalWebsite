@@ -356,10 +356,14 @@ nav {
 }
 
 /* ── 7. PROJECTS ────────────────────────────────── */
+/* Personal Labs: full-width two-column card grid on desktop (PNG VTuber
+   and Bar None side by side), single column on mobile. */
 .project-list {
-    display: flex;
-    flex-direction: column;
-    max-width: 860px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 3rem;
+    max-width: none;
+    border-bottom: 1px solid var(--line);
 }
 
 .project-item {
@@ -371,8 +375,30 @@ nav {
     border-top: 1px solid var(--line);
 }
 
-.project-item:last-child {
-    border-bottom: 1px solid var(--line);
+/* card layout: number on top, content under it, tags as a vertical
+   rail on the right; even borders on every card in the grid */
+.project-list .project-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    grid-template-areas:
+        'num    tags'
+        'content tags';
+    column-gap: 1.5rem;
+    align-items: start;
+    border-bottom: none;
+}
+
+.project-list .project-item:last-child {
+    border-bottom: none;
+}
+
+.project-list .project-num {
+    grid-area: num;
+    margin-bottom: 0.35rem;
+}
+
+.project-list .project-content {
+    grid-area: content;
 }
 
 .project-num {
@@ -401,6 +427,33 @@ nav {
     flex-wrap: wrap;
     gap: 0.4rem;
     justify-content: flex-end;
+}
+
+/* tags sit as a vertical rail along the side of each card */
+.project-list .project-tags {
+    grid-area: tags;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 0.45rem;
+    margin-top: 0.1rem;
+    padding-top: 0;
+}
+
+/* repo link under the Bar None demo */
+.project-repo-link {
+    margin-top: 1.25rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+}
+
+.project-repo-link a {
+    color: var(--purple-dim);
+    transition: color 0.2s ease;
+}
+
+.project-repo-link a:hover {
+    color: var(--purple);
 }
 
 .tag {
@@ -1207,6 +1260,33 @@ footer {
 
     .project-item {
         grid-template-columns: 2rem 1fr;
+    }
+
+    /* Personal Labs: stack the cards — PNG VTuber on top of Bar None */
+    .project-list {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+    .project-list .project-item {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            'num'
+            'content'
+            'tags';
+        column-gap: 0;
+        row-gap: 1rem;
+    }
+
+    /* on mobile the tags wrap as a row along the bottom of the card */
+    .project-list .project-tags {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.4rem;
+        margin-top: 0;
     }
 
     .project-tags {

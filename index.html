@@ -417,7 +417,7 @@
                                 <button class="demo-btn" id="loadDemoBtn">Load Demo</button>
                             </div>
                             <p class="demo-hover-hint" id="demoHoverHint">Hover over the demo to activate key
-                                tracking.</p>
+                                tracking.<br>Works better on PC!</p>
                             <p class="demo-mobile-note">Best experienced on desktop — check it out there to see
                                 it in action.</p>
                         </div>
@@ -426,6 +426,46 @@
                         <span class="tag">Python</span>
                         <span class="tag">OBS</span>
                         <span class="tag">WebSocket</span>
+                        <span class="tag">PyInstaller</span>
+                    </div>
+                </div>
+                <div class="project-item fade-up">
+                    <span class="project-num" aria-hidden="true">02</span>
+                    <div class="project-content">
+                        <p class="project-title">Bar None</p>
+                        <p class="project-desc">
+                            Built a portable Windows app that analyzes any music file and exports a
+                            CMX3600 EDL carrying Resolve markers.
+                            <br><br>
+                            Wrote the DSP pipeline from scratch on top of librosa: kick band
+                            (40–150 Hz) downbeat scoring with meter/phase inference averaged
+                            across track sections, silent intro trimming, punch aware onset
+                            snapping that can't hop onto offbeats, and a meter free cut point
+                            mode that finds strong accents for cutting clips to music — tuned to
+                            stay frame accurate across every supported rate from 23.976 to 60 fps.
+                            <br><br>
+                            Ported the same pipeline to JavaScript as a live web demo: audio
+                            decoding and all DSP run locally in a Web Worker, delivering a
+                            ready to import EDL in seconds with no upload, no server, and no
+                            install.
+                        </p>
+                        <div class="project-demo-container fade-up">
+                            <div class="demo-placeholder" id="barNonePlaceholder">
+                                <button class="demo-btn" id="loadBarNoneBtn">Load Demo</button>
+                            </div>
+                            <p class="demo-hover-hint" id="barNoneHoverHint">Pick a song, hit detect, download the
+                                EDL — then import it into DaVinci Resolve.</p>
+                        </div>
+                        <p class="project-repo-link">
+                            <a href="https://github.com/Nyang-Lin-Phyo/bar-none" target="_blank"
+                                rel="noopener noreferrer">github.com/Nyang-Lin-Phyo/bar-none ↗</a>
+                        </p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">librosa</span>
+                        <span class="tag">DSP</span>
+                        <span class="tag">Web Audio</span>
                         <span class="tag">PyInstaller</span>
                     </div>
                 </div>
@@ -533,6 +573,26 @@
                 iframe.addEventListener('mouseleave', () => {
                     iframe.contentWindow?.postMessage({ type: 'blur' }, '*');
                 });
+
+                container.innerHTML = '';
+                container.appendChild(iframe);
+
+                requestAnimationFrame(() => {
+                    hint.style.opacity = '1';
+                });
+            });
+
+            /* Bar None demo loader (independent of the VTuber one) */
+            document.getElementById('loadBarNoneBtn').addEventListener('click', () => {
+                const container = document.getElementById('barNonePlaceholder');
+                const hint = document.getElementById('barNoneHoverHint');
+
+                const iframe = document.createElement('iframe');
+                iframe.src = 'demos/barnone-demo.html';
+                iframe.className = 'project-demo';
+                iframe.title = 'Bar None demo';
+                // allow-downloads so the sandboxed iframe can hand over the .edl
+                iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-downloads');
 
                 container.innerHTML = '';
                 container.appendChild(iframe);
