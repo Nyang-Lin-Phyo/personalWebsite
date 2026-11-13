@@ -52,6 +52,7 @@
                 <li><a href="#hero-personal">Home</a></li>
                 <li><a href="#analytics">Analytics</a></li>
                 <li><a href="#drawing">Drawing</a></li>
+                <li><a href="#video">Video</a></li>
                 <li>
                     <button type="button" id="themeToggle" class="theme-toggle" aria-pressed="false">
                         <svg class="icon-sun" width="14" height="14" aria-hidden="true">
@@ -107,6 +108,18 @@
 
             <div class="art-row fade-up" id="artRow" aria-label="Recent drawings">
                 <p class="art-loading" id="artLoading">Loading recent drawings…</p>
+            </div>
+        </section>
+
+        <!-- ── VIDEO EDITING ── -->
+        <section class="layer" id="video" aria-labelledby="video-heading">
+            <p class="section-label fade-up">03 — Video Editing</p>
+            <h2 class="section-header fade-up" id="video-heading">
+                Footage,<br /><em>but shorter.</em>
+            </h2>
+
+            <div class="video-row fade-up" id="videoRow" aria-label="Video editing showcase">
+                <p class="art-loading" id="videoLoading">Loading footage…</p>
             </div>
         </section>
 
@@ -344,6 +357,112 @@
             }
 
             loadArt();
+        })();
+    </script>
+
+    <!-- VIDEO: auto-picks one random video from assets/video in the pushed repo -->
+    <script>
+        (function () {
+            'use strict';
+
+            const row = document.getElementById('videoRow');
+            const loading = document.getElementById('videoLoading');
+            if (!row || !loading) return;
+
+            /* typical browser-playable containers — drop a file with any of
+               these extensions into assets/video and it shows up here */
+            const VIDEO_EXTS = ['.mp4', '.webm', '.mov', '.m4v', '.ogv'];
+            const FOLDER = 'assets/video/';
+            /* contents of assets/video on the default branch — swap files there
+               and they update here without touching this page */
+            const API_URL =
+                'https://api.github.com/repos/Nyang-Lin-Phyo/personalWebsite/contents/assets/video';
+
+            function fail(msg) {
+                loading.textContent = msg;
+                loading.classList.add('art-error');
+            }
+
+            /* dev servers (python -m http.server …) answer a directory request
+               with an HTML listing; GitHub Pages 404s it, so we fall back to
+               the API there */
+            async function listLocal() {
+                const res = await fetch(FOLDER);
+                if (!res.ok) return null;
+                const html = await res.text();
+                if (!/<a\s/i.test(html)) return null;
+                const names = [];
+                const re = /href="([^"]+)"/g;
+                let m;
+                while ((m = re.exec(html))) {
+                    const name = decodeURIComponent(m[1]);
+                    if (!name.includes('/') && VIDEO_EXTS.some(e => name.toLowerCase().endsWith(e))) {
+                        names.push(name);
+                    }
+                }
+                return names.length ? names : null;
+            }
+
+            async function listRemote() {
+                const res = await fetch(API_URL, { headers: { Accept: 'application/vnd.github+json' } });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const files = await res.json();
+                return files
+                    .filter(f => f.type === 'file' && VIDEO_EXTS.some(e => f.name.toLowerCase().endsWith(e)))
+                    .map(f => f.name);
+            }
+
+            async function loadVideo() {
+                let names = null;
+                try {
+                    names = await listLocal();
+                } catch (e) { /* offline / file:// — fall through to the API */ }
+
+                if (!names) {
+                    try {
+                        names = await listRemote();
+                    } catch (err) {
+                        fail('Footage could not load right now (GitHub API). Try again later.');
+                        return;
+                    }
+                }
+
+                if (!names.length) {
+                    fail('No videos in the folder yet.');
+                    return;
+                }
+
+                /* a fresh random pick on every page load */
+                const name = names[Math.floor(Math.random() * names.length)];
+
+                loading.remove();
+
+                const item = document.createElement('div');
+                item.className = 'video-item';
+
+                const video = document.createElement('video');
+                video.src = FOLDER + encodeURIComponent(name);
+                video.controls = true;
+                video.preload = 'metadata';
+                video.setAttribute('playsinline', '');
+
+                /* decorative badge until the visitor starts playback — it never
+                   takes clicks itself, the video's native controls do */
+                const badge = document.createElement('span');
+                badge.className = 'video-play';
+                badge.setAttribute('aria-hidden', 'true');
+                badge.innerHTML =
+                    '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
+
+                video.addEventListener('play', () => { badge.hidden = true; });
+                video.addEventListener('pause', () => { badge.hidden = false; });
+                video.addEventListener('ended', () => { badge.hidden = false; });
+
+                item.append(video, badge);
+                row.appendChild(item);
+            }
+
+            loadVideo();
         })();
     </script>
 

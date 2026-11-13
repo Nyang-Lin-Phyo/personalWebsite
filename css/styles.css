@@ -419,7 +419,7 @@ nav {
 .project-desc {
     font-size: 0.78rem;
     color: var(--muted);
-    max-width: 55ch;
+    max-width: 75ch;
 }
 
 .project-tags {
@@ -564,7 +564,7 @@ nav {
 
 .project-demo {
     width: 100%;
-    max-width: 520px;
+    max-width: 600px;
     height: 520px;
     border-radius: 12px;
     border: 1px solid var(--line);
@@ -574,7 +574,7 @@ nav {
 
 .demo-placeholder {
     width: 100%;
-    max-width: 520px;
+    max-width: 600px;
     height: 520px;
     border: 1px solid var(--line);
     border-radius: 12px;
@@ -1132,6 +1132,56 @@ footer {
     text-transform: none;
     letter-spacing: 0.05em;
     color: var(--purple-dim);
+}
+
+/* ── VIDEO EDITING ─────────────────────────────────── */
+.video-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 3.5rem;
+}
+
+.video-item {
+    position: relative;
+    width: 100%;
+    max-width: 860px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+}
+
+.video-item video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(72vh, 620px);
+    object-fit: contain;
+    background: #000;
+}
+
+/* centered play badge shown until playback starts */
+.video-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.25rem;
+    height: 4.25rem;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: rgba(13, 11, 20, 0.6);
+    color: var(--purple);
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.video-play[hidden] {
+    display: none;
 }
 
 /* ── 15. PROJECTS PAGE ──────────────────────────── */
