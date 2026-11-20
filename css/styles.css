@@ -22,27 +22,31 @@
 ═══════════════════════════════════════════════════ */
 
 /* ── 1. TOKENS ────────────────────────────────────── */
+/* Palette: Charcoal #2b2b2e · Dusty Purple #6b5b7b · Gold #f2c14e
+   Dark: gold is the accent (text/links/buttons), dusty purple decorates
+   gradients. Light: dusty purple becomes the accent (gold fails contrast
+   on paper), gold shows up in the gradient washes. */
 :root {
     color-scheme: dark;
 
-    --bg: #0d0b14;
-    --bg2: #120f1e;
-    --bg3: #0f0c1a;
-    --purple: #d4b8ff;
-    --purple-dim: #a87fe8;
-    --text: #ede8ff;
-    --muted: #9286b8;
-    --line: rgba(201, 184, 240, 0.15);
-    --glow: rgba(201, 184, 240, 0.08);
-    --nav-bg: rgba(13, 11, 20, 0.85);
-    --surface: rgba(255, 255, 255, 0.02);
-    --cat-shadow: rgba(201, 184, 240, 0.18);
+    --bg: #2b2b2e;
+    --bg2: #323237;
+    --bg3: #2e2e33;
+    --purple: #f2c14e;
+    --purple-dim: #c2a04e;
+    --text: #f0ede6;
+    --muted: #9e9a94;
+    --line: rgba(240, 237, 230, 0.14);
+    --glow: rgba(242, 193, 78, 0.1);
+    --nav-bg: rgba(43, 43, 46, 0.85);
+    --surface: rgba(255, 255, 255, 0.03);
+    --cat-shadow: rgba(240, 237, 230, 0.18);
     --noise-opacity: 0.4;
 
-    /* hero gradient blobs (personal page) */
-    --gradient-a: rgba(90, 60, 180, 0.18);
-    --gradient-b: rgba(140, 80, 200, 0.12);
-    --gradient-c: rgba(60, 30, 120, 0.15);
+    /* hero gradient blobs (personal page) — dusty purple + gold */
+    --gradient-a: rgba(107, 91, 123, 0.38);
+    --gradient-b: rgba(242, 193, 78, 0.12);
+    --gradient-c: rgba(88, 74, 104, 0.3);
 
     --serif: 'Cormorant Garamond', Georgia, serif;
     --mono: 'DM Mono', monospace;
@@ -51,24 +55,24 @@
 :root[data-theme='light'] {
     color-scheme: light;
 
-    --bg: #f4f1fb;
-    --bg2: #ece7f5;
-    --bg3: #f0ecf8;
-    --purple: #573bb5;
-    --purple-dim: #6a52c4;
-    --text: #2b2340;
-    --muted: #5e5478;
-    --line: rgba(86, 62, 145, 0.25);
-    --glow: rgba(87, 59, 181, 0.07);
-    --nav-bg: rgba(244, 241, 251, 0.88);
-    --surface: rgba(87, 59, 181, 0.03);
-    --cat-shadow: rgba(106, 82, 196, 0.25);
+    --bg: #f5f1e7;
+    --bg2: #ede8db;
+    --bg3: #f0ebdf;
+    --purple: #6b5b7b;
+    --purple-dim: #574a66;
+    --text: #2b2b2e;
+    --muted: #67635c;
+    --line: rgba(43, 43, 46, 0.18);
+    --glow: rgba(242, 193, 78, 0.22);
+    --nav-bg: rgba(245, 241, 231, 0.88);
+    --surface: rgba(107, 91, 123, 0.06);
+    --cat-shadow: rgba(43, 43, 46, 0.2);
     --noise-opacity: 0.3;
 
-    /* much subtler hero blobs on the light background */
-    --gradient-a: rgba(150, 130, 225, 0.1);
-    --gradient-b: rgba(170, 150, 235, 0.07);
-    --gradient-c: rgba(140, 120, 220, 0.08);
+    /* much subtler hero blobs — warm gold and dusty purple on paper */
+    --gradient-a: rgba(242, 193, 78, 0.28);
+    --gradient-b: rgba(107, 91, 123, 0.14);
+    --gradient-c: rgba(242, 193, 78, 0.16);
 }
 
 /* ── 2. RESET & BASE ─────────────────────────────── */
@@ -664,7 +668,7 @@ nav {
     gap: 0.6rem;
     padding: 1rem 1rem 0.8rem;
     border: 1px solid var(--line);
-    background: #171122;
+    background: #34343a;
     transition: border-color 0.2s, transform 0.2s;
 }
 
@@ -709,7 +713,7 @@ nav {
 }
 
 :root[data-theme='light'] .contact-qr-caption {
-    color: #2b2340;
+    color: #2b2b2e;
 }
 
 .contact-social {
@@ -1173,7 +1177,7 @@ footer {
     height: 4.25rem;
     border: 1px solid var(--line);
     border-radius: 50%;
-    background: rgba(13, 11, 20, 0.6);
+    background: rgba(24, 24, 27, 0.65);
     color: var(--purple);
     backdrop-filter: blur(6px);
     pointer-events: none;
